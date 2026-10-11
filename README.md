@@ -96,9 +96,10 @@ in the appendix comes from the same scripts.
 | Thinking on (Qwen3-8B) | `thinking_check_test500.py` (generation and analysis; `slurm/thinking_check_test500.sbatch`), `thinking_check_loss_breakdown.py` |
 | When the reviewer keeps its own right answer | `v_abandons_right_answer.py` |
 
-Except for `eight_cells_table.py`, they read the archived model outputs. Part of the thinking-on calls went
-to a hosted Qwen3-8B; `thinking_check_test500.py` then reads the key from a file passed with `--api-key-file`
-(no key is included).
+Except for `eight_cells_table.py`, they read the archived model outputs. All thinking-on calls ran on our
+cluster: 45 of the 500 reviews of Llama-3.1-8B ran on a GPU without bfloat16 (Quadro RTX 8000) and were served
+in float16, the rest in bfloat16. `thinking_check_test500.py` also supports a hosted server (`--api-key-file`),
+which was not used.
 
 **4. Figures**
 
