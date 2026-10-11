@@ -1,0 +1,14 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r010
+status: c018_qwen3_8b_verifier_math_dev300
+
+verifier:
+  deterministic_decoding_expected: true
+  replicates:
+    - {replicate_id: v01, base_seed: 20260923}
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields: [replicate_plan_id, scope, replicate_id, base_seed, cell_id, problem_id, sample_index]
+  same_seed_on_retry: true
+  select_best_seed: forbidden

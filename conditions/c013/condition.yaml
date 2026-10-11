@@ -1,0 +1,93 @@
+schema_version: condition-overlay-v1
+condition_id: c013
+status: ready_for_user_requested_gate1_300_diagnostic
+extends: conditions/c011/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c013
+  status: ready_for_user_requested_gate1_300_diagnostic
+  purpose: user_requested_y1_only_diagnostic_on_the_validated_c011_gate0_rows
+
+  gate:
+    id: gate_1_300_diagnostic
+    runs_stages: [rewrite, grade_y1, counterfactual, analyze]
+    skips_stages: [generate, verify, controller_evidence, controller]
+    skips_stages_because: >-
+      The user requested only y1 on the 300 validated c011 rows. G, V, y0, y2 and
+      their grades are reused byte-for-byte. Under the registered cap semantics a KEEP
+      row has no y1: z1 equals u0 there. Rewrite calls therefore run only on the 144
+      c011 rows whose request is not KEEP, while all 300 receive a z1 label.
+    measures:
+      - all eight (z0, z1, z2) patterns with counts over the 300 rows
+      - z1 - z0 repair and harm event counts
+      - z2 - z1 repair and harm event counts
+      - rewrite status and y1 grading coverage
+    decision_criteria: diagnostic_only_no_automatic_successor
+    primary_hypothesis_under_test: >-
+      On the c011 complete-prompt rows, critique-conditioned Seed-Coder rewrites create
+      enough bidirectional z1/z0 events to characterize the value and harm of M1, even
+      though c011 failed the pre-registered Gate 0 screen for a full 832-row Gate 1.
+    scope_limit: >-
+      This is a user-authorized development diagnostic after the Gate 0 stop. It is not
+      the c012 successor that c011 would have created on a pass and cannot support a
+      confirmatory or full-development claim.
+
+  protocol:
+    record_schemas:
+      rewrite_source: protocols/authority_v6/schemas/rewrite_record_v2.json
+      counterfactual_source: protocols/authority_v6/schemas/counterfactual_record_v2.json
+
+  dataset:
+    manifest: gate0
+    manifest_rows: 300
+    manifest_sha256: 8e51cb5dc58bd0a5bc418618729e1964f2a5f492428adaf5e8a1cd347e99064e
+
+  generator:
+    prompt_rewrite: conditions/c007/prompts/g_rewrite_v1.txt
+    prompt_rewrite_provenance: byte_identical_to_validated_c007_code_rewrite_prompt
+    prompt_rewrite_rationale: >-
+      Reuse the only validated code-domain critique-and-revise contract so the new
+      measurement changes the generator family/problem field, not rewrite instructions.
+    rewrite_decoding:
+      samples: 1
+      temperature: 0.0
+      top_p: 1.0
+      top_k: null
+      max_new_tokens: 3072
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      output_logprobs:
+        enabled: false
+        disabled_because: rewrite output is post-action and no Controller may consume it
+
+  replicates:
+    plan_id: r005
+    path: replicates/r005.yaml
+    rewrite_scope: w01
+    reason: r005 is the frozen plan that introduced the paired code-domain rewrite seed
+
+  reuse_policy:
+    source_condition_id: c011
+    source_condition_hash: 38b3c73d4d9c316ce405ee5aea00387c73bd4823d508855cc86958fd010702bc
+    source_run_id: 20260920T114702Z__c011__gate0__r004__analysis__r004
+    source_artifact_path: /path/to/project/artifacts/20260920T114702Z__c011__gate0__r004
+    reuse_g_outputs: all_300_rows
+    reuse_v_reports_and_token_traces: all_300_rows
+    reuse_u0_u2_grades: all_available_rows
+    generate_only: y1_for_non_keep_rows
+    regrade_only: y1
+    rerun_from: rewrite
+
+  stages:
+    gate1_300_diagnostic:
+      dataset_manifest: gate0
+      registered_role: development_diagnostic
+      may_tune_condition: true
+      may_support_confirmatory_claims: false
+
+  successor_plan:
+    automatic_successor: none
+    reason: diagnostic_only_after_failed_gate0_screen

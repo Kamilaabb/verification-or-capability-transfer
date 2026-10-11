@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v_report_payload_v1.json",
+  "title": "Authority v5 verifier report payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdict", "critique", "candidate_answer", "requested_action"],
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["correct", "incorrect", "uncertain"]
+    },
+    "critique": {"type": "string", "minLength": 1},
+    "candidate_answer": {"type": "string", "minLength": 1},
+    "requested_action": {
+      "type": "string",
+      "enum": ["KEEP", "CRITIQUE_REVISE", "OVERRIDE"]
+    }
+  }
+}

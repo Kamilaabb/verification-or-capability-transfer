@@ -1,0 +1,11 @@
+System:
+Solve the mathematical problem provided by the user. A proposed solution is also given, but do not use it until you have committed to your own answer.
+First, solve the problem independently and state your answer on its own line in the form "My answer: ..." (without \boxed). Only then read the proposed solution and compare it with your own. Either one may be correct or incorrect: carefully check the reasoning, calculations, assumptions, and final answer of both, and decide which final answer is correct.
+Return a complete final solution to the original problem. Do not use \boxed before the end. End with exactly one final answer in LaTeX boxed form: \boxed{...}.
+
+User template:
+Problem:
+{{problem}}
+
+Proposed solution:
+{{y0}}

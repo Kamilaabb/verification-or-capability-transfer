@@ -1,0 +1,129 @@
+schema_version: dataset-v1
+dataset_id: nlreason-gpqad-reclorval-foliov2-s20261001
+status: frozen_on_server
+registered_on: 2026-10-01
+purpose: >-
+  The natural-language-reasoning domain of the GV vs max(G, V) study, run for two pre-chosen pairs
+  (Qwen3-8B / Llama-3.2-3B, then Qwen3-4B / Qwen3-8B; docs/plan/nl_reasoning_study.md). The same three benchmarks as
+  the natural-language-reasoning domain of Variation in Verification (ICLR 2026, arXiv
+  2509.17995v2), 901 rows pooled into one domain. It asks whether collapse, anchoring and
+  GV - max(G, V) look the same on logical reading, first-order-logic inference and
+  graduate-level science questions. Nothing is fit, tuned or chosen on it.
+
+source:
+  provider: author_releases
+  components:
+    reclor:
+      release: https://github.com/yuweihao/reclor/releases/download/v1/reclor_data.zip
+      archive_sha256: fc64ad8755e88d7ab353a4679101f6b9a7f22c7718ce57f993abd974920f055b
+      file: val.json
+      file_sha256: 49a43973d7cf00d5e0d645daad864efca8e10497ced241f32afa4bd260233159
+      rows: 500
+      license_note: non-commercial research use only (the archive password states it)
+    folio:
+      release: https://huggingface.co/datasets/tasksource/folio (public, no token)
+      revision: 295b95fb4fe9be4ff3f933b73142d142cf6b2c97
+      file: folio_v2_validation.jsonl
+      file_sha256: 5273a939ad5ffff5b8f1e21b6a81f07b0653be11bead084f40e067269b7b1aaf
+      rows: 203
+      version_note: >-
+        FOLIO v2, the error-fixed release the Yale-LILY/FOLIO README recommends over data/v0.0
+        (whose validation file has 204 rows); this public copy carries the same 203-row count
+        Variation in Verification reports.
+      license_note: MIT (Yale-LILY/FOLIO)
+    gpqa_diamond:
+      release: https://github.com/idavidrein/gpqa dataset.zip (password in the README)
+      archive_sha256: 461ae7329f15a3e35f8184d2dac24b990f34fdf12f366ca4062d8e6638cd08dc
+      file: dataset/gpqa_diamond.csv
+      file_sha256: 41d1213cd7a4998605a26c2798500652572007161b3a92817ba46b35befcd305
+      rows: 198
+      license_note: >-
+        CC BY 4.0. The authors ask that examples not be revealed in plain text or images online;
+        no question text goes into any committed file, report or paper.
+  raw_files_on_server: /path/to/scratch/raw_datasets (SHA256SUMS.download)
+  fields_never_given_to_any_model: [label, Correct Answer, answer]
+
+formatting:
+  prompts: the frozen MMLU-Pro solve and review prompts (authority_allocation.mmlu_pro.FROZEN_PROMPTS), unchanged
+  reclor: the passage, a blank line, the question; the four answers in source order
+  folio: >-
+    "Premises:" with the premises, "Conclusion:" with the conclusion, then "Based only on the
+    premises, is the conclusion true, false, or uncertain?"; options True / False / Uncertain in that order
+  gpqa_diamond: >-
+    the question; the correct answer and the three incorrect answers in one fixed permutation per
+    row, drawn from option_seed in ascending record-id order (the source lists the correct answer first)
+
+selection:
+  exclusions_decided_from_source_only: true
+  exclusion_rules:
+    duplicate_id: an id that occurs more than once; every copy is dropped
+    duplicate_question: identical question text and options on several rows; every copy is dropped
+    empty_question: no question text, or an empty option
+    gold_ambiguous: the correct answer's text equals another option's text
+    label_invalid: a reference label outside the row's options
+  excluded: {}
+  rows_before_exclusion: 901
+  rows_after_exclusion: 901
+  note: >-
+    Two GPQA Diamond rows (recZSGUkn56v9kEp1, recnGEpF1srQpaqWq) have two identical incorrect
+    answers; the correct answer is unique, so they stay.
+
+sampling:
+  sort_key: problem_id
+  sort_order: ascending
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  order_seed: 20261001
+  option_seed: 20261002
+  method: sort by problem id, then one fixed permutation used only for batching; every included row is used
+  drawn_before_any_model_saw_any_problem: true
+  builder: scripts/build_nlreason_manifests.py
+  builder_commit: 2e9fe63
+  built_once_on: 2026-10-01
+  build_report_sha256: 5c87cd2178eed1266c86c2daba52e3d8088db3efa226bf0a70225f15c721be42
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+
+source_rows:
+  purpose: question text, options and reference letter per row, joined to the id-only manifest at run time
+  server_path: /path/to/project/data/manifests/nlreason-gpqad-reclorval-foliov2-s20261001/source_rows.jsonl
+  rows: 901
+  sha256: b43abc948c8767948b3699c941e404b607fb4691062b85d27dd667dd185781b2
+
+manifests:
+  eval:
+    purpose: one_pair_domain_reported_in_full
+    server_path: /path/to/project/data/manifests/nlreason-gpqad-reclorval-foliov2-s20261001/eval.jsonl
+    rows: 901
+    counts_by_category: {folio: 203, gpqa_diamond: 198, reclor: 500}
+    counts_by_origin: {folio: 203, gpqa_biology: 19, gpqa_chemistry: 93, gpqa_physics: 86, reclor: 500}
+    counts_by_n_options: {"3": 203, "4": 698}
+    gold_letter_counts: {A: 235, B: 243, C: 256, D: 167}
+    sha256: 8863943a027a11525ce2ffc999fd00724a117b99ece466cf4253d431cee19990
+
+use_log:
+  - {conditions: [c192, c193, c194, c195], manifest: eval, pair: Qwen3-8B / Llama-3.2-3B,
+     plan: docs/plan/nl_reasoning_study.md}
+  - {conditions: [c196, c197, c198], manifest: eval, pair: Qwen3-4B / Qwen3-8B (Qwen3-8B alone is c193),
+     plan: docs/plan/nl_reasoning_study.md, added: 2026-10-01}
+  - {conditions: [c303, c304, c305, c306, c307], manifest: eval, pair: solo runs only (Qwen2.5-3B, Qwen2.5-7B, Ministral-8B, Mistral-Small-24B, Qwen3-32B),
+     plan: docs/plan/nl_reasoning_study.md, added: 2026-10-03}
+  - {conditions: [c308, c309, c310, c311, c312, c313, c314, c315], manifest: eval,
+     pair: Qwen3-32B / Qwen2.5-3B, Mistral-Small-24B / Llama-3.2-3B, Qwen3-32B / Mistral-Small-24B, Llama-3.2-3B / Qwen2.5-3B (reviews of c303, c306, c307, c192),
+     plan: docs/plan/nl_reasoning_study.md, added: 2026-10-03}
+  - {conditions: [c316-c359], manifest: eval, pair: the other 22 pairs of the eight NL models, both directions (all 28 pairs in total),
+     plan: docs/plan/nl_reasoning_study.md, added: 2026-10-03}
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: false
+  may_support_confirmatory_claims: true
+  pairs_fixed_before_their_runs: true
+  nothing_chosen_on_this_dataset: true

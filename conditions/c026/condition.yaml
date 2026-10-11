@@ -1,0 +1,43 @@
+schema_version: condition-overlay-v1
+condition_id: c026
+status: registered_pending_run
+extends: conditions/c023/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c026
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      V alone on mathfull dev1000 under the frozen solve prompt v2
+      (docs/plan/gv_vs_max_g_v_study.md section 4.7), paired with c025. c023 with only the
+      prompt changed, to the same prompt file as c025. Same Qwen3-8B revision, greedy
+      decoding, thinking off, 4096 tokens, never shown any G output, same-forward native
+      trace capture and seven-scalar contract. Development only; the sealed test manifest
+      is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c026_v1.json
+
+  model:
+    prompt_pass1: conditions/c025/prompts/g_solve_v2.txt
+    prompt_pass1_provenance: user_written_solve_prompt_v2_frozen_2026-09-25
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c026
+
+  runnable_gate:
+    required_before_submission:
+      - c026 differs from c023 only in prompt, seeds and evidence schema id
+      - c026 and c025 use the same prompt file
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the manifest hash equals the one in the dataset registration
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

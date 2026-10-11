@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "generated_token_trace_v1.json",
+  "title": "Auditable sampled-token logprob trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "logprobs_mode", "tokens", "reconstructed_text_sha256", "content_start_byte", "content_end_byte"],
+  "properties": {
+    "status": {"type": "string", "enum": ["ok", "missing", "text_mismatch"]},
+    "logprobs_mode": {"const": "raw_logprobs"},
+    "tokens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index", "token_id", "token", "bytes", "start_byte", "end_byte", "logprob"],
+        "properties": {
+          "index": {"type": "integer", "minimum": 0},
+          "token_id": {"type": ["integer", "null"], "minimum": 0},
+          "token": {"type": ["string", "null"]},
+          "bytes": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 255}},
+          "start_byte": {"type": "integer", "minimum": 0},
+          "end_byte": {"type": "integer", "minimum": 0},
+          "logprob": {"type": "number", "maximum": 0}
+        }
+      }
+    },
+    "reconstructed_text_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "content_start_byte": {"type": ["integer", "null"], "minimum": 0},
+    "content_end_byte": {"type": ["integer", "null"], "minimum": 0}
+  }
+}

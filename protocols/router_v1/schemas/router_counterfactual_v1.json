@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "router_counterfactual_v1.json",
+  "title": "Router v1 two-arm post-grading outcomes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_pass1_run_id",
+    "source_pass2_run_id", "condition_id", "condition_hash", "problem_id",
+    "u0", "u_self", "a0", "a1", "self_check_status", "grader_status",
+    "tokens_pass1", "tokens_pass2", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "router-counterfactual-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_pass1_run_id": {"type": "string", "minLength": 1},
+    "source_pass2_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "u0": {"$ref": "#/$defs/correctness"},
+    "u_self": {
+      "$ref": "#/$defs/correctness",
+      "description": "Null when pass 2 failed or its answer was unextractable."
+    },
+    "a0": {"$ref": "#/$defs/deployed", "description": "Never self-check. Always equals u0."},
+    "a1": {
+      "$ref": "#/$defs/deployed",
+      "description": "Always self-check. Equals u_self, or u0 when pass 2 failed, per protocol section 4. It is therefore never null while u0 is graded."
+    },
+    "self_check_status": {
+      "type": "string",
+      "enum": ["ok", "retry_ok", "model_invalid", "call_error", "fallback"]
+    },
+    "grader_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["y0", "y_self"],
+      "properties": {
+        "y0": {"$ref": "#/$defs/grader_status"},
+        "y_self": {"$ref": "#/$defs/grader_status"}
+      }
+    },
+    "tokens_pass1": {"type": ["integer", "null"], "minimum": 0},
+    "tokens_pass2": {
+      "type": ["integer", "null"], "minimum": 0,
+      "description": "This row's pass-2 output_tokens. A router that skips the row pays zero of it, which is how any routing policy's cost is evaluated from this archive without rerunning anything."
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "correctness": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "deployed": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "grader_status": {"type": "string", "enum": ["ok", "model_invalid", "grader_error", "not_run"]}
+  },
+  "description": "Two arms, no authority cap and no action vocabulary. Every row carries both arms' outcomes and both arms' token costs, so any routing policy over the registered scalars can be scored on accuracy and on cost by arithmetic over this file alone."
+}

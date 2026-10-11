@@ -1,0 +1,23 @@
+schema_version: claim-card-v1
+id: H11
+written: '2026-10-04'
+story: 问题三（同样两次调用：选择还是审阅）
+analysis: cost
+statement_zh: 同样调用两个模型，各自独立作答再由选择器挑一个，和让一个模型审阅另一个相比，准确率差多少、成本差几倍。
+# 假设：只看准确率，审阅基本比不过选择。只估计、不检验（2026-10-04）。JEV 不进这张卡片：它多一次调用。
+estimand: 每个设计配对：acc(选择器) − acc(审阅)，审阅的两个方向分开；以及每题成本之比；四个域等权平均。
+cost: 同 H10。
+questions: 同 H10。
+comparisons:
+- {a: selector_primary, b: review_by_stronger, label: 选择器 − 较强者审较弱者}
+- {a: selector_primary, b: review_by_weaker, label: 选择器 − 较弱者审较强者}
+- {a: selector_secondary, b: review_by_stronger, label: 次方案 − 较强者审较弱者（附录）}
+- {a: selector_secondary, b: review_by_weaker, label: 次方案 − 较弱者审较强者（附录）}
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 不判定。报告差和 95% 区间、选择器高于 / 持平 / 低于审阅的对数、成本倍数。
+seen_when_written:
+  accuracy: 已见过（同 H10）
+  cost: 未见
+result: null

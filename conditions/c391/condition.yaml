@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c391
+status: registered_pending_run
+extends: conditions/c253/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c391
+  status: registered_pending_run
+  purpose: qwen3_8b_commit_first_review_of_c097_mathfull_test1500
+
+  gate:
+    scope_limit: >-
+      Prompt-variant sanity check (docs/plan/prompt_variant_test500.md, user request 2026-10-09): c253 with only the
+      review prompt changed to the frozen commit-first prompt, which asks the reviewer to solve the problem
+      independently and write its own answer ("My answer: ...") before reading the proposed solution, then compare,
+      without the instruction to retain a correct proposed solution. The first
+      500 test1500 rows are analysed. Nothing measured here changes any registered result.
+
+  model:
+    prompt_pass1: conditions/c390/prompts/v_commit_first_v1.txt
+    prompt_pass1_provenance: user_approved_commit_first_review_prompt_v1_frozen_2026-10-09
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c391_v1.json
+
+  replicates:
+    seed_cell_id: c391
+
+  runnable_gate:
+    required_before_submission:
+      - c391 differs from c253 only in the review prompt, evidence schema id, seed cell and text
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/prompt_variant_test500.md
+      - the c097 source archive passes its checksums, holds exactly 1500 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0
+      - local parser and record-schema tests pass

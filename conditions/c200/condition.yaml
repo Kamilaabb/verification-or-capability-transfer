@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c200
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c200
+  status: registered_pending_run
+  purpose: c025_on_mathfull_testpool_dev1000
+
+  gate:
+    scope_limit: >-
+      Development run on the re-split development set (user decision 2026-09-29,
+      docs/plan/testpool_dev1000.md): c025 (Qwen3-4B alone, frozen solve prompt v2, greedy, 4096
+      tokens) on testpool_dev1000, rows 1501-2500 of the test pool, so development and test come
+      from the same pool; nothing else changed.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: testpool_dev1000
+    manifest_rows: 1000
+    manifest_sha256: 52c6c79d0285f40d3ac711ad6331b8102d6cf138374a8fd93a5cdc6b3756971a
+    development_only: true
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c200_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c200

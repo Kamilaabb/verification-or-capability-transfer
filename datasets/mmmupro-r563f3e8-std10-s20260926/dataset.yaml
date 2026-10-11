@@ -1,0 +1,128 @@
+schema_version: dataset-v1
+dataset_id: mmmupro-r563f3e8-std10-s20260926
+status: frozen_on_server
+registered_on: 2026-09-26
+purpose: >-
+  Vision-domain extension of docs/plan/gv_vs_max_g_v_study.md, designed in
+  docs/plan/vision_mmmu_pro_study.md: G alone, V alone and GV with Qwen3-VL-4B/8B-Instruct
+  on multi-discipline multimodal multiple-choice questions.
+
+source:
+  provider: huggingface
+  name: MMMU/MMMU_Pro
+  revision: 563f3e84bb3b90893083a1f039cfa13077f2302b
+  config: standard (10 options)
+  splits_used: [test]
+  total_rows: 1730
+  composition: >-
+    MMMU questions filtered to those text-only models could not answer, with options
+    augmented toward ten. The id prefix ("test_", "validation_") records the original MMMU
+    split. The config's only split is named test; the dev/test division below is this
+    project's own.
+  fields_never_given_to_any_model: [explanation, answer]
+  revision_note: >-
+    The dataset card records corrections to reference answers or options on 2025-03-08,
+    2026-05-30 and 2026-07-10, so results are tied to this revision.
+  license: apache-2.0
+  options_note: >-
+    Despite the config name, only 1,213 of the 1,725 kept rows have ten options; the rest
+    have 2 to 9 (26 rows have 2). Chance accuracy therefore varies by row. n_options is in
+    every manifest row and the answer parser limits letters to each row's options.
+
+selection:
+  exclusions_decided_from_source_only: true
+  exclusion_rules:
+    duplicate_id: an id that occurs more than once; every copy is dropped
+    duplicate_question: identical question text and options on several rows; every copy is dropped
+    options_unparseable: options are not a list of strings
+    option_count_out_of_range: fewer than 2 or more than 10 options
+    answer_not_an_option: the reference answer is not the letter of an existing option
+    no_referenced_image: neither question nor options reference any <image n>
+    referenced_image_missing: a referenced image_n is empty, or n exceeds 7
+    image_unreadable: a referenced image has no readable size
+    image_aspect_ratio_over_200: Qwen image preprocessing would refuse the image
+  excluded:
+    duplicate_question: [test_Art_35, test_Art_8, validation_Music_2, validation_Music_5]
+    option_count_out_of_range: [test_Computer_Science_61]
+  rows_after_exclusion: 1725
+  images_referenced: 2007
+  unreferenced_images_not_input: 3
+  images_per_row: {"1": 1589, "2": 69, "3": 11, "4": 35, "5": 20, "7": 1}
+  options_per_row: {"2": 26, "3": 42, "4": 123, "5": 41, "6": 16, "7": 12, "8": 31, "9": 221, "10": 1213}
+
+sampling:
+  strata: [subject, id_prefix]
+  strata_count: 60
+  dev_rows: 1000
+  dev_quota: proportional to stratum size by largest remainder, ties by sorted stratum key
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  split_seed: 20260926
+  dev_order_seed: 20260927
+  test_order_seed: 20260928
+  method: >-
+    sort kept rows by id; for each stratum in sorted key order draw one permutation from
+    the split stream and send its first quota rows to dev; then permute dev and test once
+    each, for run order only
+  drawn_before_any_model_saw_any_problem: true
+  builder: scripts/build_mmmu_pro_manifests.py
+  builder_commit: 9e18864
+  built_once_on: 2026-09-26
+  build_report_sha256: 0dce1eed32f20557f2ee40e372ccb6485500537c98284812cf5db44f29a262c5
+
+image_audit:
+  purpose: >-
+    choose the registered pixel cap from data; it read image sizes and bytes only, never
+    question text beyond its <image n> tags, answers or explanations
+  server_path: /path/to/project/data/manifests/mmmupro-r563f3e8-std10-s20260926/image_audit.jsonl
+  sha256: 55460844f2dd2046b4f7066a957db3c81d7480d1fab15f417a11f2c7b2f54bf2
+  per_image_record: problem_id, image_number, sha256 of the image bytes, width, height, visual tokens under each audited cap
+  cross_check: >-
+    all 2,007 images under all five caps (10,035 values) recomputed with transformers
+    5.16.1 smart_resize inside the vLLM container: 0 mismatches
+  visual_tokens_per_row_at_model_default: {p50: 216, p90: 1152, p99: 4800, max: 6400}
+  largest_image_pixels: 6515200
+  decision: >-
+    use the model default max_pixels 16,777,216 and min_pixels 65,536, registered
+    explicitly for both vLLM and HF; on this dataset it never binds, so every image enters
+    at its own resolution rounded to multiples of 32. A cap of 1,280 tokens per image would
+    have shrunk 120 images (6%), the largest ones, where small text in charts and diagrams
+    is most likely.
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  dev:
+    purpose: development
+    server_path: /path/to/project/data/manifests/mmmupro-r563f3e8-std10-s20260926/dev.jsonl
+    rows: 1000
+    counts_by_origin: {test: 669, validation: 331}
+    sha256: 60c9e1e18875e7745cd59be4e28fc736b3dbdbfbd20005d69f136bfad6419a32
+  test:
+    purpose: independent_confirmatory_test
+    status: untouched
+    server_path: /path/to/project/data/manifests/mmmupro-r563f3e8-std10-s20260926/test.jsonl
+    rows: 725
+    counts_by_origin: {test: 481, validation: 244}
+    sha256: 1899a2885f28b40cf7f354515a61ec64b04f34c0741faf37386b9b47a0cbf85c
+  row_fields: [problem_id, subject, origin, n_images, n_options]
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: true
+  may_support_confirmatory_claims: false
+  test_may_support_confirmatory_claims: true
+  independent_test_required_after_tuning: true
+  test_manifest_is_single_use: true
+  test_run_only_after: >-
+    the selector's model family, features and hyperparameters are frozen on development,
+    and the frozen G and V conditions are registered; test is then run once
+  test_status: untouched

@@ -1,0 +1,70 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r001
+status: freeze_before_pilot300
+
+generator:
+  purpose: one_fixed_counterfactual_table_for_initial_pilot
+  replicates:
+    - replicate_id: g01
+      base_seed: 20260910
+
+verifier:
+  deterministic_decoding_expected: true
+  replicates:
+    - replicate_id: v01
+      base_seed: 20260910
+
+rewrite:
+  deterministic_decoding_expected: true
+  replicates:
+    - replicate_id: w01
+      base_seed: 20260910
+
+controller_inference:
+  purpose: estimate_stability_of_one_stochastic_controller_call
+  paired_between_binary_and_ternary: true
+  select_best_seed: forbidden
+  majority_vote_is_separate_ensemble: true
+  replicates:
+    - replicate_id: c01
+      base_seed: 2026091101
+    - replicate_id: c02
+      base_seed: 2026091102
+    - replicate_id: c03
+      base_seed: 2026091103
+    - replicate_id: c04
+      base_seed: 2026091104
+    - replicate_id: c05
+      base_seed: 2026091105
+
+controller_training:
+  purpose: reserved_for_future_random_forest_mlp_or_other_stochastic_training
+  active_for_c001: false
+  replicates:
+    - replicate_id: t01
+      base_seed: 2026091201
+    - replicate_id: t02
+      base_seed: 2026091202
+    - replicate_id: t03
+      base_seed: 2026091203
+    - replicate_id: t04
+      base_seed: 2026091204
+    - replicate_id: t05
+      base_seed: 2026091205
+
+analysis:
+  bootstrap_seed: 20260913
+  bootstrap_repetitions: 10000
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields:
+    - replicate_plan_id
+    - scope
+    - replicate_id
+    - base_seed
+    - cell_id
+    - problem_id
+    - sample_index
+  menu_excluded_so_c2_c3_are_paired: true
+  same_seed_on_format_retry: true

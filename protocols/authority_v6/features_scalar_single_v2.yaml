@@ -1,0 +1,90 @@
+schema_version: feature-contract-v1
+feature_set_id: scalar_single_v2
+representation: scalar_categorical
+decision_time: after_v_report_before_action
+
+rules:
+  configured_g_sample_count: 1
+  raw_text_allowed: false
+  token_trace_allowed_in_storage_only: true
+  gold_or_outcome_allowed: false
+  storage_schema: schemas/controller_evidence_record_single_v2.json
+  exact_controller_payload_schema: schemas/controller_input_payload_single_v2.json
+  missing_value: null
+  explicit_missing_flag_required: true
+  log_base: natural
+  logprobs_mode: raw_logprobs
+  token_span_rule: include_each_generated_token_with_nonempty_utf8_byte_overlap
+  format_repair_logprobs_eligible: false
+
+features:
+  - {name: g_answer_extractable, group: F0_G, type: binary, formula: one_hot(y0_has_a_valid_extracted_mathematical_answer)}
+  - {name: v_verdict_correct, group: F0_V, type: binary_or_null, formula: one_hot(verdict_is_correct), missing_when: v_report_fallback}
+  - {name: v_verdict_incorrect, group: F0_V, type: binary_or_null, formula: one_hot(verdict_is_incorrect), missing_when: v_report_fallback}
+  - {name: v_verdict_uncertain, group: F0_V, type: binary_or_null, formula: one_hot(verdict_is_uncertain), missing_when: v_report_fallback}
+  - {name: v_request_keep, group: F0_V, type: binary, formula: one_hot(effective_registered_request_is_KEEP)}
+  - {name: v_request_revise, group: F0_V, type: binary, formula: one_hot(effective_registered_request_is_CRITIQUE_REVISE)}
+  - {name: v_request_override, group: F0_V, type: binary, formula: one_hot(effective_registered_request_is_OVERRIDE)}
+  - {name: v_candidate_extractable, group: F0_V, type: binary_or_null, formula: one_hot(candidate_answer_has_a_valid_extracted_mathematical_answer), missing_when: v_report_fallback}
+  - {name: gv_final_answer_equivalent, group: F0_GV, type: boolean_or_null, formula: mathematical_equivalence(extract(y0),extract(candidate_answer)), missing_when: either_answer_unextractable_or_v_report_fallback}
+
+  - name: g_output_mean_logprob
+    group: F1_logprob_G
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_over_all_nonempty_G_content_tokens)
+    missing_when: token_trace_missing_invalid_or_content_not_exactly_alignable
+  - name: g_final_answer_mean_logprob
+    group: F1_logprob_G
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_last_balanced_boxed_payload)
+    missing_when: y0_unextractable_or_boxed_span_missing_or_token_trace_invalid
+  - name: v_verdict_mean_logprob
+    group: F1_logprob_V
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_raw_JSON_verdict_value)
+    missing_when: v_fallback_retry_span_missing_or_token_trace_invalid
+  - name: v_request_mean_logprob
+    group: F1_logprob_V
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_raw_JSON_requested_action_value)
+    missing_when: v_fallback_retry_span_missing_or_token_trace_invalid
+  - name: v_candidate_final_answer_mean_logprob
+    group: F1_logprob_V
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_last_balanced_boxed_payload_inside_raw_JSON_candidate_answer_value)
+    missing_when: v_fallback_retry_candidate_unextractable_span_missing_or_token_trace_invalid
+  - name: v_critique_token_length_log
+    group: F1_aux_V
+    type: number_or_null
+    range: nonnegative
+    formula: ln(1+count_generated_tokens_overlapping_raw_JSON_critique_value)
+    missing_when: v_fallback_retry_span_missing_or_token_trace_invalid
+  - name: gv_answer_type_match
+    group: F1_aux_GV
+    type: boolean_or_null
+    formula: conservative_registered_math_type(extract(y0))_equals_conservative_registered_math_type(extract(candidate_answer))
+    missing_when: either_answer_unextractable_unknown_type_or_v_report_fallback
+
+answer_type_taxonomy:
+  - integer
+  - rational
+  - scalar_number
+  - relation
+  - symbolic_expression
+  - tuple
+  - set
+  - interval
+  - matrix
+
+registered_ablations:
+  F0: [g_answer_extractable, v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, v_candidate_extractable, gv_final_answer_equivalent]
+  F1_logp: [g_output_mean_logprob, g_final_answer_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_final_answer_mean_logprob]
+  F1_aux: [v_critique_token_length_log, gv_answer_type_match]
+  F1_full: [g_answer_extractable, v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, v_candidate_extractable, gv_final_answer_equivalent, g_output_mean_logprob, g_final_answer_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_final_answer_mean_logprob, v_critique_token_length_log, gv_answer_type_match]
+
+prohibited_fields: [problem_text, raw_model_output, token_trace, gold, reference_answer, grader_output, u0, u1, u2, z0, z1, z2, cap_outcomes, oracle_actions, minimal_oracle_action, y1_or_other_post_action_information]

@@ -1,0 +1,98 @@
+schema_version: condition-v1
+condition_id: c381
+status: registered_frozen_before_run
+purpose: Unchanged knowledge selector on NL development, primary and secondary nested
+  OOF
+protocol:
+  id: pair_selector_mc_oof_v1
+  path: protocols/pair_selector_mc_oof_v1
+  input_schema: protocols/pair_selector_mc_oof_v1/input.schema.json
+dataset:
+  id: nlreason-selector-dev901-s20261004
+  path: datasets/nlreason-selector-dev901-s20261004/dataset.yaml
+  manifest: eval
+  manifest_rows: 901
+  manifest_sha256: 8863943a027a11525ce2ffc999fd00724a117b99ece466cf4253d431cee19990
+  development_only: true
+  reuse_dataset_id: nlreason-gpqad-reclorval-foliov2-s20261001
+pair:
+  id: c304__c196
+  design:
+    models:
+    - Qwen3-4B
+    - Qwen2.5-7B-Instruct
+    cell: middle-middle
+    headroom: only
+  g: &id001
+    condition: c304
+    model: Qwen/Qwen2.5-7B-Instruct
+  v: &id002
+    condition: c196
+    model: Qwen/Qwen3-4B
+  gv:
+  - condition: c320
+    generator: Qwen2.5-7B-Instruct
+    reviewer: Qwen3-4B
+    run: 20261003T013000Z__c320__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c321
+    generator: Qwen3-4B
+    reviewer: Qwen2.5-7B-Instruct
+    run: 20261003T013000Z__c321__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c381
+model:
+  kind: two independent archived solo outputs
+  G: *id001
+  V: *id002
+  sample_selection: sample_index_0_unconditionally
+controller:
+  kind: trained_probabilistic_selector
+  feature_contract: protocols/pair_selector_mc_oof_v1/features.yaml
+  feature_set_id: mc_pair_scalar_v1
+  members:
+    primary:
+    - - F2
+      - A
+      - l2
+    - - F3
+      - A
+      - gbt
+    secondary:
+    - - F2
+      - A
+      - l2
+  grids:
+    l2:
+      m__C:
+      - 0.01
+      - 0.1
+      - 1
+      - 10
+    gbt:
+      m__max_depth:
+      - 2
+      - 3
+      m__learning_rate:
+      - 0.05
+      - 0.1
+      m__max_iter:
+      - 100
+      - 300
+  preprocessing:
+    l2: SimpleImputer(median,add_indicator=True); StandardScaler; LogisticRegression(max_iter=5000)
+    gbt: native missing; HistGradientBoostingClassifier(seed)
+  training: nested 5 outer / 5 inner stratified folds; one row per problem_id
+  tie: V
+replicates:
+  plan_id: r017
+  path: replicates/r017.yaml
+upstream_runs:
+  g: 20261002T231200Z__c304__nlreason-eval901__r014_solve4096
+  v: 20261001T074355Z__c196__nlreason-eval901__r014_solve4096
+stages:
+- evidence
+- targets
+- crossfit
+- analysis
+no_new_generation_or_grading: true

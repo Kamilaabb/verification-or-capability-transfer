@@ -1,0 +1,43 @@
+schema_version: condition-overlay-v1
+condition_id: c258
+status: registered_pending_run
+extends: conditions/c244/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c258
+  status: registered_pending_run
+  purpose: c244_with_special_token_bytes_repair
+
+  gate:
+    scope_limit: >-
+      Replaces c244 (Llama-3.1-8B-Instruct reviews c056's Llama-3.2-3B-Instruct test outputs, weak-weak,
+      high-headroom end; docs/plan/testpool_dev1000.md section 8). c244 stopped at its 64th row
+      (test/precalculus/1239.json) three times: the reviewer emitted <|start_header_id|> twice mid-answer,
+      vLLM left these special tokens out of the returned text but returned their bytes in the token
+      trace, so the trace did not reassemble the text (text_mismatch) and the registered alignment rule
+      stopped the run, deterministically under greedy decoding. c258 is c244 with one registered rule
+      added: when a trace fails to align and holds special added tokens of the served snapshot with
+      bytes, those bytes are emptied (as the detokenizer that wrote the text does) and the content is
+      located with the unchanged strict rule; the run still stops on any mismatch. Token ids and the
+      same-forward capture are checked as before. Repaired tokens are listed in
+      records/token_byte_repairs.jsonl and counted in the report. A trace that already aligns is untouched.
+
+  model:
+    pass1_logit_capture:
+      special_token_bytes_repair: drop_special_token_bytes_v1
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c258_v1.json
+
+  replicates:
+    seed_cell_id: c258
+
+  runnable_gate:
+    required_before_submission:
+      - c258 differs from c244 only in the special-token bytes repair rule, evidence schema id, seed cell and text
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c056 source archive passes its checksums, holds exactly 1500 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0
+      - local parser, record-schema and repair tests pass

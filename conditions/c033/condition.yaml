@@ -1,0 +1,134 @@
+schema_version: condition-v1
+condition_id: c033
+status: abandoned_incomplete_superseded_by_c036
+purpose: qwen3_vl_4b_solo_mmmu_pro_dev_8192
+path_base: repository_root
+
+gate:
+  scope_limit: >-
+    VL-G alone for docs/plan/vision_mmmu_pro_study.md: Qwen3-VL-4B-Instruct answers the
+    1,000 MMMU-Pro standard dev rows under the frozen solve prompt, greedy, no hidden
+    reasoning channel but visible reasoning required, 8,192 output tokens, images at the
+    model-default pixel limits, same-forward native logit capture and vision_mc_scalar_v1
+    evidence written before grading. The same prompt file serves VL-V alone (c034).
+    Development only; the sealed test manifest is not touched.
+
+protocol:
+  id: vision_mc_v1
+  path: protocols/vision_mc_v1/README.md
+  feature_contract: protocols/vision_mc_v1/features.yaml
+  grader: letter_equality_with_the_reference_answer (scripts/run_mmmu_pro.py grade)
+  record_schemas:
+    pass1: protocols/vision_mc_v1/schemas/vl_record_v1.json
+    native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+    scalar_evidence: protocols/vision_mc_v1/schemas/vl_evidence_record_v1.json
+
+dataset:
+  id: mmmupro-r563f3e8-std10-s20260926
+  path: datasets/mmmupro-r563f3e8-std10-s20260926/dataset.yaml
+  manifest: dev
+  manifest_rows: 1000
+  manifest_sha256: 60c9e1e18875e7745cd59be4e28fc736b3dbdbfbd20005d69f136bfad6419a32
+  image_audit_sha256: 55460844f2dd2046b4f7066a957db3c81d7480d1fab15f417a11f2c7b2f54bf2
+  development_only: true
+  source_loader: scripts/run_mmmu_pro.py load_mmmu_pro_rows
+
+model:
+  role_ids: [pass1]
+  y0_selection: sample_index_0_unconditionally
+  kind: vlm
+  model_id: Qwen/Qwen3-VL-4B-Instruct
+  revision: ebb281ec70b05090aa6165b016eac8ec08e71b17
+  tokenizer_revision: ebb281ec70b05090aa6165b016eac8ec08e71b17
+  provenance: conditions/c033/model_provenance.json
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-VL-4B-Instruct/ebb281ec70b05090aa6165b016eac8ec08e71b17
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: 3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4
+  thinking: false
+  thinking_note: >-
+    Instruct model with no hidden reasoning channel; the frozen prompt still asks for
+    visible step-by-step reasoning, which V reviews and the evidence is computed on.
+  prompt_pass1: conditions/c033/prompts/vl_solve_v1.txt
+  prompt_pass1_provenance: user_approved_vision_solve_prompt_v1_frozen_2026-09-26
+  pass1_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 8192
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  decoding_note: >-
+    repetition_penalty 1.0 and presence_penalty 0.0 are sent explicitly so the snapshot's
+    generation_config (temperature 0.7, top_p 0.8, top_k 20) and the model card's suggested
+    presence_penalty 1.5 never apply; at temperature 0 vLLM resets top_k and top_p.
+  image_processing:
+    min_pixels: 65536
+    max_pixels: 16777216
+    image_pad_token_id: 151655
+    images_sent_as: original PNG bytes as a base64 data URI
+    max_images_per_prompt: 7
+    served_visual_tokens_must_equal_audit: true
+  serving:
+    max_model_len: 32768
+    max_num_batched_tokens: 32768
+    max_num_seqs: 1
+    enforce_eager: true
+  pass1_logit_capture:
+    backend: vllm_same_forward_logits_processor_v1
+    server_logprobs_mode: raw_logprobs
+    return_token_ids: true
+    per_token_fields: [sampled_raw_logit, sampled_logprob, max_raw_logit, logsumexp, entropy,
+                       top1_top2_margin, top20_token_ids, top20_raw_logits]
+    top_k_persisted: 20
+    full_vocabulary_logits_persisted: false
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_must_equal_top1_tolerance: 1.0e-06
+  preflight_policy: >-
+    new model: every job's smoke call checks exact token alignment, the served visual-token
+    count against smart_resize, and a paired native capture before any row is spent
+
+features:
+  contract: protocols/vision_mc_v1/features.yaml
+  count: 24
+  evidence_written_before_grading: true
+
+replicates:
+  plan_id: r013
+  path: replicates/r013.yaml
+  replicate_id: p01
+  base_seed: 20260926
+  seed_cell_id: c033
+
+stages:
+  run: [pass1_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+  skip: [review, controller_training]
+
+analysis:
+  confirmatory_claims: forbidden
+  required_metrics: [accuracy, answer_parseable_rate, truncated_rows, output_tokens,
+                     official_parser_accuracy_without_random, scalar_missingness]
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [behavioral_condition_fields, referenced_file_bytes, immutable_model_revision,
+            chat_template_hash, logprob_capture_mode, image_processing]
+  exclude: [status, purpose, node, gpu_uuid, slurm_job_id, timestamps, run_id, preflight_job]
+
+change_policy:
+  completed_runs_are_immutable: true
+  model_prompt_temperature_feature_parser_or_algorithm_change_creates_new_condition: true
+  seed_change_creates_new_replicate: true
+
+runnable_gate:
+  required_before_submission:
+    - the prompt file's LF-normalized sha256 equals authority_allocation.mmmu_pro.FROZEN_PROMPTS
+    - model identity fields equal conditions/c033/model_provenance.json
+    - the manifest and image-audit hashes equal the dataset registration
+    - temperature is 0, thinking is false, max_new_tokens is 8192
+    - local parser and record-schema tests pass

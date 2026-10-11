@@ -1,0 +1,26 @@
+schema_version: claim-card-v1
+id: H10
+written: '2026-10-04'
+story: 问题三（第二个模型值不值得用）
+analysis: cost
+statement_zh: 有第二个模型时，每种用法比较强者单独作答多几分、多花几倍成本。
+# 只估计、不检验，也不下"值得 / 不值得"的结论，由读者按自己的预算判断（2026-10-04）。
+estimand: 每个设计配对：acc(用法) − acc(较强者单独)，以及每题成本之比；四个域等权平均。
+cost: 每次调用 = 参数量 ×（输入 + 输出 token）；附录用输出 × 4 复核。审阅按 V 实际读到的 G 答案计 G 的那次调用；选择器、JEV 只计两次单独作答，JEV 的 API 费用单独按美元报告。
+questions: 选择器评估的题：数学、知识只用测试集 1500 题，代码、推理用全部题目（选择器五折交叉拟合）。
+comparisons:
+- {a: weaker_alone, b: stronger_alone, label: 只用较弱者}
+- {a: review_by_stronger, b: stronger_alone, label: 较强者审较弱者}
+- {a: review_by_weaker, b: stronger_alone, label: 较弱者审较强者}
+- {a: selector_primary, b: stronger_alone, label: 选择器}
+- {a: selector_secondary, b: stronger_alone, label: 选择器（次方案，附录）}
+- {a: JEV, b: stronger_alone, label: JEV（参照，不和选择器比）}
+- {a: oracle, b: stronger_alone, label: 上限}
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 不判定。报告差和 95% 区间、48 对里高于 / 持平 / 低于较强者的对数、成本倍数。
+seen_when_written:
+  accuracy: 选择器、JEV、审阅在这些题上的正确数都已见过（结果库 20261004b 的 systems.json 与 H02/H03）
+  cost: 未见（token 从未汇总）
+result: null

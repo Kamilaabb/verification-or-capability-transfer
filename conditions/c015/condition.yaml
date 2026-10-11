@@ -1,0 +1,50 @@
+schema_version: condition-overlay-v1
+condition_id: c015
+status: validated_gate0_stop
+extends: conditions/c014/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c015
+  status: validated_gate0_stop
+  purpose: two_independent_checks_self_verification_pilot_math_dev300
+
+  gate:
+    scope_limit: >-
+      This is a paired development rerun of c014 that changes only the pass-2
+      instruction. It tests whether requiring two actually executed, methodologically
+      independent checks creates more repair/harm events than c014's generic self-check.
+      It is not confirmatory and must not be described as a SEVRA replication.
+
+  model:
+    prompt_pass2: conditions/c015/prompts/self_check_two_checks_v1.txt
+    prompt_pass2_change_from_c014: >-
+      Pass 2 must execute and report at least two candidate-specific checks using
+      genuinely distinct methods; restating one derivation twice does not count.
+    preflight_job: 65103269
+
+  reuse_policy:
+    source_condition_id: c014
+    source_condition_hash: bc7c2a40d07c09d540dbc2a4585263674f534f553c50311fd30cd7aacb6aaadb
+    source_run_id: 20260921T013500Z__c014__pilot300__r007_sameforward__analysis__r007
+    source_artifact_path: /path/to/project/artifacts/20260921T013500Z__c014__pilot300__r007_sameforward
+    reuse_pass1_records: all_300_rows_byte_identical
+    reuse_same_forward_native_logit_traces: all_300_rows_byte_identical
+    reuse_u0_grades: all_300_rows_byte_identical
+    rerun_from: pass2
+    rerun_from_because: only_the_registered_pass2_prompt_changed
+
+  replicates:
+    plan_id: r007
+    path: replicates/r007.yaml
+    pass2_scope: s01
+    seed_cell_id: c014
+    seed_pairing_reason: >-
+      Preserve c014's exact pass-2 call seeds so the prompt is the only behavioral
+      change. Decoding is greedy, but the paired seed remains frozen explicitly.
+
+  successor_plan:
+    create_router_condition_only_if: >-
+      docs/plan/router_c014_design.md section 5.2 passes under the unchanged Gate 0
+      criterion; otherwise stop without fitting or selecting a router.
+    test_manifest_stays_unread: true

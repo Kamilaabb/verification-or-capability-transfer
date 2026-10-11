@@ -1,0 +1,35 @@
+schema_version: condition-overlay-v1
+condition_id: c089
+status: registered_pending_run
+extends: conditions/c078/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c089
+  status: registered_pending_run
+  purpose: mistral_24b_solo_mmlu_pro_test1500_4096
+
+  gate:
+    scope_limit: >-
+      Stability check for docs/plan/mmlu_pro_study.md section 12, requested by the user: Mistral-Small-24B-Instruct-2501 alone on the MMLU-Pro test1500 prefix: c078 with only the manifest, evidence schema id and seed cell changed.
+      The same 1,500 test rows as c081-c084. No selector runs.
+
+  dataset:
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: a22d72830c08b2010f44500e9353b948b1adce0591369e62ac7e1e6eb35c6e4e
+    development_only: false
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c089_v1.json
+
+  replicates:
+    seed_cell_id: c089
+
+  runnable_gate:
+    required_before_submission:
+      - c089 differs from c078 only in the dataset manifest, evidence schema id, seed cell and text
+      - the manifest hash equals the test1500 registration in the dataset file
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

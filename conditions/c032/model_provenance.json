@@ -1,0 +1,23 @@
+{
+  "chat_template_hash": "e4676cb56dffea7782fd3e2b577cfaf1e123537e6ef49b3ec7caa6c095c62272",
+  "config_sha256": "c675c1d724fdf951ba97b7241da3b1dab23371ab6af069f20c4001eaa0ce1dd6",
+  "repo_id": "mistralai/Ministral-8B-Instruct-2410",
+  "resolved_from": "main",
+  "revision": "2f494a194c5b980dfb9772cb92d26cbb671fce5a",
+  "schema_version": "model-provenance-v1",
+  "server_path": "/path/to/scratch/authority-allocation/models/mistralai--Ministral-8B-Instruct-2410/2f494a194c5b980dfb9772cb92d26cbb671fce5a",
+  "tokenizer_file_sha256": {
+    "special_tokens_map.json": "6fa06efa2785e450051989a6f8fb4416b10149ded485ddd3f127a40734f5cfd0",
+    "tokenizer.json": "d7edbeaf20dd7f571b5dd1c54d9ace4f9b6299127cc7ba2afb14a6d51a4a79a4",
+    "tokenizer_config.json": "7cf3f858feed324a6890898d95c208796b1a946e9841ee45e035ef84e9dc3699"
+  },
+  "tokenizer_revision": "2f494a194c5b980dfb9772cb92d26cbb671fce5a",
+  "tokenizer_revision_note": "The tokenizer ships inside the same snapshot, so it carries the weights' commit by construction. It is recorded explicitly because a sampled token id interpreted against a different vocabulary is a different token.",
+  "total_bytes": 16056976799,
+  "weight_file_sha256": {
+    "model-00001-of-00004.safetensors": "7c2954774d8f600560e5d75b4db7f6aa7a148a5c4dea6860148908503f649ecf",
+    "model-00002-of-00004.safetensors": "888d9728a60744c4ce88984ae86952a6f07f47ee90588aa1faa4a5063951f0c1",
+    "model-00003-of-00004.safetensors": "a10db8c522602eee5fb8be78980217a51c75b160c0584d110a1c694bfd4f671a",
+    "model-00004-of-00004.safetensors": "e75c6183282198d40135032c9e757fb70c2455f8c0f4ded7b0895b49b72bbd5f"
+  }
+}

@@ -1,0 +1,158 @@
+# Screening of every pair of the nine MMLU-Pro dev1000 solo models (docs/plan/mmlu_pro_study.md section 14),
+# the knowledge-domain counterpart of pairs/mathfull_screen_dev1000.yaml. Solo archives only: headroom and
+# cross-fitted selector gain. "v" is the model with the higher dev1000 solo accuracy (section 2.1), so the
+# selectors' tie rule delivers the stronger side. The three pairs with finished GV directions list them.
+schema_version: model-pairs-v1
+dataset: mmlupro-rb189ec7-s20260927
+manifest: dev1000
+pairs:
+  - id: qwen3-32b__qwen25-72b
+    g: {condition: c079, model: Qwen3-32B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: mistral-24b__qwen25-72b
+    g: {condition: c078, model: Mistral-Small-24B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: qwen3-8b__qwen25-72b
+    g: {condition: c071, model: Qwen3-8B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: qwen3-4b__qwen25-72b
+    g: {condition: c070, model: Qwen3-4B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: qwen25-7b__qwen25-72b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: qwen25-3b__qwen25-72b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: ministral-8b__qwen25-72b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: llama-32-3b__qwen25-72b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv: []
+  - id: mistral-24b__qwen3-32b
+    g: {condition: c078, model: Mistral-Small-24B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: qwen3-8b__qwen3-32b
+    g: {condition: c071, model: Qwen3-8B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: qwen3-4b__qwen3-32b
+    g: {condition: c070, model: Qwen3-4B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: qwen25-7b__qwen3-32b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: qwen25-3b__qwen3-32b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: ministral-8b__qwen3-32b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: llama-32-3b__qwen3-32b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv: []
+  - id: qwen3-8b__mistral-24b
+    g: {condition: c071, model: Qwen3-8B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv:
+      - {condition: c087, reviewer: v, note: Mistral-Small-24B reviews Qwen3-8B}
+      - {condition: c088, reviewer: g, note: Qwen3-8B reviews Mistral-Small-24B}
+  - id: qwen3-4b__mistral-24b
+    g: {condition: c070, model: Qwen3-4B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv: []
+  - id: qwen25-7b__mistral-24b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv: []
+  - id: qwen25-3b__mistral-24b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv: []
+  - id: ministral-8b__mistral-24b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv: []
+  - id: llama-32-3b__mistral-24b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv: []
+  - id: qwen3-4b__qwen3-8b
+    g: {condition: c070, model: Qwen3-4B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv:
+      - {condition: c072, reviewer: v, note: Qwen3-8B reviews Qwen3-4B}
+      - {condition: c073, reviewer: g, note: Qwen3-4B reviews Qwen3-8B}
+  - id: qwen25-7b__qwen3-8b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv: []
+  - id: qwen25-3b__qwen3-8b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv: []
+  - id: ministral-8b__qwen3-8b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv: []
+  - id: llama-32-3b__qwen3-8b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv: []
+  - id: qwen25-7b__qwen3-4b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c070, model: Qwen3-4B}
+    gv:
+      - {condition: c085, reviewer: g, note: Qwen2.5-7B reviews Qwen3-4B}
+      - {condition: c086, reviewer: v, note: Qwen3-4B reviews Qwen2.5-7B}
+  - id: qwen25-3b__qwen3-4b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c070, model: Qwen3-4B}
+    gv: []
+  - id: ministral-8b__qwen3-4b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c070, model: Qwen3-4B}
+    gv: []
+  - id: llama-32-3b__qwen3-4b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c070, model: Qwen3-4B}
+    gv: []
+  - id: qwen25-3b__qwen25-7b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c076, model: Qwen2.5-7B}
+    gv: []
+  - id: ministral-8b__qwen25-7b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c076, model: Qwen2.5-7B}
+    gv: []
+  - id: llama-32-3b__qwen25-7b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c076, model: Qwen2.5-7B}
+    gv: []
+  - id: ministral-8b__qwen25-3b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c075, model: Qwen2.5-3B}
+    gv: []
+  - id: llama-32-3b__qwen25-3b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c075, model: Qwen2.5-3B}
+    gv: []
+  - id: llama-32-3b__ministral-8b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c077, model: Ministral-8B}
+    gv: []

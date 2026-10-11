@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c109
+status: registered_pending_run
+extends: conditions/c100/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c109
+  status: registered_pending_run
+  purpose: seed_coder_8b_instruct_solo_bigcodebench_instruct_development832_4096
+
+  gate:
+    scope_limit: >-
+      Seed-Coder-8B-Instruct alone on the 832 BigCodeBench development rows for
+      docs/plan/code_bigcodebench_study.md: c100 with only the model changed, to the snapshot the earlier code-domain conditions served, re-hashed into conditions/c109/model_provenance.json and checked against the Hugging Face LFS sha256 of every weight file on 2026-09-27.
+      Same frozen code solve prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0
+      sent, same-forward capture, evidence before grading. Development only; the test
+      manifest is not read.
+
+  model:
+    model_id: ByteDance-Seed/Seed-Coder-8B-Instruct
+    revision: 1c5af72afa21c22c9272a0b60a3a404195e88fcd
+    tokenizer_revision: 1c5af72afa21c22c9272a0b60a3a404195e88fcd
+    provenance: conditions/c109/model_provenance.json
+    identity_reference: c109
+    server_path: /path/to/scratch/authority-allocation/models/ByteDance-Seed--Seed-Coder-8B-Instruct/1c5af72afa21c22c9272a0b60a3a404195e88fcd
+    chat_template_hash: 3e5e10cb59dfb7b896283a11e7e10e349cac5e790883dfbcd3cd36244b37ccbe
+    chat_template_kwargs: null
+
+  replicates:
+    seed_cell_id: c109
+
+  runnable_gate:
+    required_before_submission:
+      - c109 differs from c100 only in model identity, seed cell and text
+      - model identity fields equal conditions/c109/model_provenance.json
+      - the prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass

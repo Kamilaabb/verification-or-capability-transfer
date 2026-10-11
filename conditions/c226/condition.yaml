@@ -1,0 +1,58 @@
+schema_version: condition-overlay-v1
+condition_id: c226
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c226
+  status: registered_pending_run
+  purpose: llama31_8b_instruct_reviewer_of_c208_mathfull_testpool_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: >-
+      Llama-3.1-8B-Instruct reviews c208's Llama-3.2-3B-Instruct outputs on testpool_dev1000 (the re-split development set,
+      docs/plan/testpool_dev1000.md) under the frozen review prompt v2, one direction of the Llama-3.2-3B / Llama-3.1-8B
+      pair (weak-weak, high-headroom end); the other direction is c227. c027 with the reviewer's identity taken from its own solo condition c067, the development manifest
+      and the generator source changed; delivery, decoding, budget, capture and evidence contract are c027's.
+      Development only.
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: testpool_dev1000
+    manifest_rows: 1000
+    manifest_sha256: 52c6c79d0285f40d3ac711ad6331b8102d6cf138374a8fd93a5cdc6b3756971a
+    development_only: true
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c226_v1.json
+  generator_source:
+    condition_id: c208
+    artifact_path: /path/to/project/artifacts/20260929T030000Z__c208__mathfull-testpool_dev1000__r012_solo4096
+    pass1_run_id: 20260929T030000Z__c208__mathfull-testpool_dev1000__r012_solo4096__pass1__p01
+    model_id: meta-llama/Llama-3.2-3B-Instruct
+    reuse_records_byte_for_byte: true
+  model:
+    chat_template_hash: e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65
+    chat_template_kwargs:
+      date_string: 26 Jul 2024
+    identity_reused_from: null
+    model_id: meta-llama/Llama-3.1-8B-Instruct
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID alignment
+      between the served content trace and the same-forward capture, as for c029-c032, c054/c055 and c066; a mismatch
+      stops the run before its row is kept.
+    preflight_reuse_reason: null
+    provenance: conditions/c067/model_provenance.json
+    revision: 0e9e39f249a16976918f6564b8830bc894c89659
+    server_path: /path/to/scratch/authority-allocation/models/meta-llama--Llama-3.1-8B-Instruct/0e9e39f249a16976918f6564b8830bc894c89659
+    tokenizer_revision: 0e9e39f249a16976918f6564b8830bc894c89659
+    identity_reuse_reason: null
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c226
+  stages:
+    run: [reuse_c208_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]

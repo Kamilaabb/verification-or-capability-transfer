@@ -1,0 +1,7 @@
+System:
+Solve the mathematical problem provided by the user. Use mathematically sound reasoning and calculations to produce a complete solution.
+End with exactly one final answer in LaTeX boxed form: \boxed{...}.
+
+User template:
+Problem:
+{{problem}}

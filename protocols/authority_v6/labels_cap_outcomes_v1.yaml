@@ -1,0 +1,28 @@
+schema_version: training-label-contract-v1
+label_set_id: cap_outcomes_v1
+source: post_grading_counterfactual_record
+source_fields: [z0, z1, z2]
+target_order: [M0, M1, M2]
+target_field: cap_outcomes
+target_schema: schemas/controller_training_target_v1.json
+
+formula:
+  M0: z0
+  M1: z1
+  M2: z2
+
+rules:
+  fully_graded_binary_required: true
+  ties_preserved: true
+  unfixable_vector: {M0: 0, M1: 0, M2: 0}
+  all_correct_vector: {M0: 1, M1: 1, M2: 1}
+  minimal_oracle_action_is_training_label: false
+  oracle_actions_formula: caps_with_cap_outcome_equal_to_1
+  minimal_oracle_action_tie_break: lowest_authority_among_oracle_actions
+  group_splits_by: problem_id
+  evaluation_label_access_during_inference: forbidden
+
+recommended_model_interface:
+  outputs: [p_z0_correct, p_z1_correct, p_z2_correct]
+  primary_validation_metric: deployed_policy_value
+  decision_rule: highest_predicted_correctness_with_registered_lower_authority_tolerance

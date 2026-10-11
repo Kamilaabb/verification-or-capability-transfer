@@ -1,0 +1,30 @@
+schema_version: claim-card-v1
+id: H02
+written: '2026-10-04'
+story: 问题一
+statement_zh: 审阅能提高被审者的成绩：审阅后的准确率高于被审者自己独立作答。
+estimand: 每个审阅方向：Δ = acc(审阅后) − acc(被审者独立作答)，即 Δ_G。
+estimand_id: gv_minus_g
+expected_sign: positive
+stronger_side: higher development solo accuracy (all solo data where a domain has no split)
+splits:
+  math:
+  - dev
+  - test
+  knowledge:
+  - dev
+  - test
+  code:
+  - dev
+  nl_reasoning:
+  - dev
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 逐域报告平均 Δ 和 95% 区间。区间不含 0 且与预期同号 → 该域成立；不含 0 且反号 → 该域相反；含 0 → 该域看不出差别。结论按域写，四个域都成立才说普遍成立。看过哪些域只作透明记录。
+seen_when_written:
+  math: seen
+  knowledge: seen
+  code: seen
+  nl_reasoning: not seen (still running on 2026-10-04)
+result: null

@@ -1,0 +1,69 @@
+schema_version: feature-contract-v1
+feature_set_id: code_scalar_v1
+representation: scalar_categorical
+decision_time: after_v_report_before_action
+
+rules:
+  configured_g_sample_count: 1
+  controller_receives_raw_text: false
+  source_text_may_be_reduced_to_registered_scalars: true
+  token_trace_allowed_in_storage_only: true
+  gold_or_outcome_allowed: false
+  code_execution_allowed: false
+  static_ast_parsing_allowed: true
+  storage_schema: schemas_code_scalar_v1/controller_evidence_record_code_scalar_v1.json
+  exact_controller_payload_schema: schemas_code_scalar_v1/controller_input_payload_code_scalar_v1.json
+  missing_value: null
+  explicit_missing_flag_required: true
+  log_base: natural
+  logprobs_mode: raw_logprobs
+  token_span_rule: include_each_generated_token_with_nonempty_utf8_byte_overlap
+  format_repair_logprobs_eligible: false
+
+features:
+  - {name: v_verdict_correct, group: S0_self_report, type: binary_or_null, formula: one_hot(verdict_is_correct), missing_when: v_report_fallback}
+  - {name: v_verdict_incorrect, group: S0_self_report, type: binary_or_null, formula: one_hot(verdict_is_incorrect), missing_when: v_report_fallback}
+  - {name: v_verdict_uncertain, group: S0_self_report, type: binary_or_null, formula: one_hot(verdict_is_uncertain), missing_when: v_report_fallback}
+  - {name: v_request_keep, group: S0_self_report, type: binary, formula: one_hot(effective_registered_request_is_KEEP)}
+  - {name: v_request_revise, group: S0_self_report, type: binary, formula: one_hot(effective_registered_request_is_CRITIQUE_REVISE)}
+  - {name: v_request_override, group: S0_self_report, type: binary, formula: one_hot(effective_registered_request_is_OVERRIDE)}
+
+  - {name: g_output_mean_logprob, group: S1_confidence_and_difficulty, type: number_or_null, range: negative_or_zero, formula: arithmetic_mean(sampled_token_natural_logprob_over_all_nonempty_G_content_tokens), missing_when: token_trace_missing_invalid_or_content_not_exactly_alignable}
+  - {name: v_verdict_mean_logprob, group: S1_confidence_and_difficulty, type: number_or_null, range: negative_or_zero, formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_raw_JSON_verdict_value), missing_when: v_fallback_retry_span_missing_or_token_trace_invalid}
+  - {name: v_request_mean_logprob, group: S1_confidence_and_difficulty, type: number_or_null, range: negative_or_zero, formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_raw_JSON_requested_action_value), missing_when: v_fallback_retry_span_missing_or_token_trace_invalid}
+  - {name: v_candidate_answer_mean_logprob, group: S1_confidence_and_difficulty, type: number_or_null, range: negative_or_zero, formula: arithmetic_mean(sampled_token_natural_logprob_for_tokens_overlapping_complete_raw_JSON_candidate_answer_value), missing_when: v_fallback_retry_span_missing_or_token_trace_invalid}
+  - {name: problem_chars_log, group: S1_confidence_and_difficulty, type: number, range: nonnegative, formula: ln_1_plus_UTF8_decoded_problem_character_count}
+  - {name: g_code_lexemes_log, group: S1_confidence_and_difficulty, type: number, range: nonnegative, formula: ln_1_plus_registered_python_lexeme_count_in_last_fenced_block_else_whole_G_output}
+  - {name: critique_words_log, group: S1_confidence_and_difficulty, type: number_or_null, range: nonnegative, formula: ln_1_plus_ASCII_identifier_word_count_in_critique, missing_when: v_report_fallback}
+
+  - {name: gv_unique_call_names_log_abs_delta, group: S2_program_and_critique_content, type: number_or_null, range: nonnegative, formula: abs_ln_1_plus_unique_AST_call_names_G_minus_candidate, missing_when: v_report_fallback}
+  - {name: gv_control_flow_log_abs_delta, group: S2_program_and_critique_content, type: number_or_null, range: nonnegative, formula: abs_ln_1_plus_registered_control_flow_node_count_G_minus_candidate, missing_when: v_report_fallback}
+  - {name: gv_literals_log_abs_delta, group: S2_program_and_critique_content, type: number_or_null, range: nonnegative, formula: abs_ln_1_plus_AST_constant_count_G_minus_candidate, missing_when: v_report_fallback}
+  - {name: critique_category_interface, group: S2_program_and_critique_content, type: binary_or_null, formula: registered_case_insensitive_phrase_match_for_interface_contract, missing_when: v_report_fallback}
+  - {name: critique_category_edge_case, group: S2_program_and_critique_content, type: binary_or_null, formula: registered_case_insensitive_phrase_match_for_edge_cases, missing_when: v_report_fallback}
+  - {name: critique_category_api_library, group: S2_program_and_critique_content, type: binary_or_null, formula: registered_case_insensitive_phrase_match_for_API_or_library_use, missing_when: v_report_fallback}
+  - {name: critique_category_logic_algorithm, group: S2_program_and_critique_content, type: binary_or_null, formula: registered_case_insensitive_phrase_match_for_logic_or_algorithm, missing_when: v_report_fallback}
+  - {name: critique_category_robustness, group: S2_program_and_critique_content, type: binary_or_null, formula: registered_case_insensitive_phrase_match_for_validation_or_exception_robustness, missing_when: v_report_fallback}
+
+static_program_rule:
+  extraction: last fenced block if one exists, otherwise the whole field
+  parsing: Python ast.parse without execution
+  control_flow_nodes: [If, For, AsyncFor, While, Try, With, AsyncWith, Match, comprehension]
+  call_name: Name.id or Attribute.attr
+  lexeme_regex: "[A-Za-z_]\\w*|numbers|python_operators|python_delimiters"
+
+critique_taxonomy:
+  interface: [signature, parameter, argument, return, entry point, format, function name, type hint]
+  edge_case: [edge case, empty, boundary, zero, negative, duplicate, none, null, missing, single element]
+  api_library: [api, library, import, module, method, function call, attribute, package]
+  logic_algorithm: [logic, algorithm, condition, incorrect, wrong, calculation, index, iteration, loop, order]
+  robustness: [exception, error handling, try, except, validation, invalid input]
+  matching: lowercase substring; multiple categories may be one simultaneously
+  excluded_after_coverage_probe: performance category occurred on 1.8 percent of development rows, below the pre-freeze 5 percent coverage floor
+
+registered_cumulative_ablations:
+  S0_self_report: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override]
+  S1_confidence_and_difficulty: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, g_output_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_answer_mean_logprob, problem_chars_log, g_code_lexemes_log, critique_words_log]
+  S2_program_and_critique_content: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, g_output_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_answer_mean_logprob, problem_chars_log, g_code_lexemes_log, critique_words_log, gv_unique_call_names_log_abs_delta, gv_control_flow_log_abs_delta, gv_literals_log_abs_delta, critique_category_interface, critique_category_edge_case, critique_category_api_library, critique_category_logic_algorithm, critique_category_robustness]
+
+prohibited_controller_fields: [problem_text, raw_model_output, raw_critique, raw_candidate_answer, token_trace, problem_id, run_metadata, gold, reference_answer, grader_output, u0, u1, u2, z0, z1, z2, cap_outcomes, oracle_actions, minimal_oracle_action, y1_or_other_post_action_information]

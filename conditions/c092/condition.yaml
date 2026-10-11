@@ -1,0 +1,36 @@
+schema_version: condition-overlay-v1
+condition_id: c092
+status: registered_pending_run
+extends: conditions/c026/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c092
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_pass1_mathfull_test1500_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Confirmatory test run (docs/plan/test_qwen3_8b_mistral24b.md): c026 on the first 1,500
+      rows of the sealed mathfull test manifest, nothing else changed. Qwen3-8B alone under the
+      frozen solve prompt v2, greedy, thinking off, 4096 tokens.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: 822250f0e685ed6dfc203d6e38beb871397130f26d271c5e4430f1382c60ae22
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c092_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c092

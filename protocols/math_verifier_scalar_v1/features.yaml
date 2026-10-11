@@ -1,0 +1,69 @@
+schema_version: feature-contract-v1
+feature_set_id: math_verifier_scalar_v1
+representation: scalar_categorical
+decision_time: after_v_report_before_any_action_or_grading
+feature_count: 29
+
+rules:
+  source_g_condition: c017
+  raw_text_allowed_in_scalar_payload: false
+  token_trace_allowed_in_storage_only: true
+  gold_or_outcome_allowed: false
+  missing_value: null
+  explicit_missing_flag_required: true
+  log_base: natural
+  token_span_rule: include_each_generated_token_with_nonempty_utf8_byte_overlap
+  math_parser: math_expression_spans_v1
+  report_parse_rule: ordered_section_headers_whitespace_deviations_tolerated_end_marker_optional_when_next_header_or_end_of_output_delimits
+  location_rule: any_verdict_quote_then_exact_then_whitespace_removed_overlapping_counts
+  location_token_features_rule: populated_only_for_unique_exact_match
+  verdict_confidence_rule: selected_class_only_unselected_classes_are_null
+  max_logit_definition: raw_pre_softmax_full_vocabulary_maximum_not_a_log_transform
+
+features:
+  - {name: v_verdict_correct, type: binary_or_null}
+  - {name: v_verdict_incorrect, type: binary_or_null}
+  - {name: v_verdict_uncertain, type: binary_or_null}
+  - {name: v_action_keep, type: binary_or_null}
+  - {name: v_action_critique_refine, type: binary_or_null}
+  - {name: v_candidate_answer_parseable, type: binary_or_null}
+  - {name: gv_final_answer_equivalent, type: boolean_or_null}
+  - {name: v_verdict_correct_mean_logprob, type: number_or_null}
+  - {name: v_verdict_incorrect_mean_logprob, type: number_or_null}
+  - {name: v_verdict_uncertain_mean_logprob, type: number_or_null}
+  - {name: v_action_mean_logprob, type: number_or_null}
+  - {name: v_math_expression_mean_logprob, type: number_or_null}
+  - {name: v_critique_token_length_log, type: number_or_null, formula: ln(1+token_count)}
+  - {name: v_verdict_correct_mean_max_logit, type: number_or_null}
+  - {name: v_verdict_incorrect_mean_max_logit, type: number_or_null}
+  - {name: v_verdict_uncertain_mean_max_logit, type: number_or_null}
+  - {name: v_action_mean_max_logit, type: number_or_null}
+  - {name: v_math_expression_mean_max_logit, type: number_or_null}
+  - {name: v_error_location_exact, type: binary_or_null}
+  - {name: v_error_location_given, type: binary_or_null}
+  - {name: v_error_location_whitespace_match, type: binary_or_null}
+  - {name: v_error_location_not_found, type: binary_or_null}
+  - {name: v_error_location_ambiguous, type: binary_or_null}
+  - {name: v_error_location_mean_logprob, type: number_or_null}
+  - {name: v_error_location_mean_max_logit, type: number_or_null}
+  - {name: g_error_location_mean_logprob, type: number_or_null}
+  - {name: g_error_location_mean_max_logit, type: number_or_null}
+  - {name: v_output_mean_logprob, type: number_or_null}
+  - {name: v_output_mean_max_logit, type: number_or_null}
+
+notes:
+  gv_final_answer_equivalent: This is the single registered form of G/V mathematical answer equivalence.
+  verdict_slots: Exactly one class-specific logprob and max-logit slot is populated for a parsed report.
+  action_confidence: Mean over the emitted KEEP or CRITIQUE_REFINE value tokens.
+  v_math_expression_confidence: Mean over every token overlapping any parsed math span in the complete V output.
+  location_block: >-
+    Applies to every parsed report whatever its verdict. v_error_location_given is 1
+    when V quoted a location and 0 when it wrote NONE or left the field empty. When 1,
+    exactly one of exact, whitespace_match, not_found, ambiguous is 1, decided in that
+    order: a unique exact occurrence in G is exact; two or more exact occurrences are
+    ambiguous; otherwise all whitespace is removed from both texts and one occurrence
+    is whitespace_match, two or more ambiguous, none not_found. Occurrences are counted
+    including overlaps. When 0, all four are 0. All five are null on report fallback.
+  localization_confidence: >-
+    V and G token-level location features are populated only for exact, under any
+    verdict. A whitespace_match hit is counted but yields no span.

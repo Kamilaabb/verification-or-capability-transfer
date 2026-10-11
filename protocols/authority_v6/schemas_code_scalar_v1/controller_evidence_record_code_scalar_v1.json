@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_evidence_record_code_scalar_v1.json",
+  "title": "Authority v6 code_scalar_v1 evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_g_run_id", "source_v_run_id", "condition_id", "condition_hash", "replicate_id", "stage", "cell_id", "problem_id", "feature_set_id", "feature_contract_sha256", "features", "missingness", "evidence_sha256", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "controller-evidence-code-scalar-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_g_run_id": {"type": "string", "minLength": 1},
+    "source_v_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c008"},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_id": {"const": "e01"},
+    "stage": {"const": "gate2"},
+    "cell_id": {"const": "V-A"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "feature_set_id": {"const": "code_scalar_v1"},
+    "feature_contract_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "features": {"$ref": "#/$defs/features"},
+    "missingness": {"$ref": "#/$defs/missingness"},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "binary_or_null": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "binary": {"type": "integer", "enum": [0, 1]},
+    "nonnegative": {"type": "number", "minimum": 0},
+    "nonnegative_or_null": {"type": ["number", "null"], "minimum": 0},
+    "logprob_or_null": {"type": ["number", "null"], "maximum": 0},
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["v_verdict_correct", "v_verdict_incorrect", "v_verdict_uncertain", "v_request_keep", "v_request_revise", "v_request_override", "g_output_mean_logprob", "v_verdict_mean_logprob", "v_request_mean_logprob", "v_candidate_answer_mean_logprob", "problem_chars_log", "g_code_lexemes_log", "critique_words_log", "gv_unique_call_names_log_abs_delta", "gv_control_flow_log_abs_delta", "gv_literals_log_abs_delta", "critique_category_interface", "critique_category_edge_case", "critique_category_api_library", "critique_category_logic_algorithm", "critique_category_robustness"],
+      "properties": {
+        "v_verdict_correct": {"$ref": "#/$defs/binary_or_null"},
+        "v_verdict_incorrect": {"$ref": "#/$defs/binary_or_null"},
+        "v_verdict_uncertain": {"$ref": "#/$defs/binary_or_null"},
+        "v_request_keep": {"$ref": "#/$defs/binary"},
+        "v_request_revise": {"$ref": "#/$defs/binary"},
+        "v_request_override": {"$ref": "#/$defs/binary"},
+        "g_output_mean_logprob": {"$ref": "#/$defs/logprob_or_null"},
+        "v_verdict_mean_logprob": {"$ref": "#/$defs/logprob_or_null"},
+        "v_request_mean_logprob": {"$ref": "#/$defs/logprob_or_null"},
+        "v_candidate_answer_mean_logprob": {"$ref": "#/$defs/logprob_or_null"},
+        "problem_chars_log": {"$ref": "#/$defs/nonnegative"},
+        "g_code_lexemes_log": {"$ref": "#/$defs/nonnegative"},
+        "critique_words_log": {"$ref": "#/$defs/nonnegative_or_null"},
+        "gv_unique_call_names_log_abs_delta": {"$ref": "#/$defs/nonnegative_or_null"},
+        "gv_control_flow_log_abs_delta": {"$ref": "#/$defs/nonnegative_or_null"},
+        "gv_literals_log_abs_delta": {"$ref": "#/$defs/nonnegative_or_null"},
+        "critique_category_interface": {"$ref": "#/$defs/binary_or_null"},
+        "critique_category_edge_case": {"$ref": "#/$defs/binary_or_null"},
+        "critique_category_api_library": {"$ref": "#/$defs/binary_or_null"},
+        "critique_category_logic_algorithm": {"$ref": "#/$defs/binary_or_null"},
+        "critique_category_robustness": {"$ref": "#/$defs/binary_or_null"}
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["v_verdict_correct", "v_verdict_incorrect", "v_verdict_uncertain", "v_request_keep", "v_request_revise", "v_request_override", "g_output_mean_logprob", "v_verdict_mean_logprob", "v_request_mean_logprob", "v_candidate_answer_mean_logprob", "problem_chars_log", "g_code_lexemes_log", "critique_words_log", "gv_unique_call_names_log_abs_delta", "gv_control_flow_log_abs_delta", "gv_literals_log_abs_delta", "critique_category_interface", "critique_category_edge_case", "critique_category_api_library", "critique_category_logic_algorithm", "critique_category_robustness"],
+      "properties": {
+        "v_verdict_correct": {"type": "boolean"}, "v_verdict_incorrect": {"type": "boolean"}, "v_verdict_uncertain": {"type": "boolean"},
+        "v_request_keep": {"type": "boolean"}, "v_request_revise": {"type": "boolean"}, "v_request_override": {"type": "boolean"},
+        "g_output_mean_logprob": {"type": "boolean"}, "v_verdict_mean_logprob": {"type": "boolean"}, "v_request_mean_logprob": {"type": "boolean"}, "v_candidate_answer_mean_logprob": {"type": "boolean"},
+        "problem_chars_log": {"type": "boolean"}, "g_code_lexemes_log": {"type": "boolean"}, "critique_words_log": {"type": "boolean"},
+        "gv_unique_call_names_log_abs_delta": {"type": "boolean"}, "gv_control_flow_log_abs_delta": {"type": "boolean"}, "gv_literals_log_abs_delta": {"type": "boolean"},
+        "critique_category_interface": {"type": "boolean"}, "critique_category_edge_case": {"type": "boolean"}, "critique_category_api_library": {"type": "boolean"}, "critique_category_logic_algorithm": {"type": "boolean"}, "critique_category_robustness": {"type": "boolean"}
+      }
+    }
+  }
+}

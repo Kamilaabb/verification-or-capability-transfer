@@ -1,0 +1,47 @@
+schema_version: condition-overlay-v1
+condition_id: c160
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c160
+  status: registered_pending_run
+  purpose: qwen3_32b_reviewer_of_c031_mathfull_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: >-
+      Qwen3-32B reviews c031's Qwen2.5-7B-Instruct outputs on mathfull dev1000 under the frozen review
+      prompt v2, one direction of the Qwen2.5-7B / Qwen3-32B pair (docs/plan/test_pair_baselines.md,
+      the strong-middle stratum, low-headroom end); the other direction is c161. c027 with the reviewer's identity taken from its own solo condition c055 and the
+      generator source changed; delivery, decoding, budget, capture and evidence contract are
+      c027's. Development only.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c160_v1.json
+  generator_source:
+    condition_id: c031
+    artifact_path: /path/to/project/artifacts/20260926T060236Z__c031__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260926T060236Z__c031__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen2.5-7B-Instruct
+    reuse_records_byte_for_byte: true
+  model:
+    identity_reused_from: null
+    model_id: Qwen/Qwen3-32B
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID alignment
+      between the served content trace and the same-forward capture, as for c029-c032; a mismatch stops the run before
+      its row is kept.
+    preflight_reuse_reason: null
+    provenance: conditions/c055/model_provenance.json
+    revision: 9216db5781bf21249d130ec9da846c4624c16137
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-32B/9216db5781bf21249d130ec9da846c4624c16137
+    tokenizer_revision: 9216db5781bf21249d130ec9da846c4624c16137
+    identity_reuse_reason: null
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c160
+  stages:
+    run: [reuse_c031_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]

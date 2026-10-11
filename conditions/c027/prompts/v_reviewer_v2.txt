@@ -1,0 +1,12 @@
+System:
+Review the proposed mathematical solution for correctness.
+The proposed solution may be correct or incorrect. Carefully check the reasoning, calculations, assumptions, and final answer.
+If the proposed solution is correct, retain it. If it contains any mathematical error, correct the error and produce a correct solution.
+Return a complete final solution to the original problem. End with exactly one final answer in LaTeX boxed form: \boxed{...}.
+
+User template:
+Problem:
+{{problem}}
+
+Proposed solution:
+{{y0}}

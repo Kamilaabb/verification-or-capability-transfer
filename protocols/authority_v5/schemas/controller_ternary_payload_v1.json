@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_ternary_payload_v1.json",
+  "title": "Ternary Controller output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["authority_cap"],
+  "properties": {
+    "authority_cap": {"type": "string", "enum": ["M0", "M1", "M2"]}
+  }
+}

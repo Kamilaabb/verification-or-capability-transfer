@@ -1,0 +1,46 @@
+schema_version: ungradeable-gold-v1
+dataset_id: mathfull-r465bcdb-l3to5-s20260924
+registered_on: 2026-09-25
+
+rule: >-
+  A problem whose reference answer the registered grader parses to a non-finite value
+  (sympy zoo or nan) cannot be graded: comparing any prediction to it raises. Such a
+  problem is excluded from the accuracy of every system (G alone, V alone, GV, any
+  selector) and listed separately. The rule looks at the reference answer only, never at
+  a model output.
+
+not_covered_by_this_rule:
+  - >-
+    A model output the grader cannot parse is graded wrong (model_invalid) and stays in
+    the denominator.
+  - >-
+    A grader_error on a problem not listed below means a model output broke the
+    comparison. It is not excluded and not scored; analysis stops for inspection.
+
+how_found: >-
+  c022 and c023 on dev1000 both stopped at analysis with one grader_error, on the same
+  problem. Its reference answer "05\!:\!00" parses to zoo (the colon read as division,
+  5/0). The manifest builder's gold audit accepted it because zoo is a successful parse.
+  After that, every reference answer in dev_order and test was scanned with
+  run_c002_dev30.math_parse_gold for a zoo or nan token. This file is kept apart from
+  dataset.yaml so that the conditions referencing dataset.yaml keep their hash.
+
+scan:
+  parser: run_c002_dev30.math_parse_gold
+  predicate: the parsed string contains the token zoo or nan
+  dev_order_rows: 5575
+  dev_order_hits: 1
+  test_rows: 3298
+  test_hits: 0
+
+ungradeable:
+  - problem_id: train/prealgebra/281.json
+    pool: development
+    in_dev1000: true
+    reference_answer: '05\!:\!00'
+    parsed_as: zoo
+
+known_grader_limitation_not_excluded: >-
+  Colons are parsed as division. Ratios ("1:4" -> 1/4) are graded as intended; clock
+  times are mis-parsed ("8\!:\!34 p.m." -> 4/17) but finite, so a prediction written the
+  same way still matches. Such rows stay in and are not excluded by this rule.

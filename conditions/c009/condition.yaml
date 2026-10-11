@@ -1,0 +1,175 @@
+schema_version: condition-v1
+condition_id: c009
+status: frozen_validated_gate0_gate1_stopped
+purpose: gate_0_measure_seed_coder_against_the_frozen_qwen3_verifier
+path_base: repository_root
+
+gate:
+  id: gate_0
+  runs_stages: [generate, verify, grade, analyze]
+  skips_stages: [rewrite, controller_evidence, controller]
+  skips_stages_because: >-
+    Gate 0 measures the deployed capability match, over-correction and error
+    complementarity of the cross-family G/V pair. Rewrite and Controller behavior are
+    downstream questions and cannot change this screen.
+  measures:
+    - acc_G = mean(u0)
+    - mean(u2)
+    - (u0, u2) cross table and error complementarity
+    - KEEP / CRITIQUE_REVISE / OVERRIDE distribution
+    - P(request != KEEP | u0 = 1)
+    - P(request != KEEP | u0 = 0)
+  incumbent_reference:
+    condition_id: c006
+    acc_G: 0.350
+    mean_u2: 0.398
+    error_complementarity: 0.100
+    over_correction_rate: 0.438
+  decision_criteria: >-
+    Continue to Gate 1 if Seed-Coder remains capability-matched (acc_G between 0.35
+    and 0.50), P(request != KEEP | u0 = 1) is at least 0.15, and deployed u0/u2 error
+    complementarity exceeds c006's 0.100. The 200-row engineering probe's 0.186
+    complementarity against archived u2 is a candidate-screening proxy, not the Gate 0
+    target and not a result for this condition.
+  primary_hypothesis_under_test: >-
+    Replacing the same-family Qwen2.5-Coder generator with Seed-Coder increases
+    generator/verifier error complementarity without introducing a capability mismatch.
+
+protocol:
+  id: authority_v6
+  path: protocols/authority_v6/README.md
+  grader_contract: protocols/authority_v6/grader_bigcodebench_v1.yaml
+  record_schemas:
+    generator: protocols/authority_v6/schemas/g_record_single_v3.json
+    verifier: protocols/authority_v6/schemas/v_record_v3.json
+    grade: protocols/authority_v6/schemas/code_grade_record_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: bigcodebench-b74c0d0-instruct-s20260917
+  path: datasets/bigcodebench-b74c0d0-instruct-s20260917/dataset.yaml
+  manifest: gate0
+  manifest_rows: 300
+  manifest_sha256: 8e51cb5dc58bd0a5bc418618729e1964f2a5f492428adaf5e8a1cd347e99064e
+  test_manifest_stays_unread: true
+
+generator:
+  role_id: G
+  kind: llm
+  model_id: ByteDance-Seed/Seed-Coder-8B-Instruct
+  revision: 1c5af72afa21c22c9272a0b60a3a404195e88fcd
+  server_path: /path/to/scratch/authority-allocation/models/ByteDance-Seed--Seed-Coder-8B-Instruct/1c5af72afa21c22c9272a0b60a3a404195e88fcd
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: 3e5e10cb59dfb7b896283a11e7e10e349cac5e790883dfbcd3cd36244b37ccbe
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  thinking: false
+  service_smoke_job: 65101965
+  capability_probe_job: 65101965
+  capability_probe_scope: first_200_gate0_rows_engineering_only
+  prompt_initial: conditions/c005/prompts/g_initial_v1.txt
+  prompt_initial_provenance: byte_identical_to_c005_c006_c007
+  initial_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    y0_selection: sample_index_0_unconditionally
+    output_logprobs:
+      enabled: true
+      mode: raw_logprobs
+      sampled_token_logprob: true
+      top_logprobs: 0
+      return_token_ids: true
+      require_exact_content_alignment: true
+      verified_again_at_registered_job_start: true
+
+verifiers:
+  - cell_id: V-A
+    kind: llm
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    backend: vllm_openai
+    backend_version: 0.29.0
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+    chat_template_hash_basis: tokenizer_config.chat_template_utf8
+    thinking: true
+    reasoning_parser: qwen3
+    prompt: conditions/c005/prompts/v_report_v1.txt
+    prompt_provenance: byte_identical_to_c006_c007
+    structured_outputs_backend: guidance
+    decoding:
+      samples: 1
+      temperature: 0.6
+      top_p: 0.95
+      top_k: 20
+      min_p: 0.0
+      max_new_tokens: 8192
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+      output_logprobs:
+        enabled: true
+        mode: raw_logprobs
+        sampled_token_logprob: true
+        top_logprobs: 0
+        return_token_ids: true
+        require_exact_content_alignment: true
+        format_repair_features_missing: true
+
+replicates:
+  plan_id: r004
+  path: replicates/r004.yaml
+  paired_with_c006: >-
+    Reusing r004 preserves the verifier call-seed derivation for a paired condition
+    comparison. The model change belongs to the condition, not to a new replicate.
+
+reuse_policy:
+  reuse_g_outputs: false
+  reuse_v_reports_and_token_traces: false
+  rerun_from: generate
+  reason: the generator model changes, so every downstream artifact changes
+
+stages:
+  gate0:
+    dataset_manifest: gate0
+    registered_role: development_screen
+    may_tune_condition: true
+    may_support_confirmatory_claims: false
+
+preferred_runtime:
+  partition: gpu-h100
+  gpus: 1
+  minimum_single_gpu_vram_gb: 40
+  max_model_len: 32768
+  grading_runs_on_cpu_partition: true
+  grading_memory_minimum_gb: 48
+
+successor_plan:
+  gate1_condition_id: c010
+  create_only_after: c009_is_validated_and_decision_criteria_pass
+  gate1_reuses: [first_300_g_outputs, first_300_v_reports_and_token_traces]
+  gate1_reruns_from: generate_for_rows_301_to_832
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [resolved_behavioral_condition_fields, referenced_prompt_bytes, protocol_component_hashes, immutable_model_revisions, chat_template_hashes, logprob_capture_mode]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id, timestamps, run_id]
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true

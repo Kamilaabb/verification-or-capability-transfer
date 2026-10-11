@@ -1,0 +1,141 @@
+schema_version: condition-v1
+condition_id: c020
+status: validated_development_diagnostic
+purpose: c018_evidence_rederived_with_parsed_text_answer_equivalence
+path_base: repository_root
+
+protocol:
+  id: math_verifier_scalar_v1
+  path: protocols/math_verifier_scalar_v1/README.md
+  feature_contract: protocols/math_verifier_scalar_v1/features.yaml
+  record_schemas:
+    generator_source: protocols/authority_v6/schemas/g_record_single_v3.json
+    generator_native_logit_source: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+    verifier_source: protocols/math_verifier_scalar_v1/schemas/v_record_v1.json
+    verifier_native_logit: protocols/math_verifier_scalar_v1/schemas/native_logit_trace_record_v1.json
+    scalar_evidence: protocols/math_verifier_scalar_v1/schemas/evidence_record_c020_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: math500-r6e4ed1-l3to5-dev300-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-dev300-s20260910/dataset.yaml
+  manifest: pilot300
+  manifest_rows: 300
+  manifest_sha256: 82b81514679262eac8c3e970a774ab083d769df1c38b0f43a470ef7927c90971
+  development_only: true
+
+generator_source:
+  condition_id: c017
+  analysis_run_id: 20260922T193921Z__c017__pilot300__r009_mathscalars__analysis__r009
+  artifact_path: /path/to/project/artifacts/20260922T193921Z__c017__pilot300__r009_mathscalars
+  pass1_run_id: 20260922T193921Z__c017__pilot300__r009_mathscalars__pass1__p01
+  native_logit_run_id: 20260922T193921Z__c017__pilot300__r009_mathscalars__same-forward-logits__p01
+  model_id: Qwen/Qwen3-4B
+  revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  thinking: false
+  temperature: 0.0
+  y0_selection: sample_index_0_unconditionally
+  reuse_records_byte_for_byte: true
+
+verifier_source:
+  condition_id: c018
+  artifact_path: /path/to/project/artifacts/20260923T192748Z__c018__pilot300__r010_vscalars
+  verify_run_id: 20260923T192748Z__c018__pilot300__r010_vscalars__verify__v01
+  native_logit_run_id: 20260923T192748Z__c018__pilot300__r010_vscalars__v-same-forward-logits__v01
+  evidence_run_id: 20260923T192748Z__c018__pilot300__r010_vscalars__evidence__e01
+  reuse_records_byte_for_byte: true
+
+verifier:
+  role_id: V
+  model_id: Qwen/Qwen3-8B
+  revision: b968826d9c46dd6066d109eabc6255188de91218
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  thinking: false
+  prompt: conditions/c018/prompts/v_report_v1.txt
+  output_format: tagged_text_v1
+  decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    min_p: 0.0
+    max_new_tokens: 4096
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    constrained_schema: null
+    format_repair: disabled
+    output_logprobs:
+      enabled: true
+      mode: raw_logprobs
+      sampled_token_logprob: true
+      top_logprobs: 0
+      return_token_ids: true
+      require_exact_content_alignment: true
+  native_logit_capture:
+    backend: vllm_same_forward_logits_processor_v1
+    per_token_fields: [sampled_raw_logit, sampled_logprob, max_raw_logit,
+      logsumexp, entropy, top1_top2_margin, top20_token_ids, top20_raw_logits]
+    top_k_persisted: 20
+    full_vocabulary_logits_persisted: false
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_must_equal_top1_tolerance: 0.000001
+
+features:
+  contract: protocols/math_verifier_scalar_v1/features.yaml
+  count: 29
+  evidence_written_before_any_grading: true
+
+replicates:
+  plan_id: r010
+  path: replicates/r010.yaml
+  replicate_id: v01
+  base_seed: 20260923
+  seed_cell_id: c018-v
+
+stages:
+  run: [reuse_c017_g, reuse_c018_v_and_native_logits, scalar_evidence, analyze,
+    compare_with_c018_evidence]
+  skip: [generate_g, verify, grade, rewrite, controller_training]
+
+rederivation:
+  reason: >-
+    c018 computed gv_final_answer_equivalent from G's stored extracted_answer, the
+    sympy string of an already-parsed answer, which does not re-parse; 20 rows where
+    G and V agree were left null. See docs/analysis/c018_report_format.md.
+  code_fix_commit: 430d65c
+  expected_changed_features: [gv_final_answer_equivalent]
+  every_other_evidence_field_must_equal_c018: true
+  models_called: none
+
+analysis:
+  confirmatory_claims: forbidden
+  required_metrics: [report_parse_rate, verdict_distribution, action_distribution,
+    answer_parseability, gv_equivalence, localization_rate, scalar_missingness,
+    scalar_summaries, output_tokens]
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [behavioral_condition_fields, referenced_file_bytes, immutable_model_revision,
+    source_run_ids, chat_template_hash, logprob_capture_mode, math_expression_parser,
+    localization_rule]
+  exclude: [status, purpose, node, gpu_uuid, slurm_job_id, timestamps, run_id]
+
+change_policy:
+  completed_runs_are_immutable: true
+  model_prompt_temperature_feature_parser_or_algorithm_change_creates_new_condition: true
+  seed_change_creates_new_replicate: true
+
+runnable_gate:
+  required_before_submission:
+    - c017 and c018 source artifact checksums pass, with 300 rows in each reused record file
+    - evidence compares G and V from parsed text (base.answer_text, commit 430d65c or later)
+    - local parser and record-schema tests pass

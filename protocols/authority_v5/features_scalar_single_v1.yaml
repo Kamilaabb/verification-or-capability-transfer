@@ -1,0 +1,94 @@
+schema_version: feature-contract-v1
+feature_set_id: scalar_single_v1
+representation: scalar_categorical
+decision_time: after_v_report_before_action
+
+rules:
+  configured_g_sample_count: 1
+  raw_text_allowed: false
+  gold_or_outcome_allowed: false
+  storage_schema: schemas/controller_evidence_record_single_v1.json
+  exact_controller_payload_schema: schemas/controller_input_payload_single_v1.json
+  missing_value: null
+  explicit_missing_flag_required: true
+
+features:
+  - name: g_answer_extractable
+    group: G
+    type: binary
+    formula: one_hot(y0_has_a_valid_extracted_mathematical_answer)
+
+  - name: v_verdict_correct
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_correct)
+    missing_when: v_report_fallback
+
+  - name: v_verdict_incorrect
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_incorrect)
+    missing_when: v_report_fallback
+
+  - name: v_verdict_uncertain
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_uncertain)
+    missing_when: v_report_fallback
+
+  - name: v_request_keep
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_KEEP)
+
+  - name: v_request_revise
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_CRITIQUE_REVISE)
+
+  - name: v_request_override
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_OVERRIDE)
+
+  - name: v_candidate_extractable
+    group: V
+    type: binary_or_null
+    formula: one_hot(candidate_answer_has_a_valid_extracted_mathematical_answer)
+    missing_when: v_report_fallback
+
+  - name: gv_final_answer_equivalent
+    group: GV
+    type: boolean_or_null
+    formula: mathematical_equivalence(extract(y0), extract(candidate_answer))
+    missing_when: either_answer_unextractable_or_v_report_fallback
+
+prohibited_fields:
+  - problem_text
+  - raw_model_output
+  - gold
+  - reference_answer
+  - grader_output
+  - u0
+  - u1
+  - u2
+  - z0
+  - z1
+  - z2
+  - oracle_label
+  - best_cap_label
+  - y1_or_other_post_action_information
+
+ablation_groups:
+  G_only:
+    - g_answer_extractable
+  V_only:
+    - v_verdict_correct
+    - v_verdict_incorrect
+    - v_verdict_uncertain
+    - v_request_keep
+    - v_request_revise
+    - v_request_override
+    - v_candidate_extractable
+  GV_added:
+    - gv_final_answer_equivalent

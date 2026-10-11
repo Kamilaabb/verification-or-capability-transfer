@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "math_verifier_record_v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_g_run_id",
+    "condition_id", "condition_hash", "replicate_id", "stage", "cell_id",
+    "problem_id", "verifier", "call_seed", "raw_output", "reasoning_content",
+    "token_logprobs", "v_report", "report_parse_status", "registered_action",
+    "field_spans", "usage", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "math-verifier-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_g_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c018"},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_id": {"type": "string", "minLength": 1},
+    "stage": {"const": "pilot300"},
+    "cell_id": {"const": "V"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "verifier": {"type": "object"},
+    "call_seed": {"type": "integer", "minimum": 0},
+    "raw_output": {"type": "string"},
+    "reasoning_content": {"type": ["string", "null"]},
+    "token_logprobs": {"$ref": "../../authority_v6/schemas/generated_token_trace_v1.json"},
+    "v_report": {"anyOf": [{"$ref": "v_report_payload_v1.json"}, {"type": "null"}]},
+    "report_parse_status": {"type": "string", "enum": ["ok", "fallback"]},
+    "registered_action": {"type": "string", "enum": ["KEEP", "CRITIQUE_REFINE"]},
+    "field_spans": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "verdict": {"$ref": "#/$defs/span"},
+        "action": {"$ref": "#/$defs/span"},
+        "error_location": {"$ref": "#/$defs/span"},
+        "critique": {"$ref": "#/$defs/span"},
+        "corrected_content": {"$ref": "#/$defs/span"},
+        "final_answer": {"$ref": "#/$defs/span"}
+      }
+    },
+    "usage": {"$ref": "#/$defs/usage"},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "span": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": {"type": "integer", "minimum": 0}
+    },
+    "usage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_tokens", "reasoning_tokens", "output_tokens", "latency_ms", "finish_reason", "retries"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "reasoning_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]},
+        "retries": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

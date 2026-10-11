@@ -1,0 +1,33 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r007
+status: router_v1_math_dev300
+
+pass1:
+  deterministic_decoding_expected: true
+  replicates:
+    - {replicate_id: p01, base_seed: 20260910}
+
+pass2:
+  deterministic_decoding_expected: true
+  replicates:
+    - {replicate_id: s01, base_seed: 20260910}
+
+router_training:
+  split_seed: 2026092101
+  model_seeds: [2026092102, 2026092103, 2026092104, 2026092105, 2026092106]
+  group_by: problem_id
+  outer_folds: 5
+  select_best_seed: forbidden
+
+analysis:
+  bootstrap_seed: 20260921
+  bootstrap_repetitions: 10000
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields: [replicate_plan_id, scope, replicate_id, base_seed, cell_id, problem_id, sample_index]
+  same_seed_on_format_retry: true
+  base_seed_shared_with_r003_because: >-
+    The math dev300 membership and order are unchanged, so keeping 20260910 keeps the
+    per-row call seeds comparable with c003 for anyone who wants to look. The model
+    differs, so this is a convenience, not a pairing claim.

@@ -1,0 +1,208 @@
+schema_version: dataset-v1
+dataset_id: mathfull-r465bcdb-l3to5-s20260924
+status: frozen_on_server
+registered_on: 2026-09-24
+purpose: >-
+  Scale-up for docs/plan/gv_vs_max_g_v_study.md. Math dev300 (MATH-500 levels 3-5) stays the
+  exploratory pilot; this identity supplies a development pool large enough to fit and
+  freeze a selector, including tree models, and a sealed test large enough to resolve
+  differences of one to two accuracy points between GV, max(G, V) and the selector.
+
+source:
+  provider: huggingface
+  name: nlile/hendrycks-MATH-benchmark
+  revision: 465bcdb36f5962aa3512891498966df785fc3c18
+  splits_used: [train]
+  total_rows: 12000
+  composition: >-
+    The PRM800K split of Hendrycks MATH. The 12,000-row train split holds the 7,500
+    original training problems (unique_id "train/...") and the 4,500 original test
+    problems that are not in MATH-500 (unique_id "test/..."). Its 500-row test split is
+    exactly MATH-500 and is not used here.
+  verified_by_builder:
+    - the source's 500-row test split equals MATH-500 (HuggingFaceH4/MATH-500 @ 6e4ed1a) by unique_id and by problem text
+    - no train row shares a unique_id with MATH-500
+  consequence: >-
+    Nothing in this identity overlaps dev30, pilot300/dev300 or unused37, all of which are
+    MATH-500 rows.
+  license_note: the source card declares no license; the upstream MATH dataset is MIT.
+
+selection:
+  level_field: level
+  allowed_levels: [3, 4, 5]
+  level_rationale: same levels as the math dev300 pilot, so the pilot's findings carry over
+  pools:
+    test: original MATH test problems not in MATH-500 (unique_id prefix "test/")
+    development: original MATH training problems (unique_id prefix "train/")
+  pools_rationale: >-
+    Splitting along MATH's own train/test boundary gives the sealed test every available
+    original-test problem, which maximises its power, while development can grow from
+    the much larger training pool without ever touching test.
+  exclusions_decided_from_source_only: true
+  exclusion_rules:
+    duplicate_unique_id: an id that occurs more than once; every copy is dropped
+    duplicate_problem_text: >-
+      exact problem text that occurs more than once across all 12,500 problems, MATH-500
+      included; every copy is dropped (none found)
+    empty_answer: no reference answer
+    gold_unparseable: >-
+      run_c002_dev30.math_parse_gold cannot parse the reference answer, so no output
+      could be graded by the registered grader
+  excluded:
+    duplicate_unique_id: ["test/precalculus/24307.json"]
+    duplicate_unique_id_rows_dropped: 2
+    duplicate_problem_text: []
+    empty_answer: ["train/number_theory/7115.json", "train/number_theory/7117.json"]
+    gold_unparseable:
+      - test/counting_and_probability/861.json
+      - test/geometry/1107.json
+      - test/intermediate_algebra/1289.json
+      - train/algebra/719.json
+      - train/algebra/866.json
+      - train/counting_and_probability/251.json
+      - train/intermediate_algebra/1918.json
+      - train/number_theory/1012.json
+      - train/number_theory/852.json
+      - train/prealgebra/635.json
+      - train/precalculus/1049.json
+      - train/precalculus/1083.json
+      - train/precalculus/1311.json
+  level_3_5_rows_before_exclusion: {test: 3303, development: 5587}
+  level_3_5_rows_after_exclusion: {test: 3298, development: 5575}
+
+sampling:
+  sort_key: unique_id
+  sort_order: ascending
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  development_seed: 20260924
+  test_seed: 20260925
+  method: sort each pool by unique_id, then one fixed permutation per pool
+  drawn_before_any_model_saw_any_problem: true
+  builder: scripts/build_math_full_manifests.py
+  builder_commit: b0e92b1
+  built_once_on: 2026-09-24
+  build_report_sha256: 5e76a9209405dca1813df5f717c103d8522d0f9b4016201b8d17a4ef833f5e72
+
+development_growth:
+  rule: >-
+    Development rows are always a prefix of dev_order. Start with dev1000. Enlarge to the
+    first 2,000, then 3,000, only if the selector comparison is still improving with data
+    under cross-fit on development; the prefix is written by slicing dev_order, never by
+    choosing rows. Rows already run stay in every larger prefix.
+  planned_prefixes: [1000, 2000, 3000]
+  decision_uses_development_only: true
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  dev_order:
+    purpose: fixed_order_of_the_whole_development_pool
+    server_path: /path/to/project/data/manifests/mathfull-r465bcdb-l3to5-s20260924/dev_order.jsonl
+    rows: 5575
+    counts_by_level: {"3": 1590, "4": 1687, "5": 2298}
+    sha256: bcc6fded3025dd41266a8dbb2a58ab24c9668eeff7892cedcb72638f44b8fb08
+  dev1000:
+    purpose: development
+    prefix_of: dev_order
+    server_path: /path/to/project/data/manifests/mathfull-r465bcdb-l3to5-s20260924/dev1000.jsonl
+    rows: 1000
+    counts_by_level: {"3": 268, "4": 317, "5": 415}
+    sha256: d6de6e4816ab52a46d1813ef05be0dc298d32eec81a2284f85dd3fc72e3d2126
+  test:
+    purpose: independent_confirmatory_test
+    status: in_use_see_test_use_log
+    server_path: /path/to/project/data/manifests/mathfull-r465bcdb-l3to5-s20260924/test.jsonl
+    rows: 3298
+    counts_by_level: {"3": 1024, "4": 1086, "5": 1188}
+    sha256: 9b93abcf4a94b5f917166124f9cb73e4f481bf20f1c9f522747b6b197e4c2cd4
+  test1500:
+    purpose: independent_confirmatory_test_for_further_model_pairs
+    prefix_of: test
+    rule: >-
+      The first 1,500 rows of test, written with `head -n 1500 test.jsonl` on the server.
+      test is already one fixed random permutation (test_seed), so a prefix is a uniform
+      random subset and no row is chosen. Size from docs/plan/test_llama_qwen25.md section 3.
+    server_path: /path/to/project/data/manifests/mathfull-r465bcdb-l3to5-s20260924/test1500.jsonl
+    rows: 1500
+    counts_by_level: {"3": 468, "4": 509, "5": 523}
+    sha256: 822250f0e685ed6dfc203d6e38beb871397130f26d271c5e4430f1382c60ae22
+  testpool_dev1000:
+    purpose: development
+    status: >-
+      Re-split development set, decided 2026-09-29 after c093 (Mistral-24B) fell 18.7
+      points from dev1000 to test1500: dev1000 comes from MATH's training problems and test from
+      its test problems, and a model that has seen the training problems scores high on dev only.
+      Rows 1501-2500 of test, so development and test1500 are disjoint samples of one pool.
+      These rows were test rows only for the Qwen3-4B / Qwen3-8B pair (c040-c043, full test);
+      that pair is analysed on test1500 from now on. See docs/plan/testpool_dev1000.md.
+    slice_of: test
+    rule: >-
+      `sed -n 1501,2500p test.jsonl` on the server; test is one fixed random permutation
+      (test_seed), so the slice is a uniform random subset disjoint from test1500 and no row
+      is chosen.
+    server_path: /path/to/project/data/manifests/mathfull-r465bcdb-l3to5-s20260924/testpool_dev1000.jsonl
+    rows: 1000
+    counts_by_level: {"3": 321, "4": 299, "5": 380}
+    sha256: 52c6c79d0285f40d3ac711ad6331b8102d6cf138374a8fd93a5cdc6b3756971a
+    verified_on_server: 1000 unique ids, all "test/", none in test1500; file made read-only
+
+test_use_log:
+  - {conditions: [c390, c391], manifest: test1500, purpose: prompt-variant sanity check (Qwen3-8B reviews c068,
+     c097 with the commit-first prompt), plan: docs/plan/prompt_variant_test500.md}
+  - {conditions: [c386, c387], manifest: test1500, purpose: self-review sanity check (Qwen3-8B, Qwen3-4B
+     review their own test solos c092, c062), plan: docs/plan/self_review_test1500.md}
+  - {conditions: [c040, c041, c042, c043], manifest: test, pair: Qwen3-4B / Qwen3-8B,
+     plan: docs/plan/test_mathfull_v2.md, result: docs/analysis/test_mathfull_v2.md}
+  - {conditions: [c056, c057, c058, c059], manifest: test1500, pair: Llama-3.2-3B / Qwen2.5-3B,
+     plan: docs/plan/test_llama_qwen25.md, result: docs/analysis/test_llama_qwen25.md}
+  - {conditions: [c062, c063, c064, c065], manifest: test1500, pair: Qwen2.5-7B / Qwen3-4B,
+     plan: docs/plan/test_qwen3_4b_qwen25_7b.md, result: docs/analysis/test_qwen3_4b_qwen25_7b.md}
+  - {conditions: [c092, c093, c094, c095], manifest: test1500, pair: Qwen3-8B / Mistral-Small-24B,
+     plan: docs/plan/test_qwen3_8b_mistral24b.md, status: withdrawn and reinstated before any c093 output; staged behind a 10-point solo-accuracy gate}
+  - {conditions: [c096, c097, c098], manifest: test1500, models: Ministral-8B / Qwen3-32B / Qwen2.5-72B,
+     status: solo only, added 2026-09-28; no pair, GV or selector analysis registered;
+       c098 (72B) was held and then withdrawn on 2026-09-29 before producing any output;
+       reinstated the same day on a dedicated 2-H100 allocation, new run stem 20260929T140000Z}
+  - {conditions: [c068], manifest: test1500, models: Llama-3.1-8B,
+     status: solo only, added 2026-09-28 together with its dev run c067; no pair, GV or selector analysis registered}
+  - {conditions: [c152, c153], manifest: test1500, pair: Ministral-8B / Qwen2.5-3B (GV on the solo runs c096, c057),
+     plan: docs/plan/test_pair_baselines.md}
+  - {conditions: [c156, c157], manifest: test1500, pair: Qwen2.5-7B / Qwen3-8B (GV on the solo runs c063, c092),
+     plan: docs/plan/test_pair_baselines.md}
+  - {conditions: [c230, c231, c232, c233, c234, c235, c236, c237, c238, c239, c240, c241, c242, c243, c244, c245, c246, c247],
+     manifest: test1500, pairs: nine stratified pairs chosen on testpool_dev1000 (GV on the test solos c056, c057, c062, c063, c068, c092, c093, c096, c097),
+     plan: docs/plan/testpool_dev1000.md section 8}
+  - {conditions: [c258], manifest: test1500, pair: Llama-3.2-3B / Llama-3.1-8B (replaces c244, which stopped at row 64 on a
+     special-token trace mismatch), plan: docs/plan/testpool_dev1000.md section 8}
+  - {conditions: [c266, c267, c268, c269], manifest: test1500, pairs: Qwen2.5-72B / Qwen3-4B and Qwen2.5-72B / Qwen3-32B
+     (the original strong-strong ends; GV on the test solos c098, c062, c097), plan: docs/plan/testpool_dev1000.md section 8}
+  - {conditions: [c252, c253], manifest: test1500, pair: Qwen3-8B / Qwen3-32B (strong-strong substitute; GV on the test solos c092, c097),
+     plan: docs/plan/testpool_dev1000.md section 8}
+test_reuse_rule: >-
+  "Single use" means per model pair and hypothesis: no pair's test outputs are ever used to
+  fit, tune or choose anything, and each pair's analysis is frozen before its test runs. A
+  new pair may run on test (or a prefix of it) because its models have never seen test and
+  the selector design, frozen on development before any test run, is not changed. Only the
+  choice of which pair to test next and its row count used an earlier pair's test effect
+  size; that is recorded in the pair's plan.
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: true
+  may_support_confirmatory_claims: false
+  test_may_support_confirmatory_claims: true
+  independent_test_required_after_tuning: true
+  test_manifest_is_single_use: true
+  test_run_only_after: >-
+    the selector's model family, features and hyperparameters are frozen on development,
+    and the frozen G and V conditions are registered; test is then run once
+  test_status: in_use_see_test_use_log

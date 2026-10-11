@@ -1,0 +1,41 @@
+schema_version: condition-overlay-v1
+condition_id: c114
+status: registered_pending_run
+extends: conditions/c113/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c114
+  status: registered_pending_run
+  purpose: qwen3_4b_reviewer_of_c101_qwen3_8b_bigcodebench_development832_4096_empty_token_bytes_repair
+
+  gate:
+    scope_limit: >-
+      Replaces c113 (docs/plan/code_bigcodebench_study.md section 10). c113 stopped at its 31st row
+      (BigCodeBench/725): vLLM returned one sampled token (id 5691, whose vocabulary entry spells the
+      bytes EF BF BD, U+FFFD) with empty text and bytes, so the token bytes did not reassemble the
+      returned text and the registered alignment rule stopped the run, deterministically on resume.
+      c114 is c113 with one registered rule added: a token returned with no bytes gets the exact bytes
+      of its vocabulary entry by token id, then the content is located with the unchanged strict rule
+      and the run still stops on any mismatch. Token ids and the same-forward capture are checked as
+      before. Repaired tokens are listed in records/token_byte_repairs.jsonl and counted in the report.
+      A trace that already aligns, or has no empty token, is untouched. Development only.
+
+  model:
+    pass1_logit_capture:
+      empty_token_bytes_repair: vocabulary_bytes_by_token_id_v1
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/code_solve_v1/schemas/code_review_evidence_record_c114_v1.json
+
+  replicates:
+    seed_cell_id: c114
+
+  runnable_gate:
+    required_before_submission:
+      - c114 differs from c113 only in the empty-token-bytes repair rule, evidence schema id, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the c101 source archive passes its checksums, holds exactly 832 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass, including the repair tests

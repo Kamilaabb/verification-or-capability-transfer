@@ -1,0 +1,10 @@
+System:
+Answer the multiple-choice question provided by the user. Think step by step before answering.
+The last line of your response must be of the form "Answer: X", where X is the letter of exactly one option.
+
+User template:
+Question:
+{{question}}
+
+Options:
+{{options}}

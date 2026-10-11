@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_crossfit_prediction_v1.json",
+  "title": "c008 cross-fitted three-head prediction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "condition_id", "replicate_id", "stage", "problem_id", "cell_id", "feature_ablation", "outer_seed", "outer_fold", "selected_C", "source_evidence_record_id", "evidence_sha256", "probabilities", "selections", "sensitivity_full_menu", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "controller-crossfit-prediction-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c008"},
+    "replicate_id": {"type": "string", "pattern": "^s[0-9]{8}$"},
+    "stage": {"const": "gate2"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "cell_id": {"const": "V-A"},
+    "feature_ablation": {"enum": ["S0_self_report", "S1_confidence_and_difficulty", "S2_program_and_critique_content"]},
+    "outer_seed": {"enum": [20260920, 20260921, 20260922, 20260923, 20260924]},
+    "outer_fold": {"type": "integer", "minimum": 0, "maximum": 4},
+    "selected_C": {"enum": [0.01, 0.1, 1.0, 10.0]},
+    "source_evidence_record_id": {"type": "string", "minLength": 1},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "probabilities": {
+      "type": "object", "additionalProperties": false, "required": ["M0", "M1", "M2"],
+      "properties": {"M0": {"type": "number", "minimum": 0, "maximum": 1}, "M1": {"type": "number", "minimum": 0, "maximum": 1}, "M2": {"type": "number", "minimum": 0, "maximum": 1}}
+    },
+    "selections": {
+      "type": "object", "additionalProperties": false, "required": ["live_edge", "legacy_extremes", "full"],
+      "properties": {"live_edge": {"enum": ["M0", "M1"]}, "legacy_extremes": {"enum": ["M0", "M2"]}, "full": {"enum": ["M0", "M1", "M2"]}}
+    },
+    "sensitivity_full_menu": {
+      "type": "object", "additionalProperties": false, "required": ["eps_0_01", "eps_0_02", "eps_0_05"],
+      "properties": {"eps_0_01": {"enum": ["M0", "M1", "M2"]}, "eps_0_02": {"enum": ["M0", "M1", "M2"]}, "eps_0_05": {"enum": ["M0", "M1", "M2"]}}
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

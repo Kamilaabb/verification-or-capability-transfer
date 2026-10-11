@@ -1,0 +1,44 @@
+schema_version: condition-overlay-v1
+condition_id: c074
+status: registered_pending_run
+extends: conditions/c070/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c074
+  status: registered_pending_run
+  purpose: llama_32_3b_solo_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      Llama-3.2-3B-Instruct alone on MMLU-Pro dev1000 for docs/plan/mmlu_pro_study.md, requested by the user
+      to run every mathfull model in the knowledge domain: c070 with only the model changed,
+      to c029's registered identity (including its chat-template inputs). Same frozen solve
+      prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0 sent, same-forward
+      capture. Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c074_c079_v1.json
+
+  model:
+    model_id: meta-llama/Llama-3.2-3B-Instruct
+    revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+    tokenizer_revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+    provenance: conditions/c029/model_provenance.json
+    identity_reference: c029
+    server_path: /path/to/scratch/authority-allocation/models/meta-llama--Llama-3.2-3B-Instruct/0cb88a4f764b7a12671c53f0838cd831a0843b95
+    chat_template_hash: 5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4
+    chat_template_kwargs: {date_string: 26 Jul 2024}
+
+  replicates:
+    seed_cell_id: c074
+
+  runnable_gate:
+    required_before_submission:
+      - c074 differs from c070 only in model identity, evidence schema id, seed cell and text
+      - model identity fields, chat-template inputs included, equal c029's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

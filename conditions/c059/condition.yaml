@@ -1,0 +1,57 @@
+schema_version: condition-overlay-v1
+condition_id: c059
+status: registered_pending_run
+extends: conditions/c045/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c059
+  status: registered_pending_run
+  purpose: llama32_3b_instruct_reviewer_of_c057_g_mathfull_test1500_4096_review_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Confirmatory test run (docs/plan/test_llama_qwen25.md): c045 on the first 1,500 rows of
+      the sealed mathfull test manifest. Llama-3.2-3B-Instruct reviews c057's Qwen2.5-3B-Instruct test outputs instead of the development ones;
+      same reviewer identity, frozen review prompt v2, delivery rule, greedy decoding, thinking
+      off, 4096 tokens, same-forward native trace capture and seven-scalar evidence.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: 822250f0e685ed6dfc203d6e38beb871397130f26d271c5e4430f1382c60ae22
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c059_v1.json
+
+  generator_source:
+    condition_id: c057
+    artifact_path: /path/to/project/artifacts/20260927T053222Z__c057__mathfull-test1500__r012_solo4096
+    pass1_run_id: 20260927T053222Z__c057__mathfull-test1500__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c059
+
+  stages:
+    run: [reuse_c057_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c059 differs from c045 only in the dataset manifest, generator source, evidence schema id, stages and seeds
+      - the test plan docs/plan/test_llama_qwen25.md and its analysis script are committed before any test run
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c057 source archive passes its checksums, holds exactly 1500 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

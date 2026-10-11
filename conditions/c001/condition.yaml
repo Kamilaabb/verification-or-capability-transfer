@@ -1,0 +1,189 @@
+schema_version: condition-v1
+condition_id: c001
+status: draft_requires_server_model_pin
+purpose: dev30_then_frozen_exploratory_pilot
+path_base: repository_root
+
+protocol:
+  id: authority_v5
+  path: protocols/authority_v5/README.md
+  feature_contract: protocols/authority_v5/features_scalar_v1.yaml
+  feature_set_id: scalar_v1
+  input_schema: protocols/authority_v5/schemas/controller_input_payload_v1.json
+  grader_contract: protocols/authority_v5/grader_math_verify_v1.yaml
+  schemas_directory: protocols/authority_v5/schemas
+
+dataset:
+  id: math500-r6e4ed1-l3to5-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-s20260910/dataset.yaml
+
+generator:
+  role_id: G
+  kind: llm
+  model_id: Qwen/Qwen2.5-7B-Instruct
+  revision: REQUIRED_BEFORE_RUN
+  server_path: REQUIRED_BEFORE_RUN
+  backend: vllm_openai
+  backend_version: REQUIRED_BEFORE_RUN
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: REQUIRED_BEFORE_RUN
+  thinking: false
+  prompt_initial: conditions/c001/prompts/g_initial_v1.txt
+  prompt_rewrite: conditions/c001/prompts/g_rewrite_v1.txt
+  initial_decoding:
+    samples: 8
+    temperature: 0.7
+    top_p: 0.95
+    top_k: null
+    max_new_tokens: 2048
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    y0_selection: sample_index_0_unconditionally
+  rewrite_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 2048
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+
+verifiers:
+  - cell_id: V-A
+    kind: llm
+    model_id: microsoft/Phi-4-mini-instruct
+    revision: REQUIRED_BEFORE_RUN
+    server_path: REQUIRED_BEFORE_RUN
+    backend: vllm_openai
+    backend_version: REQUIRED_BEFORE_RUN
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: REQUIRED_BEFORE_RUN
+    thinking: false
+    prompt: conditions/c001/prompts/v_report_v1.txt
+    decoding:
+      samples: 1
+      temperature: 0.0
+      top_p: 1.0
+      top_k: null
+      max_new_tokens: 3072
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+
+  - cell_id: V-B
+    kind: llm
+    model_id: Qwen/Qwen2.5-7B-Instruct
+    shares_weights_with: G
+    revision: REQUIRED_BEFORE_RUN
+    server_path: REQUIRED_BEFORE_RUN
+    backend: vllm_openai
+    backend_version: REQUIRED_BEFORE_RUN
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: REQUIRED_BEFORE_RUN
+    thinking: false
+    prompt: conditions/c001/prompts/v_report_v1.txt
+    decoding:
+      samples: 1
+      temperature: 0.0
+      top_p: 1.0
+      top_k: null
+      max_new_tokens: 3072
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+
+controller:
+  controller_id: C-qwen3-32b-thinking-v1
+  kind: llm
+  model_id: Qwen/Qwen3-32B
+  revision: REQUIRED_BEFORE_RUN
+  server_path: REQUIRED_BEFORE_RUN
+  backend: vllm_openai
+  backend_version: REQUIRED_BEFORE_RUN
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: REQUIRED_BEFORE_RUN
+  thinking: true
+  reasoning_parser: REQUIRED_BEFORE_RUN
+  feature_set_id: scalar_v1
+  prompts:
+    binary: conditions/c001/prompts/controller_binary_scalar_v1.txt
+    ternary: conditions/c001/prompts/controller_ternary_scalar_v1.txt
+  output_schemas:
+    binary: protocols/authority_v5/schemas/controller_binary_payload_v1.json
+    ternary: protocols/authority_v5/schemas/controller_ternary_payload_v1.json
+  menus:
+    binary: [M0, M2]
+    ternary: [M0, M1, M2]
+  decoding:
+    samples: 1
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0
+    max_new_tokens: 4096
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+  preferred_runtime:
+    partition: gpu-h100
+    gpus: 1
+    minimum_single_gpu_vram_gb: 90
+  training:
+    enabled: false
+    reason: zero_shot_llm_controller
+
+replicates:
+  plan_id: r001
+  path: replicates/r001.yaml
+
+stages:
+  dev30:
+    dataset_manifest: dev30
+    may_change_condition_for_compatibility: true
+    may_support_confirmatory_claims: false
+  pilot300:
+    dataset_manifest: pilot300
+    requires_frozen_condition: true
+    may_support_confirmatory_claims: false
+
+reuse_policy:
+  controller_change_reuses_counterfactuals: true
+  verifier_change_reuses_g_outputs: true
+  feature_recompute_reuses_raw_outputs_when_sufficient: true
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include:
+    - resolved_behavioral_condition_fields
+    - referenced_prompt_bytes
+    - protocol_component_hashes
+    - immutable_model_revisions
+    - chat_template_hashes
+  exclude:
+    - status
+    - purpose
+    - preferred_runtime
+    - node
+    - gpu_uuid
+    - slurm_job_id
+    - timestamps
+    - run_id
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true

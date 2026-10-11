@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "self_check_record_v1.json",
+  "title": "Router v1 pass-2 self-check record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_pass1_run_id",
+    "condition_id", "condition_hash", "dataset_id", "replicate_id", "stage", "cell_id",
+    "problem_id", "call_seed", "raw_output", "verdict", "extracted_answer",
+    "answer_changed", "parse_status", "token_logprobs", "usage", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "self-check-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_pass1_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "replicate_id": {"type": "string", "minLength": 1},
+    "stage": {"type": "string", "minLength": 1},
+    "cell_id": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "call_seed": {"type": "integer", "minimum": 0},
+    "raw_output": {"type": ["string", "null"]},
+    "verdict": {
+      "type": ["string", "null"],
+      "enum": ["correct", "incorrect", "uncertain", null],
+      "description": "The model's own judgement of y0. It is recorded for analysis and is explicitly NOT an authority request: router_v1 registers no action vocabulary and never gates pass 2's answer on it."
+    },
+    "extracted_answer": {"type": ["string", "null"]},
+    "answer_changed": {
+      "type": ["boolean", "null"],
+      "description": "Whether the extracted pass-2 answer differs from the extracted pass-1 answer under the registered grader's equivalence, not by string comparison. Null when either side is unextractable. A true value with verdict 'correct' is the harm channel this protocol exists to observe, so it is never silently normalised away."
+    },
+    "parse_status": {
+      "type": "string",
+      "enum": ["ok", "retry_ok", "model_invalid", "call_error", "fallback"]
+    },
+    "token_logprobs": {
+      "anyOf": [
+        {"$ref": "../../authority_v6/schemas/generated_token_trace_v1.json"},
+        {"type": "null"}
+      ]
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens", "latency_ms", "finish_reason", "retries"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]},
+        "retries": {"type": "integer", "minimum": 0}
+      }
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"parse_status": {"enum": ["model_invalid", "call_error", "fallback"]}},
+             "required": ["parse_status"]},
+      "then": {"properties": {"extracted_answer": {"type": "null"}}}
+    }
+  ],
+  "description": "One pass-2 self-check call. The model always emits a final answer, so extracted_answer is populated whenever parsing succeeded, including when the verdict is 'correct'. A failed call leaves extracted_answer null and the deployed answer falls back to y0 per protocol section 4."
+}

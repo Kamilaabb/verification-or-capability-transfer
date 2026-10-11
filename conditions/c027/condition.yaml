@@ -1,0 +1,55 @@
+schema_version: condition-overlay-v1
+condition_id: c027
+status: registered_pending_run
+extends: conditions/c024/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c027
+  status: registered_pending_run
+  purpose: qwen3_8b_reviewer_of_c025_g_mathfull_dev1000_4096_review_prompt_v2
+
+  gate:
+    scope_limit: >-
+      The GV system under the frozen review prompt v2 (docs/plan/gv_vs_max_g_v_study.md
+      section 4.7): Qwen3-8B reviews c025's Qwen3-4B solutions on mathfull dev1000. c024
+      with only the prompt and the generator source changed. v2 drops the reviewer persona
+      and "produced by another model", and states that the proposed solution may be
+      correct or incorrect. Same delivery rule, greedy decoding, thinking off, 4096
+      tokens, same-forward native trace capture, seven-scalar evidence on the reviewer's
+      own output. Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c027_v1.json
+
+  generator_source:
+    condition_id: c025
+    artifact_path: /path/to/project/artifacts/20260925T172823Z__c025__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260925T172823Z__c025__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen3-4B
+    reuse_records_byte_for_byte: true
+
+  model:
+    prompt_pass1: conditions/c027/prompts/v_reviewer_v2.txt
+    prompt_pass1_provenance: user_written_review_prompt_v2_frozen_2026-09-25
+    prompt_inputs: [problem, y0]
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c027
+
+  stages:
+    run: [reuse_c025_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c027 differs from c024 only in prompt, generator source, evidence schema id, stages and seeds
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c025 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

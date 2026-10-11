@@ -1,0 +1,51 @@
+schema_version: condition-overlay-v1
+condition_id: c066
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c066
+  status: registered_pending_run
+  purpose: qwen25_72b_instruct_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+  gate:
+    scope_limit: >-
+      Qwen2.5-72B-Instruct alone on mathfull dev1000 under the frozen solve prompt v2, requested
+      by the user as the large model. c025 with only the model changed. Its chat template is
+      byte-identical to Qwen2.5-3B's and 7B's (same hash); its generation_config carries
+      repetition_penalty 1.05, which requests override with the registered 1.0 (3572c22). The
+      weights are served in bfloat16 over two H100s with vLLM tensor parallelism, which changes
+      no registered field but runs the same-forward capture under tensor parallelism for the
+      first time; the capture writes from tensor-parallel rank 0 only, and the smoke call and
+      every row still require exact token-ID alignment. Development only.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c066_v1.json
+  model:
+    model_id: Qwen/Qwen2.5-72B-Instruct
+    revision: 495f39366efef23836d0cfae4fbe635880d2be31
+    tokenizer_revision: 495f39366efef23836d0cfae4fbe635880d2be31
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-72B-Instruct/495f39366efef23836d0cfae4fbe635880d2be31
+    provenance: conditions/c066/model_provenance.json
+    chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+    identity_reused_from: null
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_reuse_reason: null
+    preflight_policy: >-
+      No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for
+      c029-c032 and c054/c055; a mismatch stops the run before its row is kept.
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c066
+  runnable_gate:
+    required_before_submission:
+    - c066 differs from c025 only in the model identity, seeds and evidence schema id
+    - the model identity fields equal conditions/c066/model_provenance.json
+    - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+    - the manifest hash equals the one in the dataset registration
+    - temperature is 0
+    - local parser and record-schema tests pass

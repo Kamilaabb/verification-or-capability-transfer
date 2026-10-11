@@ -1,0 +1,14 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r013
+status: c033_c034_c035_mmmu_pro_dev
+
+pass1:
+  deterministic_decoding_expected: true
+  replicates:
+    - {replicate_id: p01, base_seed: 20260926}
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields: [replicate_plan_id, scope, replicate_id, base_seed, cell_id, problem_id, sample_index]
+  same_seed_on_retry: true
+  select_best_seed: forbidden

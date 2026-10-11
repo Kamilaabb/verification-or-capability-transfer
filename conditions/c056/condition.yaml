@@ -1,0 +1,47 @@
+schema_version: condition-overlay-v1
+condition_id: c056
+status: registered_pending_run
+extends: conditions/c029/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c056
+  status: registered_pending_run
+  purpose: llama32_3b_solo_pass1_mathfull_test1500_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Confirmatory test run (docs/plan/test_llama_qwen25.md): c029 on the first 1,500 rows
+      of the sealed mathfull test manifest, nothing else changed. Llama-3.2-3B-Instruct alone under the
+      frozen solve prompt v2, greedy, thinking off, 4096 tokens, same-forward native trace
+      capture and the seven-scalar contract. Its outputs are the G side of the frozen
+      selector for the Llama-3.2-3B / Qwen2.5-3B pair and the reviewed model in one GV direction.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: 822250f0e685ed6dfc203d6e38beb871397130f26d271c5e4430f1382c60ae22
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c056_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c056
+
+  runnable_gate:
+    required_before_submission:
+      - c056 differs from c029 only in the dataset manifest, seeds and evidence schema id
+      - the test plan docs/plan/test_llama_qwen25.md and its analysis script are committed before any test run
+      - the manifest hash equals the test1500 entry of the dataset registration
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

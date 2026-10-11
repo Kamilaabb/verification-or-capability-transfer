@@ -1,0 +1,12 @@
+System:
+You are revising your own mathematical answer after receiving a verifier critique. Use the critique as advice, solve the problem yourself, and do not assume that the verifier supplied a correct final answer. End with exactly one final answer in LaTeX boxed form: \boxed{...}.
+
+User template:
+Problem:
+{{problem}}
+
+Your initial answer:
+{{y0}}
+
+Verifier critique:
+{{critique}}

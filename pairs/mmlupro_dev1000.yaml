@@ -1,0 +1,90 @@
+# Model pairs on MMLU-Pro dev1000 under the frozen prompts (docs/plan/mmlu_pro_study.md section 4),
+# in the convention of pairs/mathfull_v2_dev1000.yaml. "v" is the model expected to have the
+# higher solo accuracy (Qwen3-8B, as on mathfull); if c070 turns out more accurate than c071,
+# swap g and v here before running any selector, so its tie rule delivers the stronger side.
+# Archives are resolved from artifacts/ by condition id; an unfinished GV direction is skipped.
+schema_version: model-pairs-v1
+dataset: mmlupro-rb189ec7-s20260927
+manifest: dev1000
+pairs:
+  - id: qwen3-4b__qwen3-8b
+    g: {condition: c070, model: Qwen3-4B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv:
+      - {condition: c072, reviewer: v, note: Qwen3-8B reviews Qwen3-4B}
+      - {condition: c073, reviewer: g, note: Qwen3-4B reviews Qwen3-8B}
+  - id: qwen3-4b__qwen25-7b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c070, model: Qwen3-4B}
+    gv:
+      - {condition: c085, reviewer: g, note: Qwen2.5-7B reviews Qwen3-4B}
+      - {condition: c086, reviewer: v, note: Qwen3-4B reviews Qwen2.5-7B}
+  - id: qwen3-8b__mistral-24b
+    g: {condition: c071, model: Qwen3-8B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv:
+      - {condition: c087, reviewer: v, note: Mistral-Small-24B reviews Qwen3-8B}
+      - {condition: c088, reviewer: g, note: Qwen3-8B reviews Mistral-Small-24B}
+  # The stratified selection (docs/plan/mmlu_pro_study.md section 15). Test runs: c136-c147.
+  - id: qwen25-7b__qwen3-8b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv:
+      - {condition: c126, reviewer: g, note: Qwen2.5-7B reviews Qwen3-8B}
+      - {condition: c127, reviewer: v, note: Qwen3-8B reviews Qwen2.5-7B}
+  - id: ministral-8b__qwen25-3b
+    g: {condition: c077, model: Ministral-8B}
+    v: {condition: c075, model: Qwen2.5-3B}
+    gv:
+      - {condition: c128, reviewer: g, note: Ministral-8B reviews Qwen2.5-3B}
+      - {condition: c129, reviewer: v, note: Qwen2.5-3B reviews Ministral-8B}
+  - id: llama-32-3b__qwen25-3b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c075, model: Qwen2.5-3B}
+    gv:
+      - {condition: c130, reviewer: g, note: Llama-3.2-3B reviews Qwen2.5-3B}
+      - {condition: c131, reviewer: v, note: Qwen2.5-3B reviews Llama-3.2-3B}
+  - id: qwen25-3b__qwen25-7b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c076, model: Qwen2.5-7B}
+    gv:
+      - {condition: c132, reviewer: g, note: Qwen2.5-3B reviews Qwen2.5-7B}
+      - {condition: c133, reviewer: v, note: Qwen2.5-7B reviews Qwen2.5-3B}
+  - id: llama-32-3b__qwen3-8b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c071, model: Qwen3-8B}
+    gv:
+      - {condition: c134, reviewer: g, note: Llama-3.2-3B reviews Qwen3-8B}
+      - {condition: c135, reviewer: v, note: Qwen3-8B reviews Llama-3.2-3B}
+  # Stratified pairs with a strong model (docs/plan/mmlu_pro_study.md section 16). Test runs: c176-c183.
+  - id: qwen25-7b__mistral-24b
+    g: {condition: c076, model: Qwen2.5-7B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv:
+      - {condition: c170, reviewer: v, note: Mistral-Small-24B reviews Qwen2.5-7B}
+      - {condition: c171, reviewer: g, note: Qwen2.5-7B reviews Mistral-Small-24B}
+  - id: qwen25-3b__qwen3-32b
+    g: {condition: c075, model: Qwen2.5-3B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv:
+      - {condition: c172, reviewer: v, note: Qwen3-32B reviews Qwen2.5-3B}
+      - {condition: c173, reviewer: g, note: Qwen2.5-3B reviews Qwen3-32B}
+  - id: llama-32-3b__mistral-24b
+    g: {condition: c074, model: Llama-3.2-3B}
+    v: {condition: c078, model: Mistral-Small-24B}
+    gv:
+      - {condition: c174, reviewer: v, note: Mistral-Small-24B reviews Llama-3.2-3B}
+      - {condition: c175, reviewer: g, note: Llama-3.2-3B reviews Mistral-Small-24B}
+  # The strong/strong cell (docs/plan/mmlu_pro_study.md section 16). Test runs: c188-c191.
+  - id: mistral-24b__qwen3-32b
+    g: {condition: c078, model: Mistral-Small-24B}
+    v: {condition: c079, model: Qwen3-32B}
+    gv:
+      - {condition: c184, reviewer: v, note: Qwen3-32B reviews Mistral-Small-24B}
+      - {condition: c185, reviewer: g, note: Mistral-Small-24B reviews Qwen3-32B}
+  - id: mistral-24b__qwen25-72b
+    g: {condition: c078, model: Mistral-Small-24B}
+    v: {condition: c080, model: Qwen2.5-72B}
+    gv:
+      - {condition: c186, reviewer: v, note: Qwen2.5-72B reviews Mistral-Small-24B}
+      - {condition: c187, reviewer: g, note: Mistral-Small-24B reviews Qwen2.5-72B}

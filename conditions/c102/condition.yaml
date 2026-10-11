@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c102
+status: registered_pending_run
+extends: conditions/c100/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c102
+  status: registered_pending_run
+  purpose: llama32_3b_instruct_solo_bigcodebench_instruct_development832_4096
+
+  gate:
+    scope_limit: >-
+      Llama-3.2-3B-Instruct alone on the 832 BigCodeBench development rows for
+      docs/plan/code_bigcodebench_study.md: c100 with only the model changed, to c029's registered identity (including its chat-template inputs).
+      Same frozen code solve prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0
+      sent, same-forward capture, evidence before grading. Development only; the test
+      manifest is not read.
+
+  model:
+    model_id: meta-llama/Llama-3.2-3B-Instruct
+    revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+    tokenizer_revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+    provenance: conditions/c029/model_provenance.json
+    identity_reference: c029
+    server_path: /path/to/scratch/authority-allocation/models/meta-llama--Llama-3.2-3B-Instruct/0cb88a4f764b7a12671c53f0838cd831a0843b95
+    chat_template_hash: 5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4
+    chat_template_kwargs: {date_string: 26 Jul 2024}
+
+  replicates:
+    seed_cell_id: c102
+
+  runnable_gate:
+    required_before_submission:
+      - c102 differs from c100 only in model identity, seed cell and text
+      - model identity fields, chat-template inputs included, equal c029's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass

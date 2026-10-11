@@ -1,0 +1,396 @@
+schema_version: model-pairs-v1
+dataset: nlreason-gpqad-reclorval-foliov2-s20261001
+manifest: eval
+metric: u0
+analysis_id: nl_knowledge_selector_jev_eval901_v1
+required_jev_model: jev-1.13.0
+pairs:
+- id: c306__c193
+  design:
+    models:
+    - Qwen3-8B
+    - Mistral-Small-24B-Instruct-2501
+    cell: strong-strong
+    headroom: high
+  g:
+    condition: c306
+    model: mistralai/Mistral-Small-24B-Instruct-2501
+  v:
+    condition: c193
+    model: Qwen/Qwen3-8B
+  gv:
+  - condition: c342
+    generator: Mistral-Small-24B-Instruct-2501
+    reviewer: Qwen3-8B
+    run: 20261003T013000Z__c342__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c343
+    generator: Qwen3-8B
+    reviewer: Mistral-Small-24B-Instruct-2501
+    run: 20261003T013000Z__c343__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c374
+- id: c193__c307
+  design:
+    models:
+    - Qwen3-32B
+    - Qwen3-8B
+    cell: strong-strong
+    headroom: low
+  g:
+    condition: c193
+    model: Qwen/Qwen3-8B
+  v:
+    condition: c307
+    model: Qwen/Qwen3-32B
+  gv:
+  - condition: c352
+    generator: Qwen3-32B
+    reviewer: Qwen3-8B
+    run: 20261003T013000Z__c352__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c353
+    generator: Qwen3-8B
+    reviewer: Qwen3-32B
+    run: 20261003T013000Z__c353__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c375
+- id: c196__c306
+  design:
+    models:
+    - Mistral-Small-24B-Instruct-2501
+    - Qwen3-4B
+    cell: strong-middle
+    headroom: high
+  g:
+    condition: c196
+    model: Qwen/Qwen3-4B
+  v:
+    condition: c306
+    model: mistralai/Mistral-Small-24B-Instruct-2501
+  gv:
+  - condition: c340
+    generator: Mistral-Small-24B-Instruct-2501
+    reviewer: Qwen3-4B
+    run: 20261003T013000Z__c340__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c341
+    generator: Qwen3-4B
+    reviewer: Mistral-Small-24B-Instruct-2501
+    run: 20261003T013000Z__c341__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c376
+- id: c196__c193
+  design:
+    models:
+    - Qwen3-8B
+    - Qwen3-4B
+    cell: strong-middle
+    headroom: low
+  g:
+    condition: c196
+    model: Qwen/Qwen3-4B
+  v:
+    condition: c193
+    model: Qwen/Qwen3-8B
+  gv:
+  - condition: c197
+    generator: Qwen3-4B
+    reviewer: Qwen3-8B
+    run: 20261001T074355Z__c197__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c198
+    generator: Qwen3-8B
+    reviewer: Qwen3-4B
+    run: 20261001T074355Z__c198__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c377
+- id: c196__c307
+  design:
+    models:
+    - Qwen3-32B
+    - Qwen3-4B
+    cell: strong-middle
+    headroom: low
+  g:
+    condition: c196
+    model: Qwen/Qwen3-4B
+  v:
+    condition: c307
+    model: Qwen/Qwen3-32B
+  gv:
+  - condition: c350
+    generator: Qwen3-32B
+    reviewer: Qwen3-4B
+    run: 20261003T013000Z__c350__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c351
+    generator: Qwen3-4B
+    reviewer: Qwen3-32B
+    run: 20261003T013000Z__c351__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c378
+- id: c303__c306
+  design:
+    models:
+    - Mistral-Small-24B-Instruct-2501
+    - Qwen2.5-3B-Instruct
+    cell: strong-weak
+    headroom: high
+  g:
+    condition: c303
+    model: Qwen/Qwen2.5-3B-Instruct
+  v:
+    condition: c306
+    model: mistralai/Mistral-Small-24B-Instruct-2501
+  gv:
+  - condition: c344
+    generator: Mistral-Small-24B-Instruct-2501
+    reviewer: Qwen2.5-3B-Instruct
+    run: 20261003T013000Z__c344__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c345
+    generator: Qwen2.5-3B-Instruct
+    reviewer: Mistral-Small-24B-Instruct-2501
+    run: 20261003T013000Z__c345__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c379
+- id: c192__c307
+  design:
+    models:
+    - Qwen3-32B
+    - Llama-3.2-3B-Instruct
+    cell: strong-weak
+    headroom: low
+  g:
+    condition: c192
+    model: meta-llama/Llama-3.2-3B-Instruct
+  v:
+    condition: c307
+    model: Qwen/Qwen3-32B
+  gv:
+  - condition: c354
+    generator: Qwen3-32B
+    reviewer: Llama-3.2-3B-Instruct
+    run: 20261003T013000Z__c354__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c355
+    generator: Llama-3.2-3B-Instruct
+    reviewer: Qwen3-32B
+    run: 20261003T013000Z__c355__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c380
+- id: c304__c196
+  design:
+    models:
+    - Qwen3-4B
+    - Qwen2.5-7B-Instruct
+    cell: middle-middle
+    headroom: only
+  g:
+    condition: c304
+    model: Qwen/Qwen2.5-7B-Instruct
+  v:
+    condition: c196
+    model: Qwen/Qwen3-4B
+  gv:
+  - condition: c320
+    generator: Qwen2.5-7B-Instruct
+    reviewer: Qwen3-4B
+    run: 20261003T013000Z__c320__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c321
+    generator: Qwen3-4B
+    reviewer: Qwen2.5-7B-Instruct
+    run: 20261003T013000Z__c321__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c381
+- id: c303__c304
+  design:
+    models:
+    - Qwen2.5-7B-Instruct
+    - Qwen2.5-3B-Instruct
+    cell: middle-weak
+    headroom: high
+  g:
+    condition: c303
+    model: Qwen/Qwen2.5-3B-Instruct
+  v:
+    condition: c304
+    model: Qwen/Qwen2.5-7B-Instruct
+  gv:
+  - condition: c334
+    generator: Qwen2.5-7B-Instruct
+    reviewer: Qwen2.5-3B-Instruct
+    run: 20261003T013000Z__c334__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c335
+    generator: Qwen2.5-3B-Instruct
+    reviewer: Qwen2.5-7B-Instruct
+    run: 20261003T013000Z__c335__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c382
+- id: c192__c196
+  design:
+    models:
+    - Qwen3-4B
+    - Llama-3.2-3B-Instruct
+    cell: middle-weak
+    headroom: low
+  g:
+    condition: c192
+    model: meta-llama/Llama-3.2-3B-Instruct
+  v:
+    condition: c196
+    model: Qwen/Qwen3-4B
+  gv:
+  - condition: c316
+    generator: Llama-3.2-3B-Instruct
+    reviewer: Qwen3-4B
+    run: 20261003T013000Z__c316__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c317
+    generator: Qwen3-4B
+    reviewer: Llama-3.2-3B-Instruct
+    run: 20261003T013000Z__c317__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c383
+- id: c305__c303
+  design:
+    models:
+    - Qwen2.5-3B-Instruct
+    - Ministral-8B-Instruct-2410
+    cell: weak-weak
+    headroom: high
+  g:
+    condition: c305
+    model: mistralai/Ministral-8B-Instruct-2410
+  v:
+    condition: c303
+    model: Qwen/Qwen2.5-3B-Instruct
+  gv:
+  - condition: c336
+    generator: Ministral-8B-Instruct-2410
+    reviewer: Qwen2.5-3B-Instruct
+    run: 20261003T013000Z__c336__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c337
+    generator: Qwen2.5-3B-Instruct
+    reviewer: Ministral-8B-Instruct-2410
+    run: 20261003T013000Z__c337__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c384
+- id: c192__c303
+  design:
+    models:
+    - Qwen2.5-3B-Instruct
+    - Llama-3.2-3B-Instruct
+    cell: weak-weak
+    headroom: low
+  g:
+    condition: c192
+    model: meta-llama/Llama-3.2-3B-Instruct
+  v:
+    condition: c303
+    model: Qwen/Qwen2.5-3B-Instruct
+  gv:
+  - condition: c314
+    generator: Qwen2.5-3B-Instruct
+    reviewer: Llama-3.2-3B-Instruct
+    run: 20261003T013000Z__c314__nlreason-eval901__r014_review4096
+    rows: 901
+  - condition: c315
+    generator: Llama-3.2-3B-Instruct
+    reviewer: Qwen2.5-3B-Instruct
+    run: 20261003T013000Z__c315__nlreason-eval901__r014_review4096
+    rows: 901
+  selector_condition: c385
+solos:
+  c192:
+    run: 20261001T074355Z__c192__nlreason-eval901__r014_solve4096
+    model: meta-llama/Llama-3.2-3B-Instruct
+    correct: 394
+    rows: 901
+    sha256:
+      condition.resolved.yaml: e5823a63e7ab5b8966ae42bc37e0c97431f52187734f27b37cdb7fc205045854
+      records/pass1.jsonl: b775fd5de22ef872f29f2ef66550e015eb8bac30325b3c03b58cbd88b2895194
+      records/native_logit_trace.jsonl: b920231d6cc603bcb3a87e80f2b60e36ea8890c75f2b3c032e88d902be6110ec
+      records/scalar_evidence.jsonl: 064fdb4db030e3b7dd3aa10921e4de6b0f932dc3a85e01dafd6f68170bbcaa88
+      records/grades.jsonl: 4effbcb75fdc7d5c6c2de63378ddb8c93d1ee16f6ce431998dbb60b838e7c584
+  c193:
+    run: 20261001T074355Z__c193__nlreason-eval901__r014_solve4096
+    model: Qwen/Qwen3-8B
+    correct: 665
+    rows: 901
+    sha256:
+      condition.resolved.yaml: 1e16d6f92d2018ae37be36576452ce9f408c038b6d17aa0e4ec7f1881b00423d
+      records/pass1.jsonl: 01f868459dbe5469f3ecc86801278174e09ed93d781280253eae1d5735a3af38
+      records/native_logit_trace.jsonl: f1117579b0f042bba517d06dd329af3748a47eab3402d4343badbd20c9483c80
+      records/scalar_evidence.jsonl: a39e3e5929fcf6e31f4eb115c026a88fb4bdd80479f4062d752511bae3ddd1ae
+      records/grades.jsonl: cd74602a0042e82e349a00f6be8e01ed7aa87a3a3c0b6d208b3d5ee765862003
+  c196:
+    run: 20261001T074355Z__c196__nlreason-eval901__r014_solve4096
+    model: Qwen/Qwen3-4B
+    correct: 609
+    rows: 901
+    sha256:
+      condition.resolved.yaml: 84f949e73e1bc9b384cd74bc660e90db59a750228c1f1e383cda52cfe45e3c5a
+      records/pass1.jsonl: 6ce9e74447771ddaa67414102e798a60266351f6715539612bb30d48e2748dfa
+      records/native_logit_trace.jsonl: beb4ef618a29121dfd18e8413a3073367b19f7af4edecabd6f5f1a4f242f2dc4
+      records/scalar_evidence.jsonl: 3c4e71d489d800de67447e3a138abc1714236a75ee02159cc16d4af4cd31f0ea
+      records/grades.jsonl: 60c33d0c11e5e4ab2d07832bcaedd93b09b4b0faf5da963170933619c26f3295
+  c303:
+    run: 20261002T231200Z__c303__nlreason-eval901__r014_solve4096
+    model: Qwen/Qwen2.5-3B-Instruct
+    correct: 497
+    rows: 901
+    sha256:
+      condition.resolved.yaml: 2cda74da12e7b71f35b09ed522c5fa0a0ff37e4740fc8e14d4b3d7fbb4578ad2
+      records/pass1.jsonl: 4bfd914ad014ba2d65e47a11690d0cc3d7abadb14a44d60fe1cb3920325cf3ae
+      records/native_logit_trace.jsonl: 416a3068fd8874418c4d36269e5143aaf9b37d1cbf02ea22b572489ee616ff79
+      records/scalar_evidence.jsonl: 8826ebc6107e412521bd62570016094737f4ddefcb535b4caa0cab2e0b630d1f
+      records/grades.jsonl: 1bbcb5aeeee999edd8be6486eb1b5049a4f37b17b4dfaf8f8976ea3b297e7361
+  c304:
+    run: 20261002T231200Z__c304__nlreason-eval901__r014_solve4096
+    model: Qwen/Qwen2.5-7B-Instruct
+    correct: 556
+    rows: 901
+    sha256:
+      condition.resolved.yaml: dcf3b6079218531fb1d737f106b83de2a5722f017d47062d3d938fd8ddd27e45
+      records/pass1.jsonl: b6fedd8b6dc61c872b14b3e48e3bdc6e7c1b80804c5b62a2e17ba9d9c7947d9f
+      records/native_logit_trace.jsonl: 0cf3aa0c9b1f1bd411bbc48b1e8ebe0540221904e4de74b77abaa1f654e20945
+      records/scalar_evidence.jsonl: bf6a59a6c5077dbd963fa9b51992dd2b63e606485b84c959e2a5e7d9df06d4ad
+      records/grades.jsonl: bb27776361923dcbe2635d9afc02b7a10cf3942a162fc743c309fb274122c566
+  c305:
+    run: 20261002T231200Z__c305__nlreason-eval901__r014_solve4096
+    model: mistralai/Ministral-8B-Instruct-2410
+    correct: 467
+    rows: 901
+    sha256:
+      condition.resolved.yaml: b203768c1b2fbad11647d2aa49a9cbf217d332b4d781a60961ab9e4ae40e196b
+      records/pass1.jsonl: 867c268fa64b16f504926c58a87ac238388e5f329dc96d500fd2e8a937987894
+      records/native_logit_trace.jsonl: b95c5ef7efc4d613864b77913ece50dfa8eaec3412c385fa678e0e99c90d60d4
+      records/scalar_evidence.jsonl: 818d4a05835a1397dd20dd19ccfe805effcb2d25ecd840d44667a479b51f981f
+      records/grades.jsonl: 590d20b0d33f6afc1ddafa847db00d0354ccb7b2a35226c7f7cc961063997a10
+  c306:
+    run: 20261002T231200Z__c306__nlreason-eval901__r014_solve4096
+    model: mistralai/Mistral-Small-24B-Instruct-2501
+    correct: 645
+    rows: 901
+    sha256:
+      condition.resolved.yaml: e45751261c4246e61b27437227a69239973aeccaab3de7e42443973943f03c8b
+      records/pass1.jsonl: 81156ddd9077f6cdd835a7810010ebead161f5c097c095beb76cb71c48e94d7d
+      records/native_logit_trace.jsonl: d5aa4cea76841c6a9d36c53a6ca2fbfaa2ed965b6edecfc8b2d0c2f075467d79
+      records/scalar_evidence.jsonl: a7b5d3fea29dc2902ba2d914dc9236e11a379286f39ce2f8834f05b247fe0e4b
+      records/grades.jsonl: a752887a0a4bb5d1c67c275d1fb4018f9ee49dad496952694bd14987e4377f0e
+  c307:
+    run: 20261002T231200Z__c307__nlreason-eval901__r014_solve4096
+    model: Qwen/Qwen3-32B
+    correct: 701
+    rows: 901
+    sha256:
+      condition.resolved.yaml: 491d9bd5375509c0f7e67973556c83999c8389438812f85d56b82876632df144
+      records/pass1.jsonl: 684602f7abaf407de5588f4e912e0f73eb2456f9da04ef14c482c9226037a1e8
+      records/native_logit_trace.jsonl: 34fc53408250e4f37510782c463b1da44f8d661ccccd1bb787c6e6aa518b96d2
+      records/scalar_evidence.jsonl: a89f5668afbdfb39075e777df095dc38f88392170427bf29fec4895b9dff13f2
+      records/grades.jsonl: e9d7b1d72c794310fe5e828cae0e79117d8de3cf2c8275f53aad819f6bd9acd9

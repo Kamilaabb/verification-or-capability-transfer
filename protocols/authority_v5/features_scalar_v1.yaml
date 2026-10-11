@@ -1,0 +1,138 @@
+schema_version: feature-contract-v1
+feature_set_id: scalar_v1
+representation: scalar_categorical
+decision_time: after_v_report_before_action
+
+rules:
+  raw_text_allowed: false
+  gold_or_outcome_allowed: false
+  storage_schema: schemas/controller_evidence_record_v1.json
+  exact_controller_payload_schema: schemas/controller_input_payload_v1.json
+  missing_value: null
+  explicit_missing_flag_required: true
+
+features:
+  - name: g_support_y0_valid
+    group: G
+    type: number_or_null
+    range: [0.0, 1.0]
+    formula: n_valid_g_answers_equivalent_to_y0 / n_valid_g_answers
+    missing_when: y0_unextractable_or_no_valid_g_answers
+
+  - name: g_mode_share_valid
+    group: G
+    type: number_or_null
+    range: [0.0, 1.0]
+    formula: largest_equivalence_class_count / n_valid_g_answers
+    missing_when: no_valid_g_answers
+
+  - name: g_answer_entropy_norm
+    group: G
+    type: number_or_null
+    range: [0.0, 1.0]
+    formula: entropy_base2 / log2(n_valid_g_answers) when n_valid_g_answers_gt_1 else 0
+    missing_when: no_valid_g_answers
+
+  - name: g_valid_fraction
+    group: G
+    type: number
+    range: [0.0, 1.0]
+    formula: n_valid_g_answers / configured_g_sample_count
+
+  - name: g_y0_is_mode
+    group: G
+    type: boolean_or_null
+    formula: y0_belongs_to_a_largest_valid_equivalence_class
+    missing_when: y0_unextractable_or_no_valid_g_answers
+
+  - name: v_verdict_correct
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_correct)
+    missing_when: v_report_fallback
+
+  - name: v_verdict_incorrect
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_incorrect)
+    missing_when: v_report_fallback
+
+  - name: v_verdict_uncertain
+    group: V
+    type: binary_or_null
+    formula: one_hot(verdict_is_uncertain)
+    missing_when: v_report_fallback
+
+  - name: v_request_keep
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_KEEP)
+
+  - name: v_request_revise
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_CRITIQUE_REVISE)
+
+  - name: v_request_override
+    group: V
+    type: binary
+    formula: one_hot(effective_registered_request_is_OVERRIDE)
+
+  - name: gv_final_answer_equivalent
+    group: GV
+    type: boolean_or_null
+    formula: mathematical_equivalence(extract(y0), extract(candidate_answer))
+    missing_when: either_answer_unextractable_or_v_report_fallback
+
+  - name: gv_support_y2_valid
+    group: GV
+    type: number_or_null
+    range: [0.0, 1.0]
+    formula: n_valid_g_answers_equivalent_to_y2 / n_valid_g_answers
+    missing_when: y2_unextractable_or_no_valid_g_answers_or_v_report_fallback
+
+  - name: gv_y2_is_g_mode
+    group: GV
+    type: boolean_or_null
+    formula: y2_belongs_to_a_largest_valid_g_equivalence_class
+    missing_when: y2_unextractable_or_no_valid_g_answers_or_v_report_fallback
+
+required_raw_counts:
+  - configured_g_sample_count
+  - n_valid_g_answers
+  - equivalence_class_counts
+
+prohibited_fields:
+  - problem_text
+  - raw_model_output
+  - gold
+  - reference_answer
+  - grader_output
+  - u0
+  - u1
+  - u2
+  - z0
+  - z1
+  - z2
+  - oracle_label
+  - best_cap_label
+  - y1_or_other_post_action_information
+
+ablation_groups:
+  G_only:
+    - g_support_y0_valid
+    - g_mode_share_valid
+    - g_answer_entropy_norm
+    - g_valid_fraction
+    - g_y0_is_mode
+  V_only:
+    - v_verdict_correct
+    - v_verdict_incorrect
+    - v_verdict_uncertain
+    - v_request_keep
+    - v_request_revise
+    - v_request_override
+  GV_added:
+    - gv_final_answer_equivalent
+    - gv_support_y2_valid
+    - gv_y2_is_g_mode

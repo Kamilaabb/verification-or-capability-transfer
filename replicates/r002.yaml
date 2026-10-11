@@ -1,0 +1,44 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r002
+status: dev30_only
+
+generator:
+  replicates:
+    - replicate_id: g01
+      base_seed: 20260910
+
+verifier:
+  replicates:
+    - replicate_id: v01
+      base_seed: 20260910
+
+rewrite:
+  deterministic_decoding_expected: true
+  replicates:
+    - replicate_id: w01
+      base_seed: 20260910
+
+controller_inference:
+  purpose: one_small_dev30_diagnostic_run
+  paired_between_binary_and_ternary: true
+  select_best_seed: forbidden
+  replicates:
+    - replicate_id: c01
+      base_seed: 2026091401
+
+analysis:
+  bootstrap_seed: 20260913
+  bootstrap_repetitions: 10000
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields:
+    - replicate_plan_id
+    - scope
+    - replicate_id
+    - base_seed
+    - cell_id
+    - problem_id
+    - sample_index
+  menu_excluded_so_c2_c3_are_paired: true
+  same_seed_on_format_retry: true

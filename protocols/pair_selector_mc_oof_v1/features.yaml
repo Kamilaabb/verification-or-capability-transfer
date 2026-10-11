@@ -1,0 +1,333 @@
+schema_version: feature-contract-v1
+feature_set_id: mc_pair_scalar_v1
+source: authority_allocation.mc_pair_features unchanged
+feature_sets:
+  F1:
+    g:
+    - g_n_options
+    - g_question_char_count
+    - g_prompt_tokens
+    - g_answer_parseable
+    - g_output_token_count
+    - g_truncated
+    - g_out_lp_mean
+    - g_out_lp_min
+    - g_out_lp_p10
+    - g_out_lp_std
+    - g_out_ent_mean
+    - g_out_ent_p90
+    - g_out_ent_max
+    - g_out_margin_mean
+    - g_out_margin_p10
+    - g_out_max_logit_mean
+    - g_out_lowconf_frac
+    - g_out_lowconf_run
+    - g_ans_lp
+    - g_ans_ent
+    - g_ans_margin
+    - g_ans_max_logit
+    v:
+    - v_n_options
+    - v_question_char_count
+    - v_prompt_tokens
+    - v_answer_parseable
+    - v_output_token_count
+    - v_truncated
+    - v_out_lp_mean
+    - v_out_lp_min
+    - v_out_lp_p10
+    - v_out_lp_std
+    - v_out_ent_mean
+    - v_out_ent_p90
+    - v_out_ent_max
+    - v_out_margin_mean
+    - v_out_margin_p10
+    - v_out_max_logit_mean
+    - v_out_lowconf_frac
+    - v_out_lowconf_run
+    - v_ans_lp
+    - v_ans_ent
+    - v_ans_margin
+    - v_ans_max_logit
+  F2:
+    g:
+    - g_n_options
+    - g_question_char_count
+    - g_prompt_tokens
+    - g_answer_parseable
+    - g_output_token_count
+    - g_truncated
+    - g_out_lp_mean
+    - g_out_lp_min
+    - g_out_lp_p10
+    - g_out_lp_std
+    - g_out_ent_mean
+    - g_out_ent_p90
+    - g_out_ent_max
+    - g_out_margin_mean
+    - g_out_margin_p10
+    - g_out_max_logit_mean
+    - g_out_lowconf_frac
+    - g_out_lowconf_run
+    - g_ans_lp
+    - g_ans_ent
+    - g_ans_margin
+    - g_ans_max_logit
+    - g_opt_p_chosen
+    - g_opt_mass
+    - g_opt_entropy
+    - g_opt_margin
+    - g_opt_n_plausible
+    - g_opt_logit_gap
+    - g_opt_chosen_is_top
+    - g_n_letters_mentioned
+    - g_n_answer_lines
+    - g_first_letter_is_final
+    - g_n_hedges
+    - g_n_eliminations
+    - g_n_selfcorrect
+    - g_digit_share
+    - g_n_numbers
+    - g_n_equals
+    - category_biology
+    - category_business
+    - category_chemistry
+    - category_computer_science
+    - category_economics
+    - category_engineering
+    - category_health
+    - category_history
+    - category_law
+    - category_math
+    - category_other
+    - category_philosophy
+    - category_physics
+    - category_psychology
+    - origin_ori_mmlu
+    - origin_stemez
+    - origin_theoremQA
+    - origin_scibench
+    v:
+    - v_n_options
+    - v_question_char_count
+    - v_prompt_tokens
+    - v_answer_parseable
+    - v_output_token_count
+    - v_truncated
+    - v_out_lp_mean
+    - v_out_lp_min
+    - v_out_lp_p10
+    - v_out_lp_std
+    - v_out_ent_mean
+    - v_out_ent_p90
+    - v_out_ent_max
+    - v_out_margin_mean
+    - v_out_margin_p10
+    - v_out_max_logit_mean
+    - v_out_lowconf_frac
+    - v_out_lowconf_run
+    - v_ans_lp
+    - v_ans_ent
+    - v_ans_margin
+    - v_ans_max_logit
+    - v_opt_p_chosen
+    - v_opt_mass
+    - v_opt_entropy
+    - v_opt_margin
+    - v_opt_n_plausible
+    - v_opt_logit_gap
+    - v_opt_chosen_is_top
+    - v_n_letters_mentioned
+    - v_n_answer_lines
+    - v_first_letter_is_final
+    - v_n_hedges
+    - v_n_eliminations
+    - v_n_selfcorrect
+    - v_digit_share
+    - v_n_numbers
+    - v_n_equals
+    - category_biology
+    - category_business
+    - category_chemistry
+    - category_computer_science
+    - category_economics
+    - category_engineering
+    - category_health
+    - category_history
+    - category_law
+    - category_math
+    - category_other
+    - category_philosophy
+    - category_physics
+    - category_psychology
+    - origin_ori_mmlu
+    - origin_stemez
+    - origin_theoremQA
+    - origin_scibench
+  F3:
+    g: &id001
+    - g_n_options
+    - g_question_char_count
+    - g_prompt_tokens
+    - g_answer_parseable
+    - g_output_token_count
+    - g_truncated
+    - g_out_lp_mean
+    - g_out_lp_min
+    - g_out_lp_p10
+    - g_out_lp_std
+    - g_out_ent_mean
+    - g_out_ent_p90
+    - g_out_ent_max
+    - g_out_margin_mean
+    - g_out_margin_p10
+    - g_out_max_logit_mean
+    - g_out_lowconf_frac
+    - g_out_lowconf_run
+    - g_ans_lp
+    - g_ans_ent
+    - g_ans_margin
+    - g_ans_max_logit
+    - g_opt_p_chosen
+    - g_opt_mass
+    - g_opt_entropy
+    - g_opt_margin
+    - g_opt_n_plausible
+    - g_opt_logit_gap
+    - g_opt_chosen_is_top
+    - g_n_letters_mentioned
+    - g_n_answer_lines
+    - g_first_letter_is_final
+    - g_n_hedges
+    - g_n_eliminations
+    - g_n_selfcorrect
+    - g_digit_share
+    - g_n_numbers
+    - g_n_equals
+    - v_n_options
+    - v_question_char_count
+    - v_prompt_tokens
+    - v_answer_parseable
+    - v_output_token_count
+    - v_truncated
+    - v_out_lp_mean
+    - v_out_lp_min
+    - v_out_lp_p10
+    - v_out_lp_std
+    - v_out_ent_mean
+    - v_out_ent_p90
+    - v_out_ent_max
+    - v_out_margin_mean
+    - v_out_margin_p10
+    - v_out_max_logit_mean
+    - v_out_lowconf_frac
+    - v_out_lowconf_run
+    - v_ans_lp
+    - v_ans_ent
+    - v_ans_margin
+    - v_ans_max_logit
+    - v_opt_p_chosen
+    - v_opt_mass
+    - v_opt_entropy
+    - v_opt_margin
+    - v_opt_n_plausible
+    - v_opt_logit_gap
+    - v_opt_chosen_is_top
+    - v_n_letters_mentioned
+    - v_n_answer_lines
+    - v_first_letter_is_final
+    - v_n_hedges
+    - v_n_eliminations
+    - v_n_selfcorrect
+    - v_digit_share
+    - v_n_numbers
+    - v_n_equals
+    - category_biology
+    - category_business
+    - category_chemistry
+    - category_computer_science
+    - category_economics
+    - category_engineering
+    - category_health
+    - category_history
+    - category_law
+    - category_math
+    - category_other
+    - category_philosophy
+    - category_physics
+    - category_psychology
+    - origin_ori_mmlu
+    - origin_stemez
+    - origin_theoremQA
+    - origin_scibench
+    - same_letter
+    - both_parseable
+    - xor_parseable
+    - xor_truncated
+    - option_js
+    - g_letter_rank_in_v
+    - v_letter_rank_in_g
+    - v_prob_of_g_letter
+    - g_prob_of_v_letter
+    - diff_out_lp_mean
+    - diff_out_ent_mean
+    - diff_out_margin_mean
+    - diff_out_lowconf_frac
+    - diff_ans_lp
+    - diff_ans_ent
+    - diff_ans_margin
+    - diff_opt_p_chosen
+    - diff_opt_entropy
+    - diff_opt_margin
+    - diff_output_token_count
+    - diff_n_letters_mentioned
+    v: *id001
+members:
+  primary:
+  - - F2
+    - A
+    - l2
+  - - F3
+    - A
+    - gbt
+  secondary:
+  - - F2
+    - A
+    - l2
+seeds:
+- 20260925
+- 20260926
+- 20260927
+- 20260928
+- 20260929
+outer_folds: 5
+inner_folds: 5
+grids:
+  l2:
+    m__C:
+    - 0.01
+    - 0.1
+    - 1
+    - 10
+  gbt:
+    m__max_depth:
+    - 2
+    - 3
+    m__learning_rate:
+    - 0.05
+    - 0.1
+    m__max_iter:
+    - 100
+    - 300
+hyperparameter_selection: inner training folds only; neg_log_loss
+tie: V
+preprocessing:
+  l2: SimpleImputer(median,add_indicator=True); StandardScaler; LogisticRegression(max_iter=5000)
+  gbt: native missing; HistGradientBoostingClassifier(seed)
+forbidden_in_inference:
+- problem_id
+- gold
+- grades
+- u0
+- official_parser
+- run_metadata

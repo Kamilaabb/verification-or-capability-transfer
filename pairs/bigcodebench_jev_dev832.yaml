@@ -1,0 +1,32 @@
+schema_version: external-judge-reference-v1
+analysis_id: code_jev_double_order_v1
+status: frozen_before_first_call
+dataset_id: bigcodebench-b74c0d0-instruct-s20260917
+split: development
+rows: 832
+pair_registry: pairs/bigcodebench_screen_dev832.yaml
+pair_count: 45
+upstream_conditions: [c100, c101, c102, c103, c104, c105, c106, c107, c108, c109]
+protocol_reference: protocols/code_solve_v1/README.md
+replicate_reference: r015
+scope: exploratory_external_judge_reference_no_training
+endpoint: https://api.typesafe.ai/v1/systemone
+model: jev-latest
+instructions: Which response provides a correct Python solution that satisfies the programming task?
+criteria:
+  A: Response A's program correctly satisfies the task requirements
+  B: Response B's program correctly satisfies the task requirements
+request_content: [problem_text, first_independent_raw_output, second_independent_raw_output]
+forbidden_content: [gold, canonical_solution, tests, grades, problem_id, model_identity, run_metadata]
+orders: [GV, VG]
+choice: mean_probability_of_v_greater_than_or_equal_to_0.5
+tie_and_failed_order: deliver_v
+identical_raw_outputs: deliver_v_without_call
+same_program_different_text: judge_both_orders
+v_identity: frozen_stronger_side_in_existing_pair_registry
+decisions_written_before_grade_read: true
+test_manifest_read: false
+cache_key: sha256_of_complete_request_body
+workers: 2
+price_estimate_usd_per_million_input_tokens: 0.042
+price_is_invoice: false

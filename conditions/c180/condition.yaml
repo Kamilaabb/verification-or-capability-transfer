@@ -1,0 +1,43 @@
+schema_version: condition-overlay-v1
+condition_id: c180
+status: registered_pending_run
+extends: conditions/c172/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c180
+  status: registered_pending_run
+  purpose: qwen3_32b_reviewer_of_c121_mmlu_pro_test1500_4096
+
+  gate:
+    scope_limit: >-
+      Test for docs/plan/mmlu_pro_study.md section 16, requested by the user: Qwen3-32B reviews c121's Qwen2.5-3B test1500 outputs: c172 with only the manifest, the source of the reviewed outputs, evidence schema id and seed cell changed.
+      The same 1,500 test rows as c081-c084. Nothing measured on these rows is used to fit, tune or choose anything.
+
+  dataset:
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: a22d72830c08b2010f44500e9353b948b1adce0591369e62ac7e1e6eb35c6e4e
+    development_only: false
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c170_c183_v1.json
+
+  generator_source:
+    condition_id: c121
+    artifact_path: /path/to/project/artifacts/20260928T112019Z__c121__mmlupro-test1500__r014_solve4096
+    pass1_run_id: 20260928T112019Z__c121__mmlupro-test1500__r014_solve4096__pass1__p01
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    seed_cell_id: c180
+
+  runnable_gate:
+    required_before_submission:
+      - c180 differs from c172 only in the dataset manifest, evidence schema id, seed cell, generator source and text
+      - the manifest hash equals the test1500 registration in the dataset file
+      - the c121 source archive passes its checksums, holds exactly 1500 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

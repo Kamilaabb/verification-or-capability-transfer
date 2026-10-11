@@ -1,0 +1,53 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r005
+status: gate1_code_domain
+
+generator:
+  replicates:
+    - {replicate_id: g01, base_seed: 20260917}
+  note: >-
+    Temperature is 0, so the seed does not steer sampling; it is registered anyway
+    because the call-seed derivation is part of the contract and must be reproducible.
+
+verifier:
+  replicates:
+    - {replicate_id: v01, base_seed: 20260917}
+
+rewrite:
+  replicates:
+    - {replicate_id: w01, base_seed: 20260917}
+  note: >-
+    New scope in this plan. r004 declared rewrite absent because Gate 0 skipped the
+    stage, and r004 cannot be extended: c006 is a completed run that references it.
+
+analysis:
+  bootstrap_seed: 20260917
+  bootstrap_repetitions: 10000
+
+absent_scopes:
+  controller_inference: gate_1_runs_no_controller
+  controller_training: deferred_until_gate_1_shows_which_cell_is_live
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields: [replicate_plan_id, scope, replicate_id, base_seed, cell_id, problem_id, sample_index]
+  same_seed_on_format_retry: true
+
+seed_discontinuity_across_the_reused_prefix:
+  what: >-
+    The 300 reused rows were drawn under r004; the 532 new rows are drawn under r005.
+    replicate_plan_id is an input to the derivation, so the two segments carry seeds
+    from different derivations even though base_seed is unchanged.
+  why_unavoidable: >-
+    Extending r004 with a rewrite scope would alter a plan that the completed c006 run
+    references, and completed runs are immutable.
+  why_it_does_not_bias: >-
+    The derivation is a sha256 of registered fields, so neither segment's seeds are
+    systematically higher, lower or more correlated than the other's. Model, prompt,
+    schema and decoding are identical across all 832 rows; only the seed values differ,
+    as they already do between any two problem_ids. G is at temperature 0 and unaffected
+    either way.
+  what_must_be_reported: >-
+    Any Gate 1 result that splits the 832 rows at the 300 boundary must say so, because
+    that boundary is also the reuse boundary and a difference there has two candidate
+    explanations, not one.

@@ -1,0 +1,17 @@
+schema_version: ungradeable-gold-v1
+dataset_id: olympiadbench-r91184b5-oe-to-maths-en-s20261001
+registered_on: 2026-10-01
+
+rule: >-
+  As for mathfull: a problem whose reference answer the registered grader parses to a non-finite
+  value (zoo or nan) cannot be graded and would be excluded from every system's accuracy. Here the
+  builder already excluded such rows (gold_nonfinite), so this list is empty; the file exists so
+  the shared analysis reads the same rule file for every math dataset.
+
+scan:
+  parser: run_c002_dev30.math_parse_gold
+  predicate: the parsed string contains the token zoo or nan
+  eval_rows: 571
+  eval_hits: 0
+
+ungradeable: []

@@ -1,0 +1,44 @@
+schema_version: condition-overlay-v1
+condition_id: c078
+status: registered_pending_run
+extends: conditions/c070/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c078
+  status: registered_pending_run
+  purpose: mistral_small_24b_solo_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      Mistral-Small-24B-Instruct-2501 alone on MMLU-Pro dev1000 for docs/plan/mmlu_pro_study.md, requested by the user
+      to run every mathfull model in the knowledge domain: c070 with only the model changed,
+      to c054's registered identity (including its chat-template inputs). Same frozen solve
+      prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0 sent, same-forward
+      capture. Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c074_c079_v1.json
+
+  model:
+    model_id: mistralai/Mistral-Small-24B-Instruct-2501
+    revision: 9527884be6e5616bdd54de542f9ae13384489724
+    tokenizer_revision: 9527884be6e5616bdd54de542f9ae13384489724
+    provenance: conditions/c054/model_provenance.json
+    identity_reference: c054
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Mistral-Small-24B-Instruct-2501/9527884be6e5616bdd54de542f9ae13384489724
+    chat_template_hash: 3934d199bfe5b6fab5cba1b5f8ee475e8d5738ac315f21cb09545b4e665cc005
+    chat_template_kwargs: {date_string: 26 Jul 2024}
+
+  replicates:
+    seed_cell_id: c078
+
+  runnable_gate:
+    required_before_submission:
+      - c078 differs from c070 only in model identity, evidence schema id, seed cell and text
+      - model identity fields, chat-template inputs included, equal c054's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

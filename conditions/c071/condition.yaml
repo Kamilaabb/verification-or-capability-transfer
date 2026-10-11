@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c071
+status: registered_pending_run
+extends: conditions/c070/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c071
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      Qwen3-8B alone for docs/plan/mmlu_pro_study.md, paired with c070: c070 with only the
+      model changed to Qwen3-8B (c026's identity), never shown any other output. Development
+      only; the sealed test manifest is not touched.
+
+  model:
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    tokenizer_revision: b968826d9c46dd6066d109eabc6255188de91218
+    provenance: null
+    identity_reference: c026
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+
+  replicates:
+    seed_cell_id: c071
+
+  runnable_gate:
+    required_before_submission:
+      - c071 differs from c070 only in model identity, seed cell and text
+      - model identity fields equal c026's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

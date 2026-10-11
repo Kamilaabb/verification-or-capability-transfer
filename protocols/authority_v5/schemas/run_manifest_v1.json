@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run_manifest_v1.json",
+  "title": "Authority Allocation run manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "protocol_id", "dataset_id", "condition_id",
+    "condition_hash", "replicate_plan_id", "replicate_ids", "stage", "run_kind",
+    "source_run_ids", "git_commit", "status", "environment", "hardware",
+    "started_at_utc", "ended_at_utc", "input_artifacts", "output_artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "run-manifest-v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "protocol_id": {"type": "string", "minLength": 1},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_plan_id": {"type": "string", "minLength": 1},
+    "replicate_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "stage": {"type": "string", "enum": ["dev30", "pilot300", "test"]},
+    "run_kind": {"type": "string", "enum": ["generate", "verify", "rewrite", "evidence", "grade", "controller_train", "controller_infer", "analysis"]},
+    "source_run_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "git_commit": {"type": "string", "pattern": "^[a-fA-F0-9]{40}$"},
+    "status": {"type": "string", "enum": ["planned", "running", "completed", "validated", "failed", "cancelled"]},
+    "environment": {"type": "object", "additionalProperties": {"type": ["string", "number", "integer", "boolean", "null"]}},
+    "hardware": {"type": "object", "additionalProperties": {"type": ["string", "number", "integer", "boolean", "null"]}},
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "ended_at_utc": {"type": ["string", "null"], "format": "date-time"},
+    "retry_of": {"type": ["string", "null"]},
+    "input_artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "output_artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "failure": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["stage", "error_type", "message", "recoverable"],
+      "properties": {
+        "stage": {"type": "string"},
+        "error_type": {"type": "string"},
+        "message": {"type": "string"},
+        "recoverable": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "rows", "bytes"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "rows": {"type": ["integer", "null"], "minimum": 0},
+        "bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

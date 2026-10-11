@@ -1,0 +1,93 @@
+schema_version: condition-v1
+condition_id: c016
+status: validated_development_diagnostic
+purpose: qwen3_4b_thinking_on_pass1_4096_math_dev300
+path_base: repository_root
+
+protocol:
+  id: base_solver_v1
+  path: protocols/base_solver_v1/README.md
+  grader_contract: protocols/authority_v5/grader_math_verify_v1.yaml
+  record_schemas:
+    pass1: protocols/base_solver_v1/schemas/thinking_pass1_record_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: math500-r6e4ed1-l3to5-dev300-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-dev300-s20260910/dataset.yaml
+  manifest: pilot300
+  manifest_rows: 300
+  manifest_sha256: 82b81514679262eac8c3e970a774ab083d769df1c38b0f43a470ef7927c90971
+  development_only: true
+
+model:
+  role_ids: [pass1]
+  y0_selection: sample_index_0_unconditionally
+  kind: llm
+  model_id: Qwen/Qwen3-4B
+  revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  provenance: conditions/c014/model_provenance.json
+  identity_reused_from: c014
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-4B/1cfa9a7208912126459214e8b04321603b3df60c
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  thinking: true
+  reasoning_parser: qwen3
+  prompt_pass1: conditions/c002/prompts/g_initial_v1.txt
+  pass1_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 4096
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  finalizer:
+    enabled: false
+  retry_generation: false
+  preflight_job: null
+
+replicates:
+  plan_id: r008
+  path: replicates/r008.yaml
+  replicate_id: p01
+  call_seed: 42
+  call_seed_scope: constant_for_every_problem
+
+grading:
+  answer_source: final_content_only
+  length_finish_policy: grade_if_answer_extractable_otherwise_wrong
+  unextractable_policy: u0_zero_model_invalid
+  grader_error_policy: u0_null_run_invalid_for_accuracy
+
+analysis:
+  required_metrics: [accuracy, correct_count, finish_reason_distribution,
+    length_finish_count, length_finish_extractable, length_finish_correct,
+    unextractable_count, reasoning_present_count, output_token_summary]
+  confirmatory_claims: forbidden
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [behavioral_condition_fields, referenced_prompt_bytes,
+    protocol_component_hashes, immutable_model_revision, chat_template_hash]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id,
+    timestamps, run_id, preflight_job]
+
+change_policy:
+  completed_runs_are_immutable: true
+  model_prompt_thinking_budget_backend_or_grading_change_creates_new_condition: true
+
+runnable_gate:
+  required_before_submission:
+    - model revision, tokenizer revision, server path and chat template hash are frozen
+    - model.thinking is true
+    - model.reasoning_parser is qwen3
+    - pass1 max_new_tokens is 4096 and temperature is 0
+    - call seed is exactly 42
+    - finalizer and generation retries are disabled

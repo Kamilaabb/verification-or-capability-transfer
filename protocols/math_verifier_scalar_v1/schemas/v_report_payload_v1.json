@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "math_verifier_report_payload_v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdict", "action", "error_location", "critique", "corrected_content", "final_answer"],
+  "properties": {
+    "verdict": {"type": "string", "enum": ["CORRECT", "INCORRECT", "UNCERTAIN"]},
+    "action": {"type": "string", "enum": ["KEEP", "CRITIQUE_REFINE"]},
+    "error_location": {"type": ["string", "null"]},
+    "critique": {"type": "string", "minLength": 1},
+    "corrected_content": {"type": ["string", "null"]},
+    "final_answer": {"type": "string", "minLength": 1}
+  }
+}

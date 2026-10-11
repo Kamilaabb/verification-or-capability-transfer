@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "math_expression_scalar_evidence_record_c249_v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_pass1_run_id",
+    "source_logit_run_id", "condition_id", "condition_hash", "problem_id",
+    "parser_id", "features", "missingness", "math_spans", "math_token_indices",
+    "math_token_count", "output_token_count", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "math-expression-scalar-evidence-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_pass1_run_id": {"type": "string", "minLength": 1},
+    "source_logit_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c249"},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "parser_id": {"const": "math_expression_spans_v1"},
+    "features": {
+      "type": "object", "additionalProperties": false,
+      "required": ["g_math_expression_mean_max_logit", "g_math_expression_mean_logprob",
+        "g_answer_parseable", "problem_char_count", "g_output_char_count",
+        "g_output_mean_max_logit", "g_output_mean_logprob"],
+      "properties": {
+        "g_math_expression_mean_max_logit": {"type": ["number", "null"]},
+        "g_math_expression_mean_logprob": {"type": ["number", "null"], "maximum": 0},
+        "g_answer_parseable": {"type": "integer", "minimum": 0, "maximum": 1},
+        "problem_char_count": {"type": "integer", "minimum": 0},
+        "g_output_char_count": {"type": "integer", "minimum": 0},
+        "g_output_mean_max_logit": {"type": ["number", "null"]},
+        "g_output_mean_logprob": {"type": ["number", "null"], "maximum": 0}
+      }
+    },
+    "missingness": {
+      "type": "object", "additionalProperties": false,
+      "required": ["g_math_expression_mean_max_logit", "g_math_expression_mean_logprob",
+        "g_answer_parseable", "problem_char_count", "g_output_char_count",
+        "g_output_mean_max_logit", "g_output_mean_logprob"],
+      "properties": {
+        "g_math_expression_mean_max_logit": {"type": "boolean"},
+        "g_math_expression_mean_logprob": {"type": "boolean"},
+        "g_answer_parseable": {"const": false},
+        "problem_char_count": {"const": false},
+        "g_output_char_count": {"const": false},
+        "g_output_mean_max_logit": {"type": "boolean"},
+        "g_output_mean_logprob": {"type": "boolean"}
+      }
+    },
+    "math_spans": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": false,
+        "required": ["start", "end", "kind"],
+        "properties": {"start": {"type": "integer", "minimum": 0},
+          "end": {"type": "integer", "minimum": 1}, "kind": {"type": "string"}}}
+    },
+    "math_token_indices": {"type": "array", "uniqueItems": true,
+      "items": {"type": "integer", "minimum": 0}},
+    "math_token_count": {"type": "integer", "minimum": 0},
+    "output_token_count": {"type": "integer", "minimum": 0},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  }
+}
+

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_training_target_v1.json",
+  "title": "Authority v6 multi-output cap correctness target",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "problem_id", "cell_id", "source_evidence_record_id", "evidence_sha256", "cap_outcomes", "oracle_actions", "minimal_oracle_action"],
+  "properties": {
+    "schema_version": {"const": "controller-training-target-v1"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "cell_id": {"type": "string", "minLength": 1},
+    "source_evidence_record_id": {"type": "string", "minLength": 1},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "cap_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["M0", "M1", "M2"],
+      "properties": {
+        "M0": {"type": "integer", "enum": [0, 1]},
+        "M1": {"type": "integer", "enum": [0, 1]},
+        "M2": {"type": "integer", "enum": [0, 1]}
+      }
+    },
+    "oracle_actions": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["M0", "M1", "M2"]},
+      "uniqueItems": true
+    },
+    "minimal_oracle_action": {"type": ["string", "null"], "enum": ["M0", "M1", "M2", null]}
+  }
+}

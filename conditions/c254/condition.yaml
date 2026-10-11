@@ -1,0 +1,36 @@
+schema_version: condition-overlay-v1
+condition_id: c254
+status: registered_pending_run
+extends: conditions/c204/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c254
+  status: registered_pending_run
+  purpose: c204_on_olympiadbench_eval
+
+  gate:
+    scope_limit: >-
+      The OlympiadBench one-pair extension (docs/plan/olympiadbench_extension.md): c204 (Ministral-8B-Instruct-2410 alone, frozen solve prompt v2, greedy, 4096 tokens) on
+      the 571-row OlympiadBench manifest (English, text-only, open-ended competition maths); nothing else
+      changed. The pair Ministral-8B / Qwen3-8B was fixed before any model saw these problems.
+
+  dataset:
+    id: olympiadbench-r91184b5-oe-to-maths-en-s20261001
+    path: datasets/olympiadbench-r91184b5-oe-to-maths-en-s20261001/dataset.yaml
+    manifest: eval
+    manifest_rows: 571
+    manifest_sha256: ebc2e872eef4255b81e99a12bd4df59147db0468ee36856118eb67054f3ebe78
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_olympiad_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c254_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c254

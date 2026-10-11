@@ -1,0 +1,53 @@
+schema_version: condition-overlay-v1
+condition_id: c198
+status: registered_pending_run
+extends: conditions/c073/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c198
+  status: registered_pending_run
+  purpose: qwen3_4b_reviewer_of_c193_qwen3_8b_nlreason_eval901_4096
+
+  gate:
+    scope_limit: >-
+      GV on the NL-reasoning domain (docs/plan/nl_reasoning_study.md), the second pair: Qwen3-4B (c073's identity and prompt) reviews
+      c193's outputs under the frozen review prompt. c073 with only the dataset, the source of the reviewed
+      outputs, evidence schema id, stages, seed cell and text changed; delivery as c072/c073 (primary: the
+      reviewer's letter, the reviewed model's when the reviewer's is unparseable; strict: unparseable counts
+      as wrong). Measurement only; nothing is chosen on this dataset.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c196_c198_v1.json
+
+  dataset:
+    id: nlreason-gpqad-reclorval-foliov2-s20261001
+    path: datasets/nlreason-gpqad-reclorval-foliov2-s20261001/dataset.yaml
+    manifest: eval
+    manifest_rows: 901
+    manifest_sha256: 8863943a027a11525ce2ffc999fd00724a117b99ece466cf4253d431cee19990
+    development_only: false
+    source_loader: scripts/run_nl_reasoning.py load_nl_rows
+
+  generator_source:
+    condition_id: c193
+    artifact_path: /path/to/project/artifacts/20261001T074355Z__c193__nlreason-eval901__r014_solve4096
+    pass1_run_id: 20261001T074355Z__c193__nlreason-eval901__r014_solve4096__pass1__p01
+    model_id: Qwen/Qwen3-8B
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    seed_cell_id: c198
+
+  stages:
+    run: [reuse_c193_outputs, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c198 differs from c073 only in dataset, generator source, evidence schema id, stages, seed cell and text
+      - the c193 source archive passes its checksums, holds exactly 901 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - the manifest hash equals the dataset registration and the content file's sha256 equals source_rows.sha256
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

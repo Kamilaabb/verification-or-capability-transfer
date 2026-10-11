@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "code_grade_record_v1.json",
+  "title": "Authority v6 per-outcome grading record for the code domain",
+  "description": "The runner has stamped schema_version code-grade-record-v1 on these rows since c005, but no schema by that name existed anywhere in the repository. These rows carry u0, u1 and u2 — the measurements every Gate result is computed from — so they were the least shaped and the most load-bearing records in the run. Written from what scripts/run_c005_gate0.py emits and what scripts/bigcodebench_grade.py returns, and checked against the archived c006 grades. Identity fields are not pinned to one condition, for the reason recorded in g_record_single_v3.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "run_id", "condition_id", "condition_hash", "stage",
+    "problem_id", "outcome", "u", "status", "detail", "seconds", "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "code-grade-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "stage": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "outcome": {"type": "string", "enum": ["u0", "u1", "u2"]},
+    "u": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "status": {
+      "type": "string",
+      "enum": ["ok", "model_invalid", "grader_error"],
+      "description": "model_invalid means no usable program was recovered, which is also how a deferred rewrite resolves. grader_error is a pipeline fault and nulls u; protocols/authority_v5/README.md section 5 refuses to validate a run on top of one."
+    },
+    "detail": {"type": ["string", "null"]},
+    "seconds": {"type": "number", "minimum": 0},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "grader_error"}}, "required": ["status"]},
+      "then": {"properties": {"u": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"status": {"enum": ["ok", "model_invalid"]}}, "required": ["status"]},
+      "then": {"properties": {"u": {"type": "integer"}}}
+    }
+  ]
+}

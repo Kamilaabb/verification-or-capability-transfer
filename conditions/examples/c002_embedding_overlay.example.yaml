@@ -1,0 +1,35 @@
+# Documentation example only; this is not an active condition.
+schema_version: condition-overlay-v1
+condition_id: c002
+status: example_not_runnable
+extends: conditions/c001/condition.yaml
+
+overrides:
+  protocol:
+    id: authority_v6
+    path: protocols/authority_v6/README.md
+    feature_contract: protocols/authority_v6/features_scalar_plus_embedding_v1.yaml
+    feature_set_id: scalar_plus_embedding_v1
+    input_schema: protocols/authority_v6/schemas/controller_input_payload_v1.json
+
+  feature_extractors:
+    embedding:
+      kind: text_embedding
+      model_id: REPLACE_WITH_MODEL_ID
+      revision: REQUIRED_BEFORE_RUN
+      server_path: REQUIRED_BEFORE_RUN
+      source_fields: [problem_text, y0, v_critique, v_candidate_answer]
+      decision_time: after_v_report_before_action
+      pooling: REPLACE_WITH_POOLING_RULE
+      output_dimension: REPLACE_WITH_INTEGER
+      normalize: REPLACE_WITH_BOOLEAN
+      max_input_tokens: REPLACE_WITH_INTEGER
+      truncation: REPLACE_WITH_RULE
+      dtype: REPLACE_WITH_DTYPE
+
+  controller:
+    feature_set_id: scalar_plus_embedding_v1
+
+invalidation:
+  reuse: [dataset, g_outputs, v_reports, rewrites]
+  rerun_from: embedding_evidence

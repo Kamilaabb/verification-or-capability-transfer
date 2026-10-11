@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_input_payload_single_v3.json",
+  "title": "Authority v6 scalar_single_v3 Controller payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["features", "missingness"],
+  "properties": {
+    "features": {"$ref": "controller_evidence_record_single_v3.json#/$defs/features"},
+    "missingness": {"$ref": "controller_evidence_record_single_v3.json#/$defs/missingness"}
+  }
+}

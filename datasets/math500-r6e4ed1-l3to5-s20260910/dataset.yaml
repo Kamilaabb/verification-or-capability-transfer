@@ -1,0 +1,58 @@
+schema_version: dataset-v1
+dataset_id: math500-r6e4ed1-l3to5-s20260910
+status: frozen_on_server
+
+source:
+  provider: huggingface
+  name: HuggingFaceH4/MATH-500
+  revision: 6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be
+  split: test
+  total_rows: 500
+
+selection:
+  level_field: level
+  allowed_levels: [3, 4, 5]
+  selected_rows: 367
+  counts_by_level:
+    "3": 105
+    "4": 128
+    "5": 134
+
+sampling:
+  sort_key: unique_id
+  sort_order: ascending
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  seed: 20260910
+  assignment: first_30_dev30_next_300_pilot300_remaining_37_unused37
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  dev30:
+    purpose: development
+    server_path: /path/to/project/data/manifests/math500-r6e4ed1-l3to5-s20260910/dev30.jsonl
+    rows: 30
+    sha256: 1f42d73b002c41286198355c63951d3bb3688dedb8fedfa159310a4b3ac35b88
+  pilot300:
+    purpose: frozen_exploratory_pilot
+    server_path: /path/to/project/data/manifests/math500-r6e4ed1-l3to5-s20260910/pilot300.jsonl
+    rows: 300
+    sha256: 82b81514679262eac8c3e970a774ab083d769df1c38b0f43a470ef7927c90971
+  unused37:
+    purpose: unused_not_replacement_pool
+    server_path: /path/to/project/data/manifests/math500-r6e4ed1-l3to5-s20260910/unused37.jsonl
+    rows: 37
+    sha256: 6a51df3d597f6f1e827006afbaa2143d3017eb828198fd31fd6e06a0569a6662
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  pilot_may_tune_design: false

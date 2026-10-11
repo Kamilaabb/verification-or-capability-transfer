@@ -1,0 +1,43 @@
+schema_version: condition-overlay-v1
+condition_id: c025
+status: registered_pending_run
+extends: conditions/c022/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c025
+  status: registered_pending_run
+  purpose: qwen3_4b_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      G alone on mathfull dev1000 under the frozen solve prompt v2
+      (docs/plan/gv_vs_max_g_v_study.md section 4.7). c022 with only the prompt changed:
+      c022's prompt called the model "the Generator in a mathematical problem-solving
+      experiment" and mentioned a verifier and authority levels; v2 only asks it to solve
+      the problem. Same Qwen3-4B revision, greedy decoding, thinking off, 4096 tokens,
+      same-forward native trace capture and seven-scalar contract. The same prompt file
+      serves V alone (c026). Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c025_v1.json
+
+  model:
+    prompt_pass1: conditions/c025/prompts/g_solve_v2.txt
+    prompt_pass1_provenance: user_written_solve_prompt_v2_frozen_2026-09-25
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c025
+
+  runnable_gate:
+    required_before_submission:
+      - c025 differs from c022 only in prompt, seeds and evidence schema id
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the manifest hash equals the one in the dataset registration
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

@@ -1,0 +1,29 @@
+schema_version: feature-contract-v1
+feature_set_id: math_expression_scalar_v1
+representation: scalar
+decision_time: after_pass1_before_grading
+
+parser:
+  id: math_expression_spans_v1
+  source: src/authority_allocation/math_expression_spans.py
+  token_membership: utf8_byte_overlap_with_union_of_all_parsed_math_spans
+  excludes_markdown_code: true
+  empty_math_token_set: null_aggregates
+
+features:
+  - {name: g_math_expression_mean_max_logit, type: number_or_null}
+  - {name: g_math_expression_mean_logprob, type: number_or_null, range: negative_or_zero}
+  - {name: g_answer_parseable, type: binary}
+  - {name: problem_char_count, type: integer, range: nonnegative}
+  - {name: g_output_char_count, type: integer, range: nonnegative}
+  - {name: g_output_mean_max_logit, type: number_or_null}
+  - {name: g_output_mean_logprob, type: number_or_null, range: negative_or_zero}
+
+audit_fields:
+  - math_spans
+  - math_token_indices
+  - math_token_count
+  - output_token_count
+
+prohibited_fields: [gold, grader_output, u0, correctness]
+

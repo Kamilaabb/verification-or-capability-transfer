@@ -1,0 +1,56 @@
+schema_version: condition-overlay-v1
+condition_id: c273
+status: registered_pending_run
+extends: conditions/c074/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c273
+  status: registered_pending_run
+  purpose: llama32_3b_reviewer_of_c080_qwen25_72b_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      GV for docs/plan/mmlu_pro_study.md section 20, the originally planned pairs with Qwen2.5-72B (user decision 2026-10-02): Llama-3.2-3B (c074's identity) reviews c080's Qwen2.5-72B
+      outputs under the frozen review prompt. c074 with only the prompt, the source of the reviewed
+      outputs, record schemas, delivery, stages and seed cell changed; delivery as c072/c073.
+      Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      review: protocols/text_mc_v1/schemas/mc_review_record_v1.json
+      generator_source: protocols/text_mc_v1/schemas/mc_record_v1.json
+      native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c270_c277_v1.json
+
+  generator_source:
+    condition_id: c080
+    artifact_path: /path/to/project/artifacts/20260927T190124Z__c080__mmlupro-dev1000__r014_solve4096
+    pass1_run_id: 20260927T190124Z__c080__mmlupro-dev1000__r014_solve4096__pass1__p01
+    model_id: Qwen/Qwen2.5-72B-Instruct
+    reuse_records_byte_for_byte: true
+
+  model:
+    prompt_pass1: conditions/c072/prompts/mc_review_v1.txt
+    prompt_pass1_provenance: user_approved_mmlu_pro_review_prompt_v1_frozen_2026-09-26
+    prompt_inputs: [question, options, y0]
+
+  delivery:
+    primary: the reviewer's registered answer letter; the reviewed model's letter when the reviewer's is unparseable
+    strict: the reviewer's letter; reviewer unparseable counts as wrong
+    report_fallback_rows: true
+
+  replicates:
+    seed_cell_id: c273
+
+  stages:
+    run: [reuse_c080_outputs, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c273 differs from c074 only in prompt, generator source, record schemas, delivery, stages, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the c080 source archive passes its checksums, holds exactly 1000 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

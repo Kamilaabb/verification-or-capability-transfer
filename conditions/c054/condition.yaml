@@ -1,0 +1,54 @@
+schema_version: condition-overlay-v1
+condition_id: c054
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c054
+  status: registered_pending_run
+  purpose: mistral_small_24b_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+  gate:
+    scope_limit: 'Mistral-Small-24B-Instruct-2501 alone on mathfull dev1000 under the frozen solve prompt
+      v2, requested by the user. c025 with only the model changed. The snapshot holds only Hugging Face
+      format files, so vLLM serves it through the Hugging Face tokenizer and chat template like every
+      other model. The template has a real system turn ([SYSTEM_PROMPT]) that carries the frozen text
+      verbatim. It calls strftime_now only for its default system prompt, which the registered system
+      turn replaces, so no date reaches the model; date_string is pinned only to satisfy the clock guard
+      and the template ignores it. Unlike Ministral''s, this tokenizer''s split regex does differ from
+      the corrected one: over the 1,000 rendered dev1000 prompts, 5 tokenize differently by 1 to 3 tokens
+      (2 tokens in total). vLLM uses the shipped tokenizer, and that is what is run. Its generation_config
+      sets only temperature, which the request overrides. Development only; the sealed test manifest is
+      not touched.'
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c054_v1.json
+  model:
+    model_id: mistralai/Mistral-Small-24B-Instruct-2501
+    revision: 9527884be6e5616bdd54de542f9ae13384489724
+    tokenizer_revision: 9527884be6e5616bdd54de542f9ae13384489724
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Mistral-Small-24B-Instruct-2501/9527884be6e5616bdd54de542f9ae13384489724
+    provenance: conditions/c054/model_provenance.json
+    chat_template_hash: 3934d199bfe5b6fab5cba1b5f8ee475e8d5738ac315f21cb09545b4e665cc005
+    chat_template_kwargs:
+      date_string: 26 Jul 2024
+    identity_reused_from: null
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_reuse_reason: null
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for c029-c032; a mismatch
+      stops the run before its row is kept.
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c054
+  runnable_gate:
+    required_before_submission:
+    - c054 differs from c025 only in the model identity, seeds and evidence schema id
+    - the model identity fields equal conditions/c054/model_provenance.json
+    - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+    - the manifest hash equals the one in the dataset registration
+    - temperature is 0
+    - local parser and record-schema tests pass

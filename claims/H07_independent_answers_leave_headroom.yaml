@@ -1,0 +1,30 @@
+schema_version: claim-card-v1
+id: H07
+written: '2026-10-04'
+story: 问题三
+statement_zh: 两个模型各自独立作答有互补空间：至少一个答对的题，多于较强者自己答对的题。
+estimand: 每对模型：Δ = P(G 或 V 独立作答对) − P(较强者独立作答对)，即独立作答的上限空间。
+estimand_id: oracle_minus_stronger_solo
+expected_sign: positive
+stronger_side: higher development solo accuracy (all solo data where a domain has no split)
+splits:
+  math:
+  - dev
+  - test
+  knowledge:
+  - dev
+  - test
+  code:
+  - dev
+  nl_reasoning:
+  - dev
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 逐域报告平均 Δ 和 95% 区间。区间不含 0 且与预期同号 → 该域成立；不含 0 且反号 → 该域相反；含 0 → 该域看不出差别。结论按域写，四个域都成立才说普遍成立。看过哪些域只作透明记录。
+seen_when_written:
+  math: seen
+  knowledge: seen
+  code: seen
+  nl_reasoning: not seen (still running on 2026-10-04)
+result: null

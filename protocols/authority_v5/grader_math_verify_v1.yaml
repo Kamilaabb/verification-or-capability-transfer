@@ -1,0 +1,45 @@
+schema_version: grader-contract-v1
+grader_id: math_verify_v1
+library: math-verify
+version: 0.9.0
+antlr_runtime_version: 4.13.2
+
+call:
+  argument_order: verify(gold, prediction)
+  retries_on_tool_error: 1
+
+extraction:
+  gold_and_prediction_use_same_config: true
+  gold_input_serialization: wrap_bare_math500_answer_in_dollar_math_delimiters
+  config_order:
+    - type: LatexExtractionConfig
+      boxed_match_priority: 0
+    - type: ExprExtractionConfig
+  fallback_mode: no_fallback
+  extraction_mode: first_match
+  parsing_timeout_seconds: 10
+  raise_on_error: true
+  empty_or_unextractable_model_answer: model_invalid_output
+  empty_or_unextractable_gold_answer: gold_parse_failure
+
+verification:
+  float_rounding: 6
+  numeric_precision: 15
+  strict: true
+  allow_set_relation_comp: false
+  timeout_seconds: 10
+  raise_on_error: true
+
+outcomes:
+  equivalent: 1
+  not_equivalent: 0
+  model_invalid_output: 0
+  grader_exception: null
+  grader_timeout: null
+  gold_parse_failure: null
+
+validation:
+  any_null_due_to_grader_error_blocks_run_validation: true
+  raised_parse_or_verify_exception_is_never_not_equivalent: true
+  same_rules_for_y0_y1_y2: true
+  audit_before_model_predictions: true

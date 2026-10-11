@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c105
+status: registered_pending_run
+extends: conditions/c100/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c105
+  status: registered_pending_run
+  purpose: ministral_8b_instruct_2410_solo_bigcodebench_instruct_development832_4096
+
+  gate:
+    scope_limit: >-
+      Ministral-8B-Instruct-2410 alone on the 832 BigCodeBench development rows for
+      docs/plan/code_bigcodebench_study.md: c100 with only the model changed, to c032's registered identity (including its chat-template inputs).
+      Same frozen code solve prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0
+      sent, same-forward capture, evidence before grading. Development only; the test
+      manifest is not read.
+
+  model:
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    tokenizer_revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    provenance: conditions/c032/model_provenance.json
+    identity_reference: c032
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Ministral-8B-Instruct-2410/2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    chat_template_hash: e4676cb56dffea7782fd3e2b577cfaf1e123537e6ef49b3ec7caa6c095c62272
+    chat_template_kwargs: null
+
+  replicates:
+    seed_cell_id: c105
+
+  runnable_gate:
+    required_before_submission:
+      - c105 differs from c100 only in model identity, seed cell and text
+      - model identity fields, chat-template inputs included, equal c032's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass

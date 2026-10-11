@@ -1,0 +1,65 @@
+schema_version: condition-overlay-v1
+condition_id: c032
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c032
+  status: registered_pending_run
+  purpose: ministral_8b_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Ministral-8B-Instruct-2410 alone on mathfull dev1000 under the frozen solve prompt v2
+      (docs/plan/gv_vs_max_g_v_study.md section 4.7), requested by the user. c025 with only
+      the model changed: same prompt file, greedy decoding, 4096 tokens, same-forward
+      native trace capture and seven-scalar contract. The snapshot holds only the
+      Hugging Face format files (no consolidated.safetensors, tekken.json or params.json),
+      so vLLM loads it through the Hugging Face tokenizer and chat template like every
+      other model. That template has no system turn: it writes the registered system text,
+      a blank line and the user text into one [INST] block, so the words are the frozen
+      prompt's own. It reads no clock and has no thinking switch; its generation_config
+      carries no sampling or penalty defaults. transformers warns that the tokenizer's
+      split regex is wrong, but the snapshot already holds the corrected pattern: the
+      pre-tokenizer is identical with fix_mistral_regex, and so is the tokenization of all
+      1,000 rendered dev1000 prompts. Development only; the sealed test manifest is not
+      touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c032_v1.json
+
+  # Every identity field equals conditions/c032/model_provenance.json, written from one scan
+  # of the snapshot on the login node (2026-09-26); check-runnable enforces it.
+  model:
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    tokenizer_revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Ministral-8B-Instruct-2410/2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    provenance: conditions/c032/model_provenance.json
+    chat_template_hash: e4676cb56dffea7782fd3e2b577cfaf1e123537e6ef49b3ec7caa6c095c62272
+    identity_reused_from: null
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_reuse_reason: null
+    preflight_policy: >-
+      No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for
+      c027 and c029-c031; a mismatch stops the run before its row is kept.
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c032
+
+  runnable_gate:
+    required_before_submission:
+      - c032 differs from c025 only in the model identity, seeds and evidence schema id
+      - the model identity fields equal conditions/c032/model_provenance.json
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the manifest hash equals the one in the dataset registration
+      - temperature is 0
+      - local parser and record-schema tests pass

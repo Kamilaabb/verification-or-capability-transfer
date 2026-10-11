@@ -1,0 +1,84 @@
+schema_version: dataset-v1
+dataset_id: bigcodebench-b74c0d0-complete-s20260917
+status: frozen_on_server
+
+source:
+  provider: huggingface
+  name: bigcode/bigcodebench
+  revision: b74c0d0bf70d2c0bc459be537895cca163007f1a
+  split: v0.1.4
+  prompt_field: complete_prompt
+  prompt_field_rationale: >-
+    Paired follow-up to the instruct_prompt conditions. Problem
+    membership, ordering and grader stay fixed; only the registered problem text field
+    changes. This tests the prior development diagnosis that prompt difficulty was not
+    the main source of low generator/verifier complementarity.
+  paired_dataset_id: bigcodebench-b74c0d0-instruct-s20260917
+  split_equivalence_verified: >-
+    v0.1.4 holds exactly the id set the container's get_bigcodebench(subset="full")
+    returns, so the shared id-only manifests and grader refer to the same tasks.
+
+grader:
+  contract: protocols/authority_v6/grader_bigcodebench_v1.yaml
+  excluded_rows: 8
+  usable_rows: 1132
+  ground_truth_noise_floor_offline: 0.0070
+
+selection:
+  method: reuse_exact_frozen_membership_and_order_from_instruct_dataset
+  seed: 20260917
+  drawn_before_any_model_saw_any_task: true
+  membership_and_order_identical_to: bigcodebench-b74c0d0-instruct-s20260917
+  partition:
+    development: 832
+    test: 300
+    reserve: 0
+  nesting: gate0 is the first 300 rows of development in the same shuffled order
+  reserve_is_empty_because: >-
+    The domain's hard ceiling is 1132 tasks. The paired prompt-field comparison must
+    preserve the original task membership and order rather than redraw it.
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  gate0:
+    purpose: gate_0_screen_generate_verify_grade
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/gate0.jsonl
+    shared_membership_only: true
+    rows: 300
+    sha256: 8e51cb5dc58bd0a5bc418618729e1964f2a5f492428adaf5e8a1cd347e99064e
+    subset_of: development
+  development:
+    purpose: development_training_validation_and_feature_ablation
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/development.jsonl
+    shared_membership_only: true
+    rows: 832
+    sha256: 5fc23a137b20357ca254f4a73fc9d72d4bca24adb05ca03b947a92d4917b4a30
+  test:
+    purpose: independent_confirmatory_test
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/test.jsonl
+    shared_membership_only: true
+    rows: 300
+    sha256: 6f263a53a76357e801cd84226003f296cb51df64825cd7a1360a3e37b8c25e23
+    status: untouched
+    may_be_read_before_development_is_frozen: false
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures: forbidden
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: true
+  may_train_controller: true
+  may_select_features_and_thresholds: true
+  may_support_confirmatory_claims: false
+  independent_test_required_after_tuning: true
+  test_manifest_is_single_use: true
+  test_manifest_is_single_use_because: >-
+    The reserve is empty, so a test set consumed by an exploratory look cannot be
+    replaced from within this dataset. Sharing membership with the instruct-prompt
+    dataset does not make the test manifest available for inspection.

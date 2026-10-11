@@ -1,0 +1,15 @@
+System:
+Review the proposed solution to the multiple-choice question for correctness.
+The proposed solution may be correct or incorrect. Carefully check its reading of the image(s), its reasoning, and its final choice.
+If the proposed solution is correct, retain its answer. If it contains any error, correct the error and produce a correct solution.
+Return a complete final solution to the original question. The last line of your response must be of the form "Answer: X", where X is the letter of exactly one option.
+
+User template:
+Question:
+{{question}}
+
+Options:
+{{options}}
+
+Proposed solution:
+{{y0}}

@@ -1,0 +1,35 @@
+schema_version: claim-card-v1
+id: H01
+written: 2026-10-03
+statement_zh: 同一对模型，让对内较强者生成、较弱者审阅，最终准确率高于让较强者审阅较弱者。
+estimand: >
+  对每个配对 p：Δ_p = acc(GV | G=较强, V=较弱) − acc(GV | G=较弱, V=较强)，单位百分点，
+  两个方向在同一批题上作答。域内效应 = 设计配对的 Δ_p 平均；总体效应 = 各域等权平均。
+estimand_id: stronger_generates_minus_stronger_reviews
+unit: design pair (in_design_sample == true)
+stronger_side: higher development solo accuracy (all solo data where a domain has no split)
+splits:  # claims/labels.yaml split names; math dev = testpool_dev1000, nl_reasoning dev = all 901
+  math: [dev, test]
+  knowledge: [dev, test]
+  code: [dev]
+  nl_reasoning: [dev]
+bootstrap: {reps: 2000, seed: 20261003}
+tests:
+  per_pair: exact McNemar and paired accuracy-difference 95% CI
+  across_pairs: exact sign test; two-level bootstrap 95% CI of mean Δ (reps 2000, seed 20261003)
+  dependence: leave-one-model-out
+  across_domains: per-domain estimate and CI; count of domains with the same sign and CI excluding 0
+expected_sign: positive
+decision_rule: >
+  按本领域惯例（2026-10-03 放宽）：逐域报告平均 Δ 和 95% 区间。区间不含 0 且为正 → 该域成立；
+  不含 0 且为负 → 该域相反；含 0 → 该域看不出差别。结论按域写（例如"数学、知识成立，代码看不出差别"），
+  四个域都成立才说普遍成立。写卡片时看过哪些域照旧记录，只作透明说明，不作判定门槛。
+seen_when_written:  # transparency only, not a gate; "seen" means results already existed and were examined, by anyone, not what anyone remembers
+  math: seen (big_table summary counts, earlier sessions)
+  knowledge: seen (big_table summary counts, earlier sessions)
+  code: seen (all directions finished and examined in earlier sessions)
+  nl_reasoning: not seen (still running on 2026-10-03)
+sensitivity:
+  - all pairs that ran, including in_design_sample == false (implemented in scripts/evaluate_claim.py)
+  - not yet implemented: stronger side by full-set accuracy; OlympiadBench single pair reported on its own
+result: null  # generated on the server; do not fill by hand

@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c302
+status: registered_pending_run
+extends: conditions/c297/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c302
+  status: registered_pending_run
+  purpose: seed_coder_8b_reviewer_of_c102_llama32_3b_bigcodebench_development832_4096_empty_token_bytes_repair
+
+  gate:
+    scope_limit: >-
+      Replaces c297 (docs/plan/code_bigcodebench_study.md section 14). c297 stopped at its 231st row
+      (BigCodeBench/991) on one attempt: vLLM returned one sampled token (id 1663, whose vocabulary entry spells
+      the bytes EF BF BD, U+FFFD) with empty bytes, so the token bytes did not reassemble the returned text and
+      the registered alignment rule stopped the run, as c113 and c279 did. c302 is c297 with the rule c114 and
+      c301 registered: a token returned with no bytes gets the exact bytes of its vocabulary entry by token id,
+      then the content is located with the unchanged strict rule and the run still stops on any mismatch.
+      Repaired tokens are listed in records/token_byte_repairs.jsonl and counted in the report. Same pair,
+      prompt and reviewed outputs as c297. Development only.
+
+  model:
+    pass1_logit_capture:
+      empty_token_bytes_repair: vocabulary_bytes_by_token_id_v1
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/code_solve_v1/schemas/code_review_evidence_record_c302_v1.json
+
+  replicates:
+    seed_cell_id: c302
+
+  runnable_gate:
+    required_before_submission:
+      - c302 differs from c297 only in the empty-token-bytes repair rule, evidence schema id, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the c102 source archive passes its checksums, holds exactly 832 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass, including the repair tests

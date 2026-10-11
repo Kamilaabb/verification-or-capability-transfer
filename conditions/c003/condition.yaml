@@ -1,0 +1,180 @@
+schema_version: condition-v1
+condition_id: c003
+status: ready_for_server_compatibility_smoke
+purpose: scalar_single_v2_development300_zero_shot_and_counterfactual_collection
+path_base: repository_root
+
+protocol:
+  id: authority_v6
+  path: protocols/authority_v6/README.md
+  feature_contract: protocols/authority_v6/features_scalar_single_v2.yaml
+  feature_set_id: scalar_single_v2
+  input_schema: protocols/authority_v6/schemas/controller_input_payload_single_v2.json
+  training_label_contract: protocols/authority_v6/labels_cap_outcomes_v1.yaml
+  training_target_schema: protocols/authority_v6/schemas/controller_training_target_v1.json
+  grader_contract: protocols/authority_v5/grader_math_verify_v1.yaml
+  schemas_directory: protocols/authority_v6/schemas
+  record_schemas:
+    generator: protocols/authority_v6/schemas/g_record_single_v2.json
+    verifier: protocols/authority_v6/schemas/v_record_v2.json
+    evidence: protocols/authority_v6/schemas/controller_evidence_record_single_v2.json
+    rewrite: protocols/authority_v5/schemas/rewrite_record_v1.json
+    counterfactual: protocols/authority_v5/schemas/counterfactual_record_v1.json
+    controller_decision: protocols/authority_v5/schemas/controller_decision_record_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: math500-r6e4ed1-l3to5-dev300-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-dev300-s20260910/dataset.yaml
+
+generator:
+  role_id: G
+  kind: llm
+  model_id: Qwen/Qwen2.5-7B-Instruct
+  revision: a09a35458c702b33eeacc393d103063234e8bc28
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-7B-Instruct/a09a35458c702b33eeacc393d103063234e8bc28
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  thinking: false
+  prompt_initial: conditions/c002/prompts/g_initial_v1.txt
+  prompt_rewrite: conditions/c002/prompts/g_rewrite_v1.txt
+  initial_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 2048
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    y0_selection: sample_index_0_unconditionally
+    output_logprobs:
+      enabled: true
+      mode: raw_logprobs
+      sampled_token_logprob: true
+      top_logprobs: 0
+      return_token_ids: true
+      require_exact_content_alignment: true
+  rewrite_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 2048
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+
+verifiers:
+  - cell_id: V-A
+    kind: llm
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    backend: vllm_openai
+    backend_version: 0.29.0
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+    chat_template_hash_basis: tokenizer_config.chat_template_utf8
+    thinking: true
+    reasoning_parser: qwen3
+    prompt: conditions/c002/prompts/v_report_v1.txt
+    decoding:
+      samples: 1
+      temperature: 0.6
+      top_p: 0.95
+      top_k: 20
+      min_p: 0.0
+      max_new_tokens: 4096
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+      output_logprobs:
+        enabled: true
+        mode: raw_logprobs
+        sampled_token_logprob: true
+        top_logprobs: 0
+        return_token_ids: true
+        require_exact_content_alignment: true
+        format_repair_features_missing: true
+
+controller:
+  controller_id: C-qwen3-14b-thinking-single-v2
+  kind: llm
+  model_id: Qwen/Qwen3-14B
+  revision: 40c069824f4251a91eefaf281ebe4c544efd3e18
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-14B/40c069824f4251a91eefaf281ebe4c544efd3e18
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  thinking: true
+  reasoning_parser: qwen3
+  feature_set_id: scalar_single_v2
+  prompts:
+    binary: conditions/c003/prompts/controller_binary_scalar_single_v2.txt
+    ternary: conditions/c003/prompts/controller_ternary_scalar_single_v2.txt
+  output_schemas:
+    binary: protocols/authority_v5/schemas/controller_binary_payload_v1.json
+    ternary: protocols/authority_v5/schemas/controller_ternary_payload_v1.json
+  menus:
+    binary: [M0, M2]
+    ternary: [M0, M1, M2]
+  decoding:
+    samples: 1
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    min_p: 0.0
+    max_new_tokens: 2048
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+  preferred_runtime:
+    partition: gpu-h100
+    gpus: 1
+    minimum_single_gpu_vram_gb: 40
+  training:
+    enabled: false
+    reason: zero_shot_F1_collection_comparator
+    future_label_set_id: cap_outcomes_v1
+
+replicates:
+  plan_id: r003
+  path: replicates/r003.yaml
+
+stages:
+  pilot300:
+    dataset_manifest: pilot300
+    registered_role: development300
+    purpose: feature_ablation_training_and_validation_development
+    may_tune_condition: true
+    may_support_confirmatory_claims: false
+
+reuse_policy:
+  controller_change_reuses_counterfactuals: true
+  verifier_change_reuses_g_outputs: true
+  F0_and_F1_must_share_exact_G_V_rewrite_outputs: true
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [resolved_behavioral_condition_fields, referenced_prompt_bytes, protocol_component_hashes, immutable_model_revisions, chat_template_hashes, logprob_capture_mode]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id, timestamps, run_id]
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true

@@ -1,0 +1,65 @@
+schema_version: condition-overlay-v1
+condition_id: c024
+status: registered_pending_run
+extends: conditions/c023/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c024
+  status: registered_pending_run
+  purpose: qwen3_8b_reviewer_of_c022_g_mathfull_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      The GV system for docs/plan/gv_vs_max_g_v_study.md: Qwen3-8B as a plain reviewer of
+      c022's Qwen3-4B solutions on mathfull dev1000. Everything that is not the prompt is
+      c023's: same model revision, greedy decoding, thinking off, 4096 tokens, same-forward
+      native trace capture, seven-scalar evidence on the reviewer's own output. The prompt
+      is a standard review-and-revise reviewer: keep a correct solution, correct a wrong
+      one, return a complete final solution ending in one boxed answer. It carries no
+      verdict field; whether V changed G's answer is read by comparing the two final
+      answers. Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      pass1: protocols/gv_review_v1/schemas/review_record_v1.json
+      generator_source: protocols/authority_v6/schemas/g_record_single_v3.json
+      generator_native_logit_source: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c024_v1.json
+
+  generator_source:
+    condition_id: c022
+    artifact_path: /path/to/project/artifacts/20260924T203442Z__c022__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260924T203442Z__c022__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen3-4B
+    reuse_records_byte_for_byte: true
+
+  model:
+    prompt_pass1: conditions/c024/prompts/v_reviewer_v1.txt
+    prompt_pass1_provenance: user_selected_plain_reviewer_2026-09-25
+    prompt_inputs: [problem, y0]
+
+  delivery:
+    gv_answer: the reviewer's final boxed answer
+    fallback: >-
+      if the reviewer's output yields no extracted answer, the GV system delivers G's
+      output, as a reviewer that returns nothing leaves G's solution in place
+    ungradeable_gold: datasets/mathfull-r465bcdb-l3to5-s20260924/ungradeable_gold.yaml
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c024
+
+  stages:
+    run: [reuse_c022_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c024 differs from c023 only in prompt, record schemas, generator source, delivery, stages and seeds
+      - the c022 source archive passes its checksums and holds exactly 1000 G and native-trace rows
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

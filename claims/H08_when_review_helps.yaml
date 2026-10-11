@@ -1,0 +1,44 @@
+schema_version: claim-card-v1
+id: H08
+written: '2026-10-04'
+story: 问题一（什么情况下成立）
+analysis: conditions
+statement_zh: 审阅能不能提升被审者、能不能超过较强者自己，取决于谁审谁、两个模型差多少、两人独立作答的上限空间有多大。
+factors:
+  direction: 较强者审较弱者，还是较弱者审较强者（2026-10-04）
+  gap: 能力差距 = acc(较强者独立作答) − acc(较弱者独立作答)，在该方向自己的题上算
+  headroom: 上限空间 = acc(两人至少一个对) − acc(较强者独立作答)，即较弱者对、较强者错的题的比例（与 H07 同一个量）
+categories:
+  green: Δ_C 的 95% 区间整个在 0 以上：超过较强者自己
+  yellow: 不是 green，但 Δ_G 的 95% 区间整个在 0 以上：提升了被审者，没超过较强者（较弱者审较强者时不可能出现）
+  white: 其余：没提升被审者；Δ_G 区间整个在 0 以下的另标“变差”
+# 预期针对“两者一起”（控制另一个因素后）的斜率：差距越大越难超过较强者，空间越大越有机会超过。
+# 较强者审较弱者时 Δ_G = 差距 + Δ_C，所以 Δ_G 随差距变大是预期之中的，用来说明“提升里有多少只是能力转移”。
+expected:
+  stronger_reviews:
+    Δ_C: {gap: negative, headroom: positive}
+    Δ_G: {gap: positive}
+  weaker_reviews:
+    Δ_C: {gap: negative, headroom: positive}
+stronger_side: higher development solo accuracy (all solo data where a domain has no split)
+splits:
+  math:
+  - dev
+  - test
+  knowledge:
+  - dev
+  - test
+  code:
+  - dev
+  nl_reasoning:
+  - dev
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 逐个斜率看 95% 区间：不含 0 且与预期同号 → 成立；不含 0 且反号 → 相反；含 0 → 看不出关系。合计（各域等权、各域自己的截距）是主结果，逐域斜率与格子汇总只作描述。看过哪些域只作透明记录。
+seen_when_written:
+  math: seen (per-direction Δ_G and Δ_C in summary tables; slopes never computed)
+  knowledge: seen (per-direction Δ_G and Δ_C in summary tables; slopes never computed)
+  code: seen
+  nl_reasoning: not seen (still running on 2026-10-04)
+result: null

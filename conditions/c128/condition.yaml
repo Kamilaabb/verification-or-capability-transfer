@@ -1,0 +1,56 @@
+schema_version: condition-overlay-v1
+condition_id: c128
+status: registered_pending_run
+extends: conditions/c077/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c128
+  status: registered_pending_run
+  purpose: ministral_8b_reviewer_of_c075_qwen25_3b_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      GV for docs/plan/mmlu_pro_study.md section 15, the stratified pair selection requested by the user: Ministral-8B (c077's identity) reviews c075's Qwen2.5-3B
+      outputs under the frozen review prompt. c077 with only the prompt, the source of the reviewed
+      outputs, record schemas, delivery, stages and seed cell changed; delivery as c072/c073.
+      Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      review: protocols/text_mc_v1/schemas/mc_review_record_v1.json
+      generator_source: protocols/text_mc_v1/schemas/mc_record_v1.json
+      native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c126_c147_v1.json
+
+  generator_source:
+    condition_id: c075
+    artifact_path: /path/to/project/artifacts/20260927T060820Z__c075__mmlupro-dev1000__r014_solve4096
+    pass1_run_id: 20260927T060820Z__c075__mmlupro-dev1000__r014_solve4096__pass1__p01
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    reuse_records_byte_for_byte: true
+
+  model:
+    prompt_pass1: conditions/c072/prompts/mc_review_v1.txt
+    prompt_pass1_provenance: user_approved_mmlu_pro_review_prompt_v1_frozen_2026-09-26
+    prompt_inputs: [question, options, y0]
+
+  delivery:
+    primary: the reviewer's registered answer letter; the reviewed model's letter when the reviewer's is unparseable
+    strict: the reviewer's letter; reviewer unparseable counts as wrong
+    report_fallback_rows: true
+
+  replicates:
+    seed_cell_id: c128
+
+  stages:
+    run: [reuse_c075_outputs, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c128 differs from c077 only in prompt, generator source, record schemas, delivery, stages, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the c075 source archive passes its checksums, holds exactly 1000 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

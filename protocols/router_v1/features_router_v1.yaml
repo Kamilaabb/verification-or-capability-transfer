@@ -1,0 +1,121 @@
+schema_version: feature-contract-v1
+feature_set_id: router_v1
+representation: scalar
+decision_time: after_pass1_before_pass2
+
+rules:
+  configured_sample_count: 1
+  router_receives_raw_text: false
+  source_text_may_be_reduced_to_registered_scalars: true
+  native_logit_trace_allowed_in_storage_only: true
+  gold_or_outcome_allowed: false
+  missing_value: null
+  explicit_missing_flag_required: true
+  log_base: natural
+  every_feature_must_be_computable_before_pass2: true
+
+features:
+  - name: g_answer_extractable
+    group: R0_free
+    type: binary
+    formula: one_hot(y0_has_a_valid_extracted_mathematical_answer)
+
+  - name: problem_chars_log
+    group: R0_free
+    type: number
+    range: nonnegative
+    formula: ln_1_plus_UTF8_decoded_problem_character_count
+    free_because: known before any model runs
+
+  - name: g_output_chars_log
+    group: R0_free
+    type: number
+    range: nonnegative
+    formula: ln_1_plus_UTF8_decoded_pass1_raw_output_character_count
+
+  - name: g_output_mean_logprob
+    group: R1_normalized_confidence
+    type: number_or_null
+    range: negative_or_zero
+    formula: arithmetic_mean(sampled_token_natural_logprob_over_all_nonempty_pass1_content_tokens)
+    missing_when: token_trace_missing_invalid_or_content_not_exactly_alignable
+    scale_free: true
+
+  - name: g_output_mean_max_logit
+    group: R2_unnormalized_confidence
+    type: number_or_null
+    range: unbounded
+    formula: arithmetic_mean(max_over_vocabulary_of_raw_presoftmax_logit_at_each_pass1_content_position)
+    missing_when: native_raw_logit_capture_missing_or_token_path_not_exactly_matched
+    scale_free: false
+    requires_stage: pass1_same_forward_logit_capture
+
+  - name: g_output_mean_logsumexp
+    group: R2_unnormalized_confidence
+    type: number_or_null
+    range: unbounded
+    formula: arithmetic_mean(logsumexp_over_vocabulary_of_raw_presoftmax_logits_at_each_pass1_content_position)
+    missing_when: native_raw_logit_capture_missing_or_token_path_not_exactly_matched
+    scale_free: false
+    requires_stage: pass1_same_forward_logit_capture
+
+registered_cumulative_ablations:
+  R0_free: [g_answer_extractable, problem_chars_log, g_output_chars_log]
+  R1_normalized_confidence: [g_answer_extractable, problem_chars_log, g_output_chars_log, g_output_mean_logprob]
+  R2_unnormalized_confidence: [g_answer_extractable, problem_chars_log,
+    g_output_chars_log, g_output_mean_logprob, g_output_mean_max_logit]
+
+collinearity_rule:
+  never_fit_all_three_logit_scalars_jointly: true
+  because: >-
+    g_output_mean_logprob == g_output_mean_max_logit - g_output_mean_logsumexp exactly,
+    so the three together are rank deficient and span only a two-dimensional space. An
+    L2 fit will not fail, but its coefficients are unidentified and the arm would be
+    reported as carrying three sources of information when it carries two.
+  therefore: >-
+    R2 retains every R1 baseline feature and adds mean_max_logit. mean_logsumexp remains
+    stored and is reported singly, but is omitted from that joint fit because it is
+    exactly mean_max_logit minus mean_logprob. Thus raw-logit evidence is added to the
+    cheap baseline rather than replacing problem length, output length or normalized
+    confidence.
+
+registered_single_feature_report_required: true
+registered_single_feature_report_because: >-
+  Every predictability number this project has reported is a feature-SET AUC, so no
+  archived result says which scalar carries the signal. The math domain's registered
+  contract held no length feature and scored 0.6605, while a rebuilt triplet holding two
+  length features scored 0.8414, which hints at length but cannot separate problem
+  length from output length. This contract therefore requires per-feature and
+  leave-one-out cross-fit AUC alongside the cumulative ablations.
+
+redundancy_is_deliberate:
+  identity: g_output_mean_logprob == g_output_mean_max_logit - g_output_mean_logsumexp
+  holds_only_when: temperature is 0 so the sampled token is the argmax at every position
+  validation_required: true
+  capture_validation:
+    backend: vllm_same_forward_logits_processor_v1
+    same_request_capture_id: required
+    exact_generated_token_id_match: required
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_equals_top1_tolerance: 0.000001
+  because: >-
+    The identity is the whole point of the R2 group. A softmax is invariant to adding a
+    constant to every logit, so a log-probability is a pure function of the gaps between
+    logits and carries no information about their absolute scale. Registering all three
+    lets the ablation ask whether the scale term logsumexp, which normalization discards,
+    predicts anything the normalized feature cannot. A no-op vLLM logits processor
+    reduces the exact raw tensor used by pass 1 online, while vLLM's ordinary response
+    returns sampled-token logprob. Their same-request capture ID, token IDs and numerical
+    identity must agree. No second generation, Transformers replay or full-vocabulary
+    disk artifact is a registered source for R2.
+
+stored_token_statistics:
+  fields: [sampled_raw_logit, sampled_logprob, max_raw_logit, logsumexp, entropy,
+    top1_top2_margin, top20_token_ids, top20_raw_logits]
+  full_vocabulary_logits: forbidden
+  sequence_aggregates: derived_offline_without_rerunning_the_model
+  future_aggregates_may_include: [mean, median, quantiles]
+
+prohibited_router_fields: [problem_text, raw_model_output, raw_self_check, token_trace,
+  native_logit_trace, problem_id, run_metadata, gold, reference_answer, grader_output, u0,
+  u_self, y_self, verdict, any_post_pass2_information]

@@ -1,0 +1,66 @@
+schema_version: condition-overlay-v1
+condition_id: c028
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c028
+  status: registered_pending_run
+  purpose: qwen3_4b_reviewer_of_c026_qwen3_8b_mathfull_dev1000_4096_review_prompt_v2
+
+  gate:
+    scope_limit: >-
+      The reversed GV direction under the frozen prompts (docs/plan/gv_vs_max_g_v_study.md
+      section 4.7): Qwen3-4B reviews c026's Qwen3-8B solutions on mathfull dev1000. c027
+      with the two models swapped: the reviewer is c025's Qwen3-4B identity and the
+      generator source is c026's archive. Same frozen review prompt v2, delivery rule,
+      greedy decoding, thinking off, 4096 tokens, same-forward native trace capture and
+      seven-scalar evidence on the reviewer's own output. Development only; the sealed
+      test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c028_v1.json
+
+  generator_source:
+    condition_id: c026
+    artifact_path: /path/to/project/artifacts/20260925T172823Z__c026__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260925T172823Z__c026__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen3-8B
+    reuse_records_byte_for_byte: true
+
+  # The reviewer is c025's Qwen3-4B; every identity field below equals c025's resolved
+  # model block, which scripts/run_mathfull_review.py check-runnable enforces.
+  model:
+    model_id: Qwen/Qwen3-4B
+    revision: 1cfa9a7208912126459214e8b04321603b3df60c
+    tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-4B/1cfa9a7208912126459214e8b04321603b3df60c
+    provenance: conditions/c014/model_provenance.json
+    identity_reused_from: c014
+    identity_reuse_reason: null
+    preflight_job: 65103081
+    preflight_reused_from: c014
+    preflight_policy: null
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c028
+
+  stages:
+    run: [reuse_c026_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c028 differs from c027 only in the reviewer model identity, generator source, evidence schema id, stages and seeds
+      - the reviewer model block equals c025's outside the prompt fields
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c026 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

@@ -1,0 +1,57 @@
+schema_version: condition-overlay-v1
+condition_id: c150
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c150
+  status: registered_pending_run
+  purpose: qwen25_3b_instruct_reviewer_of_c032_mathfull_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: >-
+      Qwen2.5-3B-Instruct reviews c032's Ministral-8B-Instruct-2410 outputs on mathfull dev1000 under the frozen review
+      prompt v2, one direction of the Ministral-8B / Qwen2.5-3B pair (docs/plan/test_pair_baselines.md,
+      the weak-weak stratum); the other direction is c151. c027 with the reviewer's identity taken
+      from its own solo condition c030 and the generator source changed; delivery, decoding,
+      budget, capture and evidence contract are c027's. Development only.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c150_v1.json
+  generator_source:
+    condition_id: c032
+    artifact_path: /path/to/project/artifacts/20260926T061450Z__c032__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260926T061450Z__c032__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    reuse_records_byte_for_byte: true
+  model:
+    chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+    identity_reuse_reason: null
+    identity_reused_from: null
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for c027 and c029; a
+      mismatch stops the run before its row is kept.
+    preflight_reuse_reason: null
+    provenance: conditions/c030/model_provenance.json
+    revision: aa8e72537993ba99e69dfaafa59ed015b17504d1
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-3B-Instruct/aa8e72537993ba99e69dfaafa59ed015b17504d1
+    tokenizer_revision: aa8e72537993ba99e69dfaafa59ed015b17504d1
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c150
+  stages:
+    run: [reuse_c032_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+  runnable_gate:
+    required_before_submission:
+    - c150 differs from c027 only in the reviewer identity, which must equal c030's, generator source,
+      evidence schema id, stages and seeds
+    - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+    - the c032 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its
+      pass-1 run id equals generator_source.pass1_run_id
+    - temperature is 0
+    - local parser and record-schema tests pass

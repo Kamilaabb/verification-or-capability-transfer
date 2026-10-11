@@ -1,0 +1,55 @@
+schema_version: condition-overlay-v1
+condition_id: c152
+status: registered_pending_run
+extends: conditions/c150/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c152
+  status: registered_pending_run
+  purpose: c150_on_mathfull_test1500_reviewing_c096
+
+  gate:
+    scope_limit: >-
+      Test run (docs/plan/test_pair_baselines.md): c150 (GV-A, Qwen2.5-3B reviews Ministral-8B) on the first 1,500 rows of the
+      sealed mathfull test manifest, reviewing c096's test outputs; nothing else changed.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: 822250f0e685ed6dfc203d6e38beb871397130f26d271c5e4430f1382c60ae22
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c152_v1.json
+
+  generator_source:
+    condition_id: c096
+    artifact_path: /path/to/project/artifacts/20260928T130000Z__c096__mathfull-test1500__r012_solo4096
+    pass1_run_id: 20260928T130000Z__c096__mathfull-test1500__r012_solo4096__pass1__p01
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c152
+
+  stages:
+    run: [reuse_c096_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c152 differs from c150 only in the dataset manifest, generator source, evidence schema id, stages and seeds
+      - the plan docs/plan/test_pair_baselines.md and its analysis script are committed before any test run
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c096 source archive passes its checksums, holds exactly 1500 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0
+      - local parser and record-schema tests pass

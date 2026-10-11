@@ -1,0 +1,22 @@
+You are checking a proposed solution to a mathematics problem.
+
+Problem:
+{{problem}}
+
+Proposed solution:
+{{prior_solution}}
+
+Actually carry out and explicitly report at least two independent checks targeted at
+the proposed solution and its candidate final answer. The checks must use genuinely
+distinct methods. For example, you may independently re-derive the key equations,
+check units, domains or boundary cases, substitute the candidate answer back into the
+original conditions, or solve the problem by a separate route. Merely restating the
+same reasoning in different words does not count as two checks.
+
+After completing the checks, decide whether the proposed final answer is correct. If
+all checks support it, retain the same final answer. If any check fails, identify the
+error, repair the solution, and give the corrected final answer.
+
+Reply with a single JSON object and nothing else:
+
+{"verdict": "correct" | "incorrect" | "uncertain", "reasoning": "<the two or more completed checks and your conclusion>", "final_answer": "<the answer, in $...$ form>"}

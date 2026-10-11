@@ -1,0 +1,50 @@
+schema_version: condition-overlay-v1
+condition_id: c052
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c052
+  status: registered_pending_run
+  purpose: qwen3_8b_reviewer_of_c032_mathfull_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: Qwen3-8B reviews c032's Ministral-8B-Instruct-2410 outputs on mathfull dev1000 under
+      the frozen review prompt v2, requested by the user as one direction of the Qwen3-8B / Ministral-8B
+      pair; the other direction is registered beside it. c027 with the reviewer's identity taken from
+      its own solo condition c026 and the generator source changed; delivery, decoding, budget, capture
+      and evidence contract are c027's. Development only; the sealed test manifest is not touched.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c052_v1.json
+  generator_source:
+    condition_id: c032
+    artifact_path: /path/to/project/artifacts/20260926T061450Z__c032__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260926T061450Z__c032__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    reuse_records_byte_for_byte: true
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c052
+  stages:
+    run:
+    - reuse_c032_g
+    - review_with_same_forward_logit_capture
+    - scalar_evidence
+    - grade
+    - analyze
+    skip:
+    - generate_g
+    - verifier_verdict
+    - controller_training
+  runnable_gate:
+    required_before_submission:
+    - c052 differs from c027 only in the reviewer identity, which must equal c026's, generator source,
+      evidence schema id, stages and seeds
+    - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+    - the c032 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its
+      pass-1 run id equals generator_source.pass1_run_id
+    - temperature is 0
+    - local parser and record-schema tests pass

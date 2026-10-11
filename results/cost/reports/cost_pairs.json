@@ -1,0 +1,4344 @@
+{
+  "unit": "billion parameters x tokens per question",
+  "output_weights": {
+    "main": 1.0,
+    "output_x4": 4.0
+  },
+  "jev_usd_per_million_input": 0.042,
+  "params_b": {
+    "Qwen3-4B": 4.0,
+    "Qwen3-8B": 8.2,
+    "Qwen3-32B": 32.8,
+    "Qwen2.5-3B-Instruct": 3.09,
+    "Qwen2.5-7B-Instruct": 7.61,
+    "Qwen2.5-72B-Instruct": 72.7,
+    "Qwen2.5-Coder-7B-Instruct": 7.61,
+    "Seed-Coder-8B-Instruct": 8.25,
+    "Llama-3.2-3B-Instruct": 3.21,
+    "Llama-3.1-8B-Instruct": 8.03,
+    "Ministral-8B-Instruct-2410": 8.02,
+    "Mistral-Small-24B-Instruct-2501": 23.6
+  },
+  "pairs": [
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Llama-3.1-8B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Llama-3.1-8B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 8.03
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.6,
+        "stronger_alone": 41.333333333333336,
+        "review_by_stronger": 39.93333333333333,
+        "review_by_weaker": 40.666666666666664,
+        "selector_primary": 44.53333333333333,
+        "selector_secondary": 44.53333333333333,
+        "JEV": 50.13333333333333,
+        "oracle": 51.93333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "solo_s": [
+          151.93733333333333,
+          1347.6186666666667
+        ],
+        "g_of_review_by_s": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "review_by_s": [
+          1123.9446666666668,
+          1155.3466666666666
+        ],
+        "g_of_review_by_w": [
+          151.93733333333333,
+          1347.6186666666667
+        ],
+        "review_by_w": [
+          1545.9906666666666,
+          965.6213333333334
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3459.19872,
+          "stronger_alone": 12041.43468,
+          "review_by_stronger": 21761.908126666665,
+          "review_by_weaker": 20103.709199999998,
+          "selector_primary": 15500.633399999999,
+          "selector_secondary": 15500.633399999999,
+          "JEV": 15500.633399999999,
+          "oracle": 15500.633399999999
+        },
+        "output_x4": {
+          "weaker_alone": 12373.638359999999,
+          "stronger_alone": 44505.56836,
+          "review_by_stronger": 58508.64896666666,
+          "review_by_weaker": 61866.77631999999,
+          "selector_primary": 56879.20672,
+          "selector_secondary": 56879.20672,
+          "JEV": 56879.20672,
+          "oracle": 56879.20672
+        }
+      },
+      "jev": {
+        "calls": 1998,
+        "questions_called": 999,
+        "input_tokens": 7579972,
+        "output_tokens": 61938,
+        "usd_total": 0.31835882400000004,
+        "usd_per_1k_questions": 0.21223921600000004
+      },
+      "archives": {
+        "solo_w": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T174500Z__c068__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20261001T200000Z__c258__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c245__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T174500Z__c068__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen3-8B"
+      ],
+      "weaker": "Llama-3.1-8B-Instruct",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 8.03,
+        "s": 8.2
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 41.333333333333336,
+        "stronger_alone": 81.73333333333333,
+        "review_by_stronger": 75.53333333333333,
+        "review_by_weaker": 76.6,
+        "selector_primary": 82.0,
+        "selector_secondary": 81.86666666666666,
+        "JEV": 82.4,
+        "oracle": 83.13333333333334
+      },
+      "mean_tokens": {
+        "solo_w": [
+          151.93733333333333,
+          1347.6186666666667
+        ],
+        "solo_s": [
+          136.372,
+          892.5393333333334
+        ],
+        "g_of_review_by_s": [
+          151.93733333333333,
+          1347.6186666666667
+        ],
+        "review_by_s": [
+          1635.328,
+          847.3626666666667
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          892.5393333333334
+        ],
+        "review_by_w": [
+          1045.8246666666666,
+          618.9713333333333
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 12041.43468,
+          "stronger_alone": 8437.072933333333,
+          "review_by_stronger": 32399.498146666665,
+          "review_by_weaker": 21805.384813333334,
+          "selector_primary": 20478.50761333333,
+          "selector_secondary": 20478.50761333333,
+          "JEV": 20478.50761333333,
+          "oracle": 20478.50761333333
+        },
+        "output_x4": {
+          "weaker_alone": 44505.56836,
+          "stronger_alone": 30393.540533333333,
+          "review_by_stronger": 85708.75342666666,
+          "review_by_weaker": 58672.87183333332,
+          "selector_primary": 74899.10889333332,
+          "selector_secondary": 74899.10889333332,
+          "JEV": 74899.10889333332,
+          "oracle": 74899.10889333332
+        }
+      },
+      "jev": {
+        "calls": 1780,
+        "questions_called": 890,
+        "input_tokens": 6818818,
+        "output_tokens": 55180,
+        "usd_total": 0.286390356,
+        "usd_per_1k_questions": 0.190926904
+      },
+      "archives": {
+        "solo_w": "20260928T174500Z__c068__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c236__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c237__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T174500Z__c068__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Ministral-8B-Instruct-2410",
+      "params_b": {
+        "w": 3.21,
+        "s": 8.02
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.6,
+        "stronger_alone": 51.86666666666667,
+        "review_by_stronger": 43.266666666666666,
+        "review_by_weaker": 50.13333333333333,
+        "selector_primary": 52.86666666666667,
+        "selector_secondary": 52.4,
+        "JEV": 56.93333333333333,
+        "oracle": 58.93333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "solo_s": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "g_of_review_by_s": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "review_by_s": [
+          1113.548,
+          539.4906666666667
+        ],
+        "g_of_review_by_w": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "review_by_w": [
+          819.6073333333334,
+          579.656
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3459.19872,
+          "stronger_alone": 6035.910813333333,
+          "review_by_stronger": 16716.568826666666,
+          "review_by_weaker": 10527.546113333334,
+          "selector_primary": 9495.109533333332,
+          "selector_secondary": 9495.109533333332,
+          "JEV": 9495.109533333332,
+          "oracle": 9495.109533333332
+        },
+        "output_x4": {
+          "weaker_alone": 12373.638359999999,
+          "stronger_alone": 21184.343453333335,
+          "review_by_stronger": 38611.15390666667,
+          "review_by_weaker": 31258.066033333333,
+          "selector_primary": 33557.98181333333,
+          "selector_secondary": 33557.98181333333,
+          "JEV": 33557.98181333333,
+          "oracle": 33557.98181333333
+        }
+      },
+      "jev": {
+        "calls": 1906,
+        "questions_called": 953,
+        "input_tokens": 5013307,
+        "output_tokens": 59086,
+        "usd_total": 0.210558894,
+        "usd_per_1k_questions": 0.140372596
+      },
+      "archives": {
+        "solo_w": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c246__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c247__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 7.61
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.6,
+        "stronger_alone": 69.26666666666667,
+        "review_by_stronger": 58.733333333333334,
+        "review_by_weaker": 66.6,
+        "selector_primary": 69.33333333333333,
+        "selector_secondary": 68.26666666666667,
+        "JEV": 70.4,
+        "oracle": 72.46666666666667
+      },
+      "mean_tokens": {
+        "solo_w": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "solo_s": [
+          132.372,
+          631.0053333333333
+        ],
+        "g_of_review_by_s": [
+          151.93733333333333,
+          925.6946666666666
+        ],
+        "review_by_s": [
+          1173.1093333333333,
+          480.618
+        ],
+        "g_of_review_by_w": [
+          132.372,
+          631.0053333333333
+        ],
+        "review_by_w": [
+          797.798,
+          380.214
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3459.19872,
+          "stronger_alone": 5809.301506666667,
+          "review_by_stronger": 16044.063726666667,
+          "review_by_weaker": 9590.720026666668,
+          "selector_primary": 9268.500226666667,
+          "selector_secondary": 9268.500226666667,
+          "JEV": 9268.500226666667,
+          "oracle": 9268.500226666667
+        },
+        "output_x4": {
+          "weaker_alone": 12373.638359999999,
+          "stronger_alone": 20215.153266666668,
+          "review_by_stronger": 35931.012306666664,
+          "review_by_weaker": 27658.032606666668,
+          "selector_primary": 32588.791626666665,
+          "selector_secondary": 32588.791626666665,
+          "JEV": 32588.791626666665,
+          "oracle": 32588.791626666665
+        }
+      },
+      "jev": {
+        "calls": 1808,
+        "questions_called": 904,
+        "input_tokens": 4797325,
+        "output_tokens": 56048,
+        "usd_total": 0.20148765000000002,
+        "usd_per_1k_questions": 0.1343251
+      },
+      "archives": {
+        "solo_w": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c242__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c243__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260927T053222Z__c056__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen2.5-3B-Instruct",
+      "params_b": {
+        "w": 8.02,
+        "s": 3.09
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 51.86666666666667,
+        "stronger_alone": 60.06666666666667,
+        "review_by_stronger": 54.8,
+        "review_by_weaker": 60.06666666666667,
+        "selector_primary": 61.666666666666664,
+        "selector_secondary": 61.333333333333336,
+        "JEV": 65.73333333333333,
+        "oracle": 68.26666666666667
+      },
+      "mean_tokens": {
+        "solo_w": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "solo_s": [
+          132.372,
+          721.7453333333333
+        ],
+        "g_of_review_by_s": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "review_by_s": [
+          834.0993333333333,
+          630.1126666666667
+        ],
+        "g_of_review_by_w": [
+          132.372,
+          721.7453333333333
+        ],
+        "review_by_w": [
+          861.9066666666666,
+          348.7
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 6035.910813333333,
+          "stronger_alone": 2639.2225599999997,
+          "review_by_stronger": 10560.325893333333,
+          "review_by_weaker": 12348.288026666665,
+          "selector_primary": 8675.133373333332,
+          "selector_secondary": 8675.133373333332,
+          "JEV": 8675.133373333332,
+          "oracle": 8675.133373333332
+        },
+        "output_x4": {
+          "weaker_alone": 21184.343453333335,
+          "stronger_alone": 9329.8018,
+          "review_by_stronger": 31549.902953333334,
+          "review_by_weaker": 27428.589266666666,
+          "selector_primary": 30514.14525333333,
+          "selector_secondary": 30514.14525333333,
+          "JEV": 30514.14525333333,
+          "oracle": 30514.14525333333
+        }
+      },
+      "jev": {
+        "calls": 1558,
+        "questions_called": 779,
+        "input_tokens": 3589230,
+        "output_tokens": 48298,
+        "usd_total": 0.15074766,
+        "usd_per_1k_questions": 0.10049844000000001
+      },
+      "archives": {
+        "solo_w": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260928T190000Z__c152__mathfull-test1500__r012_review",
+        "review_by_w": "20260928T190000Z__c153__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-8B"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 8.02,
+        "s": 8.2
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 51.86666666666667,
+        "stronger_alone": 81.73333333333333,
+        "review_by_stronger": 75.73333333333333,
+        "review_by_weaker": 81.06666666666666,
+        "selector_primary": 82.2,
+        "selector_secondary": 81.46666666666667,
+        "JEV": 83.13333333333334,
+        "oracle": 84.2
+      },
+      "mean_tokens": {
+        "solo_w": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "solo_s": [
+          136.372,
+          892.5393333333334
+        ],
+        "g_of_review_by_s": [
+          122.99666666666667,
+          629.6106666666667
+        ],
+        "review_by_s": [
+          838.0993333333333,
+          806.6566666666666
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          892.5393333333334
+        ],
+        "review_by_w": [
+          1025.708,
+          335.61466666666666
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 6035.910813333333,
+          "stronger_alone": 8437.072933333333,
+          "review_by_stronger": 19522.910013333334,
+          "review_by_weaker": 19354.880719999997,
+          "selector_primary": 14472.983746666665,
+          "selector_secondary": 14472.983746666665,
+          "JEV": 14472.983746666665,
+          "oracle": 14472.983746666665
+        },
+        "output_x4": {
+          "weaker_alone": 21184.343453333335,
+          "stronger_alone": 30393.540533333333,
+          "review_by_stronger": 54515.09665333333,
+          "review_by_weaker": 49386.237199999996,
+          "selector_primary": 51577.88398666666,
+          "selector_secondary": 51577.88398666666,
+          "JEV": 51577.88398666666,
+          "oracle": 51577.88398666666
+        }
+      },
+      "jev": {
+        "calls": 1480,
+        "questions_called": 740,
+        "input_tokens": 3959817,
+        "output_tokens": 45880,
+        "usd_total": 0.16631231400000002,
+        "usd_per_1k_questions": 0.11087487600000001
+      },
+      "archives": {
+        "solo_w": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c234__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c235__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T130000Z__c096__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 23.6,
+        "s": 7.61
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 66.13333333333334,
+        "stronger_alone": 69.26666666666667,
+        "review_by_stronger": 68.6,
+        "review_by_weaker": 69.8,
+        "selector_primary": 72.46666666666667,
+        "selector_secondary": 71.86666666666666,
+        "JEV": 75.46666666666667,
+        "oracle": 77.73333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          125.00733333333334,
+          543.0526666666667
+        ],
+        "solo_s": [
+          132.372,
+          631.0053333333333
+        ],
+        "g_of_review_by_s": [
+          125.00733333333334,
+          543.0526666666667
+        ],
+        "review_by_s": [
+          745.8846666666667,
+          330.23
+        ],
+        "g_of_review_by_w": [
+          132.372,
+          631.0053333333333
+        ],
+        "review_by_w": [
+          775.3393333333333,
+          390.1286666666667
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 15766.216,
+          "stronger_alone": 5809.301506666667,
+          "review_by_stronger": 23955.448613333334,
+          "review_by_weaker": 33314.346306666666,
+          "selector_primary": 21575.517506666667,
+          "selector_secondary": 21575.517506666667,
+          "JEV": 21575.517506666667,
+          "oracle": 21575.517506666667
+        },
+        "output_x4": {
+          "weaker_alone": 54214.3448,
+          "stronger_alone": 20215.153266666668,
+          "review_by_stronger": 69942.72831333333,
+          "review_by_weaker": 75341.30766666666,
+          "selector_primary": 74429.49806666667,
+          "selector_secondary": 74429.49806666667,
+          "JEV": 74429.49806666667,
+          "oracle": 74429.49806666667
+        }
+      },
+      "jev": {
+        "calls": 1168,
+        "questions_called": 584,
+        "input_tokens": 2436831,
+        "output_tokens": 36208,
+        "usd_total": 0.102346902,
+        "usd_per_1k_questions": 0.068231268
+      },
+      "archives": {
+        "solo_w": "20260928T090000Z__c093__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c238__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c239__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T090000Z__c093__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-4B"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 23.6,
+        "s": 4.0
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 66.13333333333334,
+        "stronger_alone": 79.2,
+        "review_by_stronger": 76.2,
+        "review_by_weaker": 79.2,
+        "selector_primary": 79.53333333333333,
+        "selector_secondary": 79.13333333333334,
+        "JEV": 82.4,
+        "oracle": 84.46666666666667
+      },
+      "mean_tokens": {
+        "solo_w": [
+          125.00733333333334,
+          543.0526666666667
+        ],
+        "solo_s": [
+          136.372,
+          907.492
+        ],
+        "g_of_review_by_s": [
+          125.00733333333334,
+          543.0526666666667
+        ],
+        "review_by_s": [
+          749.8846666666667,
+          687.7693333333333
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          907.492
+        ],
+        "review_by_w": [
+          1041.4326666666666,
+          328.72066666666666
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 15766.216,
+          "stronger_alone": 4175.456,
+          "review_by_stronger": 21516.832,
+          "review_by_weaker": 36511.07466666667,
+          "selector_primary": 19941.672,
+          "selector_secondary": 19941.672,
+          "JEV": 19941.672,
+          "oracle": 19941.672
+        },
+        "output_x4": {
+          "weaker_alone": 54214.3448,
+          "stronger_alone": 15065.36,
+          "review_by_stronger": 68218.1928,
+          "review_by_weaker": 70674.40186666668,
+          "selector_primary": 69279.7048,
+          "selector_secondary": 69279.7048,
+          "JEV": 69279.7048,
+          "oracle": 69279.7048
+        }
+      },
+      "jev": {
+        "calls": 1114,
+        "questions_called": 557,
+        "input_tokens": 3121790,
+        "output_tokens": 34534,
+        "usd_total": 0.13111518000000003,
+        "usd_per_1k_questions": 0.08741012000000001
+      },
+      "archives": {
+        "solo_w": "20260928T090000Z__c093__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260927T055111Z__c062__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c230__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c231__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T090000Z__c093__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260927T055111Z__c062__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.09,
+        "s": 7.61
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 60.06666666666667,
+        "stronger_alone": 69.26666666666667,
+        "review_by_stronger": 62.0,
+        "review_by_weaker": 68.06666666666666,
+        "selector_primary": 70.46666666666667,
+        "selector_secondary": 69.93333333333334,
+        "JEV": 72.86666666666666,
+        "oracle": 75.73333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          132.372,
+          721.7453333333333
+        ],
+        "solo_s": [
+          132.372,
+          631.0053333333333
+        ],
+        "g_of_review_by_s": [
+          132.372,
+          721.7453333333333
+        ],
+        "review_by_s": [
+          900.3586666666666,
+          312.50933333333336
+        ],
+        "g_of_review_by_w": [
+          132.372,
+          631.0053333333333
+        ],
+        "review_by_w": [
+          809.6,
+          595.482
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2639.2225599999997,
+          "stronger_alone": 5809.301506666667,
+          "review_by_stronger": 11869.148039999998,
+          "review_by_weaker": 10151.004886666668,
+          "selector_primary": 8448.524066666667,
+          "selector_secondary": 8448.524066666667,
+          "JEV": 8448.524066666667,
+          "oracle": 8448.524066666667
+        },
+        "output_x4": {
+          "weaker_alone": 9329.8018,
+          "stronger_alone": 20215.153266666668,
+          "review_by_stronger": 25694.31536,
+          "review_by_weaker": 30076.974786666666,
+          "selector_primary": 29544.95506666667,
+          "selector_secondary": 29544.95506666667,
+          "JEV": 29544.95506666667,
+          "oracle": 29544.95506666667
+        }
+      },
+      "jev": {
+        "calls": 1274,
+        "questions_called": 637,
+        "input_tokens": 2961903,
+        "output_tokens": 39494,
+        "usd_total": 0.12439992600000001,
+        "usd_per_1k_questions": 0.08293328400000001
+      },
+      "archives": {
+        "solo_w": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c240__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c241__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260927T055111Z__c063__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 3.09,
+        "s": 32.8
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 60.06666666666667,
+        "stronger_alone": 85.73333333333333,
+        "review_by_stronger": 80.4,
+        "review_by_weaker": 78.93333333333334,
+        "selector_primary": 86.06666666666666,
+        "selector_secondary": 85.33333333333333,
+        "JEV": 86.2,
+        "oracle": 87.6
+      },
+      "mean_tokens": {
+        "solo_w": [
+          132.372,
+          721.7453333333333
+        ],
+        "solo_s": [
+          136.372,
+          911.068
+        ],
+        "g_of_review_by_s": [
+          132.372,
+          721.7453333333333
+        ],
+        "review_by_s": [
+          904.3586666666666,
+          782.182
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          911.068
+        ],
+        "review_by_w": [
+          1089.6966666666667,
+          634.0833333333334
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2639.2225599999997,
+          "stronger_alone": 34356.03199999999,
+          "review_by_stronger": 57957.75642666666,
+          "review_by_weaker": 39682.5122,
+          "selector_primary": 36995.254559999994,
+          "selector_secondary": 36995.254559999994,
+          "JEV": 36995.254559999994,
+          "oracle": 36995.254559999994
+        },
+        "output_x4": {
+          "weaker_alone": 9329.8018,
+          "stronger_alone": 124005.12319999999,
+          "review_by_stronger": 141615.04446666664,
+          "review_by_weaker": 135209.5559,
+          "selector_primary": 133334.925,
+          "selector_secondary": 133334.925,
+          "JEV": 133334.925,
+          "oracle": 133334.925
+        }
+      },
+      "jev": {
+        "calls": 1204,
+        "questions_called": 602,
+        "input_tokens": 3574994,
+        "output_tokens": 37324,
+        "usd_total": 0.15014974800000003,
+        "usd_per_1k_questions": 0.10009983200000001
+      },
+      "archives": {
+        "solo_w": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T130000Z__c097__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260930T070000Z__c232__mathfull-test1500__r012_review",
+        "review_by_w": "20260930T070000Z__c233__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260927T053222Z__c057__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T130000Z__c097__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen3-8B",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen3-8B",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 8.2,
+        "s": 32.8
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 81.73333333333333,
+        "stronger_alone": 85.73333333333333,
+        "review_by_stronger": 83.6,
+        "review_by_weaker": 86.46666666666667,
+        "selector_primary": 87.06666666666666,
+        "selector_secondary": 86.4,
+        "JEV": 89.0,
+        "oracle": 90.06666666666666
+      },
+      "mean_tokens": {
+        "solo_w": [
+          136.372,
+          892.5393333333334
+        ],
+        "solo_s": [
+          136.372,
+          911.068
+        ],
+        "g_of_review_by_s": [
+          136.372,
+          892.5393333333334
+        ],
+        "review_by_s": [
+          1075.168,
+          553.068
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          911.068
+        ],
+        "review_by_w": [
+          1093.6966666666667,
+          767.2346666666666
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 8437.072933333333,
+          "stronger_alone": 34356.03199999999,
+          "review_by_stronger": 61843.21373333333,
+          "review_by_weaker": 49615.66893333333,
+          "selector_primary": 42793.104933333336,
+          "selector_secondary": 42793.104933333336,
+          "JEV": 42793.104933333336,
+          "oracle": 42793.104933333336
+        },
+        "output_x4": {
+          "weaker_alone": 30393.540533333333,
+          "stronger_alone": 124005.12319999999,
+          "review_by_stronger": 138221.57253333332,
+          "review_by_weaker": 158138.73293333332,
+          "selector_primary": 154398.66373333332,
+          "selector_secondary": 154398.66373333332,
+          "JEV": 154398.66373333332,
+          "oracle": 154398.66373333332
+        }
+      },
+      "jev": {
+        "calls": 612,
+        "questions_called": 306,
+        "input_tokens": 2631323,
+        "output_tokens": 18972,
+        "usd_total": 0.11051556600000001,
+        "usd_per_1k_questions": 0.07367704400000001
+      },
+      "archives": {
+        "solo_w": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T130000Z__c097__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20261001T090000Z__c252__mathfull-test1500__r012_review",
+        "review_by_w": "20261001T090000Z__c253__mathfull-test1500__r012_review",
+        "g_of_review_by_s": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096",
+        "g_of_review_by_w": "20260928T130000Z__c097__mathfull-test1500__r012_solo4096"
+      }
+    },
+    {
+      "domain": "math",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "weaker": "Qwen3-4B",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 4.0,
+        "s": 8.2
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 79.2,
+        "stronger_alone": 81.73333333333333,
+        "review_by_stronger": 81.66666666666667,
+        "review_by_weaker": 82.06666666666666,
+        "selector_primary": 83.06666666666666,
+        "selector_secondary": 83.4,
+        "JEV": 86.93333333333334,
+        "oracle": 88.06666666666666
+      },
+      "mean_tokens": {
+        "solo_w": [
+          136.372,
+          907.492
+        ],
+        "solo_s": [
+          136.372,
+          892.5393333333334
+        ],
+        "g_of_review_by_s": [
+          136.372,
+          893.7846666666667
+        ],
+        "review_by_s": [
+          1076.4126666666666,
+          760.5346666666667
+        ],
+        "g_of_review_by_w": [
+          136.372,
+          882.7693333333333
+        ],
+        "review_by_w": [
+          1065.3966666666668,
+          471.72066666666666
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4175.456,
+          "stronger_alone": 8437.072933333333,
+          "review_by_stronger": 19183.5948,
+          "review_by_weaker": 14505.428266666666,
+          "selector_primary": 12612.528933333333,
+          "selector_secondary": 12612.528933333333,
+          "JEV": 12612.528933333333,
+          "oracle": 12612.528933333333
+        },
+        "output_x4": {
+          "weaker_alone": 15065.36,
+          "stronger_alone": 30393.540533333333,
+          "review_by_stronger": 48618.16359999999,
+          "review_by_weaker": 41882.20186666666,
+          "selector_primary": 45458.90053333333,
+          "selector_secondary": 45458.90053333333,
+          "JEV": 45458.90053333333,
+          "oracle": 45458.90053333333
+        }
+      },
+      "jev": {
+        "calls": 716,
+        "questions_called": 358,
+        "input_tokens": 2895125,
+        "output_tokens": 22196,
+        "usd_total": 0.12159525000000002,
+        "usd_per_1k_questions": 0.08106350000000001
+      },
+      "archives": {
+        "solo_w": "20260927T055111Z__c062__mathfull-test1500__r012_solo4096",
+        "solo_s": "20260928T090000Z__c092__mathfull-test1500__r012_solo4096",
+        "review_by_s": "20260926T091114Z__c042__mathfull-test__r012_review",
+        "review_by_w": "20260926T091114Z__c043__mathfull-test__r012_review",
+        "g_of_review_by_s": "20260926T091114Z__c040__mathfull-test__r012_solo4096",
+        "g_of_review_by_w": "20260926T091114Z__c041__mathfull-test__r012_solo4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 3.21,
+        "s": 23.6
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.0,
+        "stronger_alone": 64.06666666666666,
+        "review_by_stronger": 61.13333333333333,
+        "review_by_weaker": 60.733333333333334,
+        "selector_primary": 64.2,
+        "selector_secondary": 63.733333333333334,
+        "JEV": 67.0,
+        "oracle": 70.06666666666666
+      },
+      "mean_tokens": {
+        "solo_w": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "solo_s": [
+          240.614,
+          413.5226666666667
+        ],
+        "g_of_review_by_s": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "review_by_s": [
+          1152.53,
+          411.514
+        ],
+        "g_of_review_by_w": [
+          240.614,
+          413.5226666666667
+        ],
+        "review_by_w": [
+          721.2953333333334,
+          439.0133333333333
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3374.3819599999997,
+          "stronger_alone": 15437.625333333333,
+          "review_by_stronger": 40285.820360000005,
+          "review_by_weaker": 19162.216153333335,
+          "selector_primary": 18812.007293333336,
+          "selector_secondary": 18812.007293333336,
+          "JEV": 18812.007293333336,
+          "oracle": 18812.007293333336
+        },
+        "output_x4": {
+          "weaker_alone": 10995.762980000001,
+          "stronger_alone": 44715.030133333334,
+          "review_by_stronger": 77042.39258,
+          "review_by_weaker": 52667.31935333333,
+          "selector_primary": 55710.79311333333,
+          "selector_secondary": 55710.79311333333,
+          "JEV": 55710.79311333333,
+          "oracle": 55710.79311333333
+        }
+      },
+      "jev": {
+        "calls": 1742,
+        "questions_called": 871,
+        "input_tokens": 4152837,
+        "output_tokens": 54002,
+        "usd_total": 0.17441915400000002,
+        "usd_per_1k_questions": 0.11627943600000001
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260929T061547Z__c182__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260929T061547Z__c183__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen2.5-3B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 3.09
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.0,
+        "stronger_alone": 43.0,
+        "review_by_stronger": 43.266666666666666,
+        "review_by_weaker": 44.0,
+        "selector_primary": 46.8,
+        "selector_secondary": 46.13333333333333,
+        "JEV": 53.93333333333333,
+        "oracle": 56.733333333333334
+      },
+      "mean_tokens": {
+        "solo_w": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "solo_s": [
+          248.638,
+          482.56533333333334
+        ],
+        "g_of_review_by_s": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "review_by_s": [
+          1164.16,
+          435.86533333333335
+        ],
+        "g_of_review_by_w": [
+          248.638,
+          482.56533333333334
+        ],
+        "review_by_w": [
+          776.8173333333333,
+          463.42
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3374.3819599999997,
+          "stronger_alone": 2259.4183,
+          "review_by_stronger": 8318.46024,
+          "review_by_weaker": 6240.580139999999,
+          "selector_primary": 5633.80026,
+          "selector_secondary": 5633.80026,
+          "JEV": 5633.80026,
+          "oracle": 5633.80026
+        },
+        "output_x4": {
+          "weaker_alone": 10995.762980000001,
+          "stronger_alone": 6732.79894,
+          "review_by_stronger": 19980.312899999997,
+          "review_by_weaker": 15176.695380000001,
+          "selector_primary": 17728.56192,
+          "selector_secondary": 17728.56192,
+          "JEV": 17728.56192,
+          "oracle": 17728.56192
+        }
+      },
+      "jev": {
+        "calls": 1870,
+        "questions_called": 935,
+        "input_tokens": 4426227,
+        "output_tokens": 57970,
+        "usd_total": 0.185901534,
+        "usd_per_1k_questions": 0.12393435600000001
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c143__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c142__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 3.21,
+        "s": 8.2
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 40.0,
+        "stronger_alone": 64.0,
+        "review_by_stronger": 58.0,
+        "review_by_weaker": 65.26666666666667,
+        "selector_primary": 65.06666666666666,
+        "selector_secondary": 64.2,
+        "JEV": 67.33333333333333,
+        "oracle": 70.4
+      },
+      "mean_tokens": {
+        "solo_w": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "solo_s": [
+          252.638,
+          690.8446666666666
+        ],
+        "g_of_review_by_s": [
+          259.78866666666664,
+          791.4206666666666
+        ],
+        "review_by_s": [
+          1168.16,
+          607.4946666666667
+        ],
+        "g_of_review_by_w": [
+          252.638,
+          690.8446666666666
+        ],
+        "review_by_w": [
+          979.1466666666666,
+          239.48933333333332
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3374.3819599999997,
+          "stronger_alone": 7736.557866666666,
+          "review_by_stronger": 17934.750226666667,
+          "review_by_weaker": 11648.379426666666,
+          "selector_primary": 11110.939826666665,
+          "selector_secondary": 11110.939826666665,
+          "JEV": 11110.939826666665,
+          "oracle": 11110.939826666665
+        },
+        "output_x4": {
+          "weaker_alone": 10995.762980000001,
+          "stronger_alone": 24731.336666666666,
+          "review_by_stronger": 40500.50004666666,
+          "review_by_weaker": 30949.440506666666,
+          "selector_primary": 35727.09964666667,
+          "selector_secondary": 35727.09964666667,
+          "JEV": 35727.09964666667,
+          "oracle": 35727.09964666667
+        }
+      },
+      "jev": {
+        "calls": 1776,
+        "questions_called": 888,
+        "input_tokens": 4822902,
+        "output_tokens": 55056,
+        "usd_total": 0.20256188400000003,
+        "usd_per_1k_questions": 0.135041256
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c147__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c146__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c120__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen2.5-3B-Instruct",
+      "params_b": {
+        "w": 8.02,
+        "s": 3.09
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 41.86666666666667,
+        "stronger_alone": 43.0,
+        "review_by_stronger": 42.86666666666667,
+        "review_by_weaker": 44.8,
+        "selector_primary": 48.333333333333336,
+        "selector_secondary": 47.93333333333333,
+        "JEV": 53.333333333333336,
+        "oracle": 57.0
+      },
+      "mean_tokens": {
+        "solo_w": [
+          238.61466666666666,
+          459.5353333333333
+        ],
+        "solo_s": [
+          248.638,
+          482.56533333333334
+        ],
+        "g_of_review_by_s": [
+          238.61466666666666,
+          459.5353333333333
+        ],
+        "review_by_s": [
+          775.0193333333333,
+          413.46666666666664
+        ],
+        "g_of_review_by_w": [
+          248.638,
+          482.56533333333334
+        ],
+        "review_by_w": [
+          767.5806666666666,
+          350.5133333333333
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 5599.163,
+          "stronger_alone": 2259.4183,
+          "review_by_stronger": 9271.58474,
+          "review_by_weaker": 11226.53218,
+          "selector_primary": 7858.5813,
+          "selector_secondary": 7858.5813,
+          "JEV": 7858.5813,
+          "oracle": 7858.5813
+        },
+        "output_x4": {
+          "weaker_alone": 16655.58312,
+          "stronger_alone": 6732.79894,
+          "review_by_stronger": 24160.84086,
+          "review_by_weaker": 24133.26362,
+          "selector_primary": 23388.382059999996,
+          "selector_secondary": 23388.382059999996,
+          "JEV": 23388.382059999996,
+          "oracle": 23388.382059999996
+        }
+      },
+      "jev": {
+        "calls": 1810,
+        "questions_called": 905,
+        "input_tokens": 3083807,
+        "output_tokens": 56110,
+        "usd_total": 0.12951989400000002,
+        "usd_per_1k_questions": 0.08634659600000003
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c123__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c141__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c140__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c123__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen2.5-72B-Instruct",
+      "params_b": {
+        "w": 23.6,
+        "s": 72.7
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 64.06666666666666,
+        "stronger_alone": 72.26666666666667,
+        "review_by_stronger": 69.26666666666667,
+        "review_by_weaker": 70.66666666666667,
+        "selector_primary": 72.93333333333334,
+        "selector_secondary": 72.26666666666667,
+        "JEV": 75.06666666666666,
+        "oracle": 77.73333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          240.614,
+          413.5226666666667
+        ],
+        "solo_s": [
+          248.638,
+          479.00666666666666
+        ],
+        "g_of_review_by_s": [
+          240.614,
+          413.5226666666667
+        ],
+        "review_by_s": [
+          727.516,
+          340.9746666666667
+        ],
+        "g_of_review_by_w": [
+          248.638,
+          479.00666666666666
+        ],
+        "review_by_w": [
+          766.616,
+          378.938
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 15437.625333333333,
+          "stronger_alone": 52899.76726666667,
+          "review_by_stronger": 93116.89680000002,
+          "review_by_weaker": 79934.84166666666,
+          "selector_primary": 68337.3926,
+          "selector_secondary": 68337.3926,
+          "JEV": 68337.3926,
+          "oracle": 68337.3926
+        },
+        "output_x4": {
+          "weaker_alone": 44715.030133333334,
+          "stronger_alone": 157371.12126666668,
+          "review_by_stronger": 196760.8764,
+          "review_by_weaker": 211235.00606666668,
+          "selector_primary": 202086.1514,
+          "selector_secondary": 202086.1514,
+          "JEV": 202086.1514,
+          "oracle": 202086.1514
+        }
+      },
+      "jev": {
+        "calls": 898,
+        "questions_called": 449,
+        "input_tokens": 1598426,
+        "output_tokens": 27838,
+        "usd_total": 0.067133892,
+        "usd_per_1k_questions": 0.044755928
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T233940Z__c125__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260930T012839Z__c190__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260930T012839Z__c191__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T233940Z__c125__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 7.61,
+        "s": 23.6
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 57.2,
+        "stronger_alone": 64.06666666666666,
+        "review_by_stronger": 62.93333333333333,
+        "review_by_weaker": 63.333333333333336,
+        "selector_primary": 65.4,
+        "selector_secondary": 64.6,
+        "JEV": 69.4,
+        "oracle": 73.2
+      },
+      "mean_tokens": {
+        "solo_w": [
+          248.638,
+          398.36066666666665
+        ],
+        "solo_s": [
+          240.614,
+          413.5226666666667
+        ],
+        "g_of_review_by_s": [
+          248.638,
+          398.36066666666665
+        ],
+        "review_by_s": [
+          689.9913333333334,
+          391.85066666666665
+        ],
+        "g_of_review_by_w": [
+          240.614,
+          413.5226666666667
+        ],
+        "review_by_w": [
+          727.516,
+          269.428
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4923.659853333334,
+          "stronger_alone": 15437.625333333333,
+          "review_by_stronger": 30455.131053333338,
+          "review_by_weaker": 23024.369173333336,
+          "selector_primary": 20361.285186666668,
+          "selector_secondary": 20361.285186666668,
+          "JEV": 20361.285186666668,
+          "oracle": 20361.285186666668
+        },
+        "output_x4": {
+          "weaker_alone": 14018.233873333334,
+          "stronger_alone": 44715.030133333334,
+          "review_by_stronger": 67292.73227333334,
+          "review_by_weaker": 58452.815213333335,
+          "selector_primary": 58733.26400666667,
+          "selector_secondary": 58733.26400666667,
+          "JEV": 58733.26400666667,
+          "oracle": 58733.26400666667
+        }
+      },
+      "jev": {
+        "calls": 1190,
+        "questions_called": 595,
+        "input_tokens": 1934960,
+        "output_tokens": 36890,
+        "usd_total": 0.08126832,
+        "usd_per_1k_questions": 0.054178880000000006
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260929T061547Z__c178__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260929T061547Z__c179__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-32B"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 23.6,
+        "s": 32.8
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 64.06666666666666,
+        "stronger_alone": 70.0,
+        "review_by_stronger": 69.93333333333334,
+        "review_by_weaker": 72.86666666666666,
+        "selector_primary": 72.2,
+        "selector_secondary": 71.6,
+        "JEV": 73.4,
+        "oracle": 77.4
+      },
+      "mean_tokens": {
+        "solo_w": [
+          240.614,
+          413.5226666666667
+        ],
+        "solo_s": [
+          252.638,
+          577.312
+        ],
+        "g_of_review_by_s": [
+          240.614,
+          413.5226666666667
+        ],
+        "review_by_s": [
+          731.516,
+          430.19666666666666
+        ],
+        "g_of_review_by_w": [
+          252.638,
+          577.312
+        ],
+        "review_by_w": [
+          858.92,
+          384.6433333333333
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 15437.625333333333,
+          "stronger_alone": 27222.36,
+          "review_by_stronger": 53541.800800000005,
+          "review_by_weaker": 56570.454666666665,
+          "selector_primary": 42659.98533333333,
+          "selector_secondary": 42659.98533333333,
+          "JEV": 42659.98533333333,
+          "oracle": 42659.98533333333
+        },
+        "output_x4": {
+          "weaker_alone": 44715.030133333334,
+          "stronger_alone": 84029.8608,
+          "review_by_stronger": 125150.5576,
+          "review_by_weaker": 140610.70346666666,
+          "selector_primary": 128744.89093333334,
+          "selector_secondary": 128744.89093333334,
+          "JEV": 128744.89093333334,
+          "oracle": 128744.89093333334
+        }
+      },
+      "jev": {
+        "calls": 998,
+        "questions_called": 499,
+        "input_tokens": 2046391,
+        "output_tokens": 30938,
+        "usd_total": 0.08594842200000001,
+        "usd_per_1k_questions": 0.05729894800000001
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T233940Z__c124__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260929T131341Z__c188__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260929T131341Z__c189__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T233940Z__c124__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen3-8B",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Qwen3-8B",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 8.2,
+        "s": 23.6
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 64.0,
+        "stronger_alone": 64.06666666666666,
+        "review_by_stronger": 67.8,
+        "review_by_weaker": 65.73333333333333,
+        "selector_primary": 68.0,
+        "selector_secondary": 68.06666666666666,
+        "JEV": 71.4,
+        "oracle": 75.66666666666667
+      },
+      "mean_tokens": {
+        "solo_w": [
+          252.638,
+          690.8446666666666
+        ],
+        "solo_s": [
+          240.614,
+          413.5226666666667
+        ],
+        "g_of_review_by_s": [
+          252.638,
+          690.8446666666666
+        ],
+        "review_by_s": [
+          973.214,
+          425.98
+        ],
+        "g_of_review_by_w": [
+          240.614,
+          413.5226666666667
+        ],
+        "review_by_w": [
+          731.516,
+          504.814
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 7736.557866666666,
+          "stronger_alone": 15437.625333333333,
+          "review_by_stronger": 40757.53626666666,
+          "review_by_weaker": 25575.531333333332,
+          "selector_primary": 23174.1832,
+          "selector_secondary": 23174.1832,
+          "JEV": 23174.1832,
+          "oracle": 23174.1832
+        },
+        "output_x4": {
+          "weaker_alone": 24731.336666666666,
+          "stronger_alone": 44715.030133333334,
+          "review_by_stronger": 87911.69906666667,
+          "review_by_weaker": 67271.36053333333,
+          "selector_primary": 69446.3668,
+          "selector_secondary": 69446.3668,
+          "JEV": 69446.3668,
+          "oracle": 69446.3668
+        }
+      },
+      "jev": {
+        "calls": 1082,
+        "questions_called": 541,
+        "input_tokens": 2345341,
+        "output_tokens": 33542,
+        "usd_total": 0.098504322,
+        "usd_per_1k_questions": 0.06566954800000001
+      },
+      "archives": {
+        "solo_w": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260929T061547Z__c176__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260929T061547Z__c177__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c089__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.09,
+        "s": 7.61
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 43.0,
+        "stronger_alone": 57.2,
+        "review_by_stronger": 50.13333333333333,
+        "review_by_weaker": 55.93333333333333,
+        "selector_primary": 56.86666666666667,
+        "selector_secondary": 56.46666666666667,
+        "JEV": 61.266666666666666,
+        "oracle": 64.8
+      },
+      "mean_tokens": {
+        "solo_w": [
+          248.638,
+          482.56533333333334
+        ],
+        "solo_s": [
+          248.638,
+          398.36066666666665
+        ],
+        "g_of_review_by_s": [
+          248.638,
+          482.56533333333334
+        ],
+        "review_by_s": [
+          788.886,
+          329.5346666666667
+        ],
+        "g_of_review_by_w": [
+          248.638,
+          398.36066666666665
+        ],
+        "review_by_w": [
+          704.6786666666667,
+          389.32
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2259.4183,
+          "stronger_alone": 4923.659853333334,
+          "review_by_stronger": 10770.599573333335,
+          "review_by_weaker": 8304.115733333334,
+          "selector_primary": 7183.078153333334,
+          "selector_secondary": 7183.078153333334,
+          "JEV": 7183.078153333334,
+          "oracle": 7183.078153333334
+        },
+        "output_x4": {
+          "weaker_alone": 6732.79894,
+          "stronger_alone": 14018.233873333334,
+          "review_by_stronger": 22767.256653333337,
+          "review_by_weaker": 21007.686153333332,
+          "selector_primary": 20751.03281333333,
+          "selector_secondary": 20751.03281333333,
+          "JEV": 20751.03281333333,
+          "oracle": 20751.03281333333
+        }
+      },
+      "jev": {
+        "calls": 1530,
+        "questions_called": 765,
+        "input_tokens": 2439470,
+        "output_tokens": 47430,
+        "usd_total": 0.10245774,
+        "usd_per_1k_questions": 0.06830516
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c145__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c144__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 3.09,
+        "s": 32.8
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 43.0,
+        "stronger_alone": 70.0,
+        "review_by_stronger": 67.86666666666666,
+        "review_by_weaker": 66.46666666666667,
+        "selector_primary": 71.66666666666667,
+        "selector_secondary": 71.4,
+        "JEV": 71.6,
+        "oracle": 74.6
+      },
+      "mean_tokens": {
+        "solo_w": [
+          248.638,
+          482.56533333333334
+        ],
+        "solo_s": [
+          252.638,
+          577.312
+        ],
+        "g_of_review_by_s": [
+          248.638,
+          482.56533333333334
+        ],
+        "review_by_s": [
+          792.886,
+          542.5866666666667
+        ],
+        "g_of_review_by_w": [
+          252.638,
+          577.312
+        ],
+        "review_by_w": [
+          883.6533333333333,
+          431.59
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2259.4183,
+          "stronger_alone": 27222.36,
+          "review_by_stronger": 46062.92176666666,
+          "review_by_weaker": 31286.461899999995,
+          "selector_primary": 29481.778299999998,
+          "selector_secondary": 29481.778299999998,
+          "JEV": 29481.778299999998,
+          "oracle": 29481.778299999998
+        },
+        "output_x4": {
+          "weaker_alone": 6732.79894,
+          "stronger_alone": 84029.8608,
+          "review_by_stronger": 103926.83040666666,
+          "review_by_weaker": 92094.802,
+          "selector_primary": 90762.65973999999,
+          "selector_secondary": 90762.65973999999,
+          "JEV": 90762.65973999999,
+          "oracle": 90762.65973999999
+        }
+      },
+      "jev": {
+        "calls": 1612,
+        "questions_called": 806,
+        "input_tokens": 3043985,
+        "output_tokens": 49972,
+        "usd_total": 0.12784737000000002,
+        "usd_per_1k_questions": 0.08523158000000002
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260928T233940Z__c124__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260929T131341Z__c180__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260929T131341Z__c181__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c121__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260928T233940Z__c124__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 7.61,
+        "s": 4.0
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 57.2,
+        "stronger_alone": 58.13333333333333,
+        "review_by_stronger": 60.0,
+        "review_by_weaker": 60.6,
+        "selector_primary": 61.46666666666667,
+        "selector_secondary": 60.733333333333334,
+        "JEV": 66.8,
+        "oracle": 70.0
+      },
+      "mean_tokens": {
+        "solo_w": [
+          248.638,
+          398.36066666666665
+        ],
+        "solo_s": [
+          252.638,
+          458.87333333333333
+        ],
+        "g_of_review_by_s": [
+          248.638,
+          398.36066666666665
+        ],
+        "review_by_s": [
+          708.6786666666667,
+          257.4153333333333
+        ],
+        "g_of_review_by_w": [
+          252.638,
+          458.87333333333333
+        ],
+        "review_by_w": [
+          765.202,
+          261.17333333333335
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4923.659853333334,
+          "stronger_alone": 2846.0453333333335,
+          "review_by_stronger": 8788.035853333335,
+          "review_by_weaker": 10656.76162,
+          "selector_primary": 7769.705186666667,
+          "selector_secondary": 7769.705186666667,
+          "JEV": 7769.705186666667,
+          "oracle": 7769.705186666667
+        },
+        "output_x4": {
+          "weaker_alone": 14018.233873333334,
+          "stronger_alone": 8352.525333333333,
+          "review_by_stronger": 20971.593873333335,
+          "review_by_weaker": 22125.82882,
+          "selector_primary": 22370.75920666667,
+          "selector_secondary": 22370.75920666667,
+          "JEV": 22370.75920666667,
+          "oracle": 22370.75920666667
+        }
+      },
+      "jev": {
+        "calls": 1250,
+        "questions_called": 625,
+        "input_tokens": 2066241,
+        "output_tokens": 38750,
+        "usd_total": 0.086782122,
+        "usd_per_1k_questions": 0.057854748000000004
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260927T184802Z__c081__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c137__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c136__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260927T184802Z__c081__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "knowledge",
+      "split": "test",
+      "evaluation": "test",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 7.61,
+        "s": 8.2
+      },
+      "n": 1500,
+      "accuracy_pct": {
+        "weaker_alone": 57.2,
+        "stronger_alone": 64.0,
+        "review_by_stronger": 64.66666666666667,
+        "review_by_weaker": 65.46666666666667,
+        "selector_primary": 66.26666666666667,
+        "selector_secondary": 65.13333333333334,
+        "JEV": 69.2,
+        "oracle": 73.53333333333333
+      },
+      "mean_tokens": {
+        "solo_w": [
+          248.638,
+          398.36066666666665
+        ],
+        "solo_s": [
+          252.638,
+          690.8446666666666
+        ],
+        "g_of_review_by_s": [
+          248.638,
+          398.36066666666665
+        ],
+        "review_by_s": [
+          708.6786666666667,
+          554.2086666666667
+        ],
+        "g_of_review_by_w": [
+          252.638,
+          690.8446666666666
+        ],
+        "review_by_w": [
+          997.184,
+          268.10133333333334
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4923.659853333334,
+          "stronger_alone": 7736.557866666666,
+          "review_by_stronger": 15279.335986666667,
+          "review_by_weaker": 17365.379253333333,
+          "selector_primary": 12660.217719999999,
+          "selector_secondary": 12660.217719999999,
+          "JEV": 12660.217719999999,
+          "oracle": 12660.217719999999
+        },
+        "output_x4": {
+          "weaker_alone": 14018.233873333334,
+          "stronger_alone": 24731.336666666666,
+          "review_by_stronger": 38007.44320666666,
+          "review_by_weaker": 40480.91149333333,
+          "selector_primary": 38749.57053999999,
+          "selector_secondary": 38749.57053999999,
+          "JEV": 38749.57053999999,
+          "oracle": 38749.57053999999
+        }
+      },
+      "jev": {
+        "calls": 1268,
+        "questions_called": 634,
+        "input_tokens": 2578425,
+        "output_tokens": 39308,
+        "usd_total": 0.10829385000000001,
+        "usd_per_1k_questions": 0.07219590000000001
+      },
+      "archives": {
+        "solo_w": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "solo_s": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096",
+        "review_by_s": "20260928T204320Z__c139__mmlupro-test1500__r014_review4096",
+        "review_by_w": "20260928T204320Z__c138__mmlupro-test1500__r014_review4096",
+        "g_of_review_by_s": "20260928T112019Z__c122__mmlupro-test1500__r014_solve4096",
+        "g_of_review_by_w": "20260927T184802Z__c082__mmlupro-test1500__r014_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 7.61
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 24.639423076923077,
+        "stronger_alone": 33.89423076923077,
+        "review_by_stronger": 30.28846153846154,
+        "review_by_weaker": 25.721153846153847,
+        "selector_primary": 34.49519230769231,
+        "selector_secondary": 33.65384615384615,
+        "JEV": 37.13942307692308,
+        "oracle": 41.82692307692308
+      },
+      "mean_tokens": {
+        "solo_w": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "solo_s": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "g_of_review_by_s": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "review_by_s": [
+          788.3329326923077,
+          510.24399038461536
+        ],
+        "g_of_review_by_w": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "review_by_w": [
+          503.4639423076923,
+          538.9026442307693
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2375.1337860576923,
+          "stronger_alone": 3220.4385817307693,
+          "review_by_stronger": 12257.304170673076,
+          "review_by_weaker": 6566.4353245192315,
+          "selector_primary": 5595.572367788462,
+          "selector_secondary": 5595.572367788462,
+          "JEV": 5595.572367788462,
+          "oracle": 5595.572367788462
+        },
+        "output_x4": {
+          "weaker_alone": 7264.187560096154,
+          "stronger_alone": 8037.102103365385,
+          "review_by_stronger": 28795.22824519231,
+          "review_by_weaker": 16572.731310096155,
+          "selector_primary": 15301.289663461539,
+          "selector_secondary": 15301.289663461539,
+          "JEV": 15301.289663461539,
+          "oracle": 15301.289663461539
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 2094026,
+        "output_tokens": 51584,
+        "usd_total": 0.087949092,
+        "usd_per_1k_questions": 0.10570804326923078
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c290__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c289__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c104__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 3.21,
+        "s": 8.2
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 24.639423076923077,
+        "stronger_alone": 42.42788461538461,
+        "review_by_stronger": 34.375,
+        "review_by_weaker": 30.408653846153847,
+        "selector_primary": 42.06730769230769,
+        "selector_secondary": 41.10576923076923,
+        "JEV": 42.66826923076923,
+        "oracle": 46.15384615384615
+      },
+      "mean_tokens": {
+        "solo_w": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "solo_s": [
+          216.20552884615384,
+          218.70552884615384
+        ],
+        "g_of_review_by_s": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "review_by_s": [
+          792.3329326923077,
+          543.1177884615385
+        ],
+        "g_of_review_by_w": [
+          216.20552884615384,
+          218.70552884615384
+        ],
+        "review_by_w": [
+          512.0456730769231,
+          554.9182692307693
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2375.1337860576923,
+          "stronger_alone": 3566.270673076923,
+          "review_by_stronger": 13325.829699519229,
+          "review_by_weaker": 6991.224927884615,
+          "selector_primary": 5941.4044591346155,
+          "selector_secondary": 5941.4044591346155,
+          "JEV": 5941.4044591346155,
+          "oracle": 5941.4044591346155
+        },
+        "output_x4": {
+          "weaker_alone": 7264.187560096154,
+          "stronger_alone": 8946.426682692307,
+          "review_by_stronger": 31575.581069711538,
+          "review_by_weaker": 17715.243870192306,
+          "selector_primary": 16210.61424278846,
+          "selector_secondary": 16210.61424278846,
+          "JEV": 16210.61424278846,
+          "oracle": 16210.61424278846
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 2106868,
+        "output_tokens": 51584,
+        "usd_total": 0.08848845600000001,
+        "usd_per_1k_questions": 0.10635631730769231
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c101__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261001T200000Z__c199__bcb-dev832__r015_review4096",
+        "review_by_w": "20261001T200000Z__c148__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c101__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Seed-Coder-8B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 8.25
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 24.639423076923077,
+        "stronger_alone": 43.87019230769231,
+        "review_by_stronger": 32.69230769230769,
+        "review_by_weaker": 34.49519230769231,
+        "selector_primary": 43.62980769230769,
+        "selector_secondary": 43.75,
+        "JEV": 43.14903846153846,
+        "oracle": 47.59615384615385
+      },
+      "mean_tokens": {
+        "solo_w": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "solo_s": [
+          226.60216346153845,
+          259.765625
+        ],
+        "g_of_review_by_s": [
+          232.22716346153845,
+          507.68990384615387
+        ],
+        "review_by_s": [
+          853.5949519230769,
+          660.9723557692307
+        ],
+        "g_of_review_by_w": [
+          226.60216346153845,
+          259.765625
+        ],
+        "review_by_w": [
+          529.2560096153846,
+          549.5012019230769
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2375.1337860576923,
+          "stronger_alone": 4012.5342548076924,
+          "review_by_stronger": 14870.314074519232,
+          "review_by_weaker": 7475.344903846154,
+          "selector_primary": 6387.668040865384,
+          "selector_secondary": 6387.668040865384,
+          "JEV": 6387.668040865384,
+          "oracle": 6387.668040865384
+        },
+        "output_x4": {
+          "weaker_alone": 7264.187560096154,
+          "stronger_alone": 10441.733473557691,
+          "review_by_stronger": 36118.43365384616,
+          "review_by_weaker": 19196.240697115383,
+          "selector_primary": 17705.921033653845,
+          "selector_secondary": 17705.921033653845,
+          "JEV": 17705.921033653845,
+          "oracle": 17705.921033653845
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 2138562,
+        "output_tokens": 51584,
+        "usd_total": 0.08981960400000001,
+        "usd_per_1k_questions": 0.10795625480769232
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c109__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T190000Z__c302__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T180000Z__c298__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c102__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c109__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 8.02,
+        "s": 23.6
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 37.5,
+        "stronger_alone": 43.26923076923077,
+        "review_by_stronger": 39.30288461538461,
+        "review_by_weaker": 38.82211538461539,
+        "selector_primary": 42.42788461538461,
+        "selector_secondary": 42.42788461538461,
+        "JEV": 44.71153846153846,
+        "oracle": 49.87980769230769
+      },
+      "mean_tokens": {
+        "solo_w": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "solo_s": [
+          210.00240384615384,
+          252.203125
+        ],
+        "g_of_review_by_s": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "review_by_s": [
+          636.4074519230769,
+          442.16466346153845
+        ],
+        "g_of_review_by_w": [
+          210.00240384615384,
+          252.203125
+        ],
+        "review_by_w": [
+          522.2007211538462,
+          478.9026442307692
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4590.534254807692,
+          "stronger_alone": 10908.05048076923,
+          "review_by_stronger": 30044.836177884616,
+          "review_by_weaker": 18936.899471153847,
+          "selector_primary": 15498.584735576924,
+          "selector_secondary": 15498.584735576924,
+          "JEV": 15498.584735576924,
+          "oracle": 15498.584735576924
+        },
+        "output_x4": {
+          "weaker_alone": 13357.599182692307,
+          "stronger_alone": 28764.031730769235,
+          "review_by_stronger": 70117.15927884616,
+          "review_by_weaker": 48315.27834134615,
+          "selector_primary": 42121.630913461544,
+          "selector_secondary": 42121.630913461544,
+          "JEV": 42121.630913461544,
+          "oracle": 42121.630913461544
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1865590,
+        "output_tokens": 51584,
+        "usd_total": 0.07835478,
+        "usd_per_1k_questions": 0.09417641826923076
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c293__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c294__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c106__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "params_b": {
+        "w": 8.02,
+        "s": 7.61
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 37.5,
+        "stronger_alone": 40.74519230769231,
+        "review_by_stronger": 38.58173076923077,
+        "review_by_weaker": 35.33653846153846,
+        "selector_primary": 41.10576923076923,
+        "selector_secondary": 41.10576923076923,
+        "JEV": 42.66826923076923,
+        "oracle": 47.95673076923077
+      },
+      "mean_tokens": {
+        "solo_w": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "solo_s": [
+          212.20552884615384,
+          277.9026442307692
+        ],
+        "g_of_review_by_s": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "review_by_s": [
+          623.9435096153846,
+          289.5504807692308
+        ],
+        "g_of_review_by_w": [
+          212.20552884615384,
+          277.9026442307692
+        ],
+        "review_by_w": [
+          563.0336538461538,
+          462.97836538461536
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4590.534254807692,
+          "stronger_alone": 3729.7231971153847,
+          "review_by_stronger": 11542.223521634616,
+          "review_by_weaker": 11958.339591346154,
+          "selector_primary": 8320.257451923077,
+          "selector_secondary": 8320.257451923077,
+          "JEV": 8320.257451923077,
+          "oracle": 8320.257451923077
+        },
+        "output_x4": {
+          "weaker_alone": 13357.599182692307,
+          "stronger_alone": 10074.240564903846,
+          "review_by_stronger": 26919.72592548077,
+          "review_by_weaker": 29442.116430288464,
+          "selector_primary": 23431.83974759615,
+          "selector_secondary": 23431.83974759615,
+          "JEV": 23431.83974759615,
+          "oracle": 23431.83974759615
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1923350,
+        "output_tokens": 51584,
+        "usd_total": 0.08078070000000001,
+        "usd_per_1k_questions": 0.09709218750000001
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c108__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c286__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c285__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c108__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-4B"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 8.02,
+        "s": 4.0
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 37.5,
+        "stronger_alone": 37.98076923076923,
+        "review_by_stronger": 39.54326923076923,
+        "review_by_weaker": 37.25961538461539,
+        "selector_primary": 39.66346153846154,
+        "selector_secondary": 39.66346153846154,
+        "JEV": 42.54807692307692,
+        "oracle": 48.55769230769231
+      },
+      "mean_tokens": {
+        "solo_w": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "solo_s": [
+          216.20552884615384,
+          219.63341346153845
+        ],
+        "g_of_review_by_s": [
+          208.00240384615384,
+          364.38341346153845
+        ],
+        "review_by_s": [
+          627.9435096153846,
+          357.9254807692308
+        ],
+        "g_of_review_by_w": [
+          216.20552884615384,
+          219.63341346153845
+        ],
+        "review_by_w": [
+          504.02403846153845,
+          461.4831730769231
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4590.534254807692,
+          "stronger_alone": 1743.3557692307693,
+          "review_by_stronger": 8534.010216346154,
+          "review_by_weaker": 9486.723605769232,
+          "selector_primary": 6333.890024038462,
+          "selector_secondary": 6333.890024038462,
+          "JEV": 6333.890024038462,
+          "oracle": 6333.890024038462
+        },
+        "output_x4": {
+          "weaker_alone": 13357.599182692307,
+          "stronger_alone": 4378.9567307692305,
+          "review_by_stronger": 21596.18091346154,
+          "review_by_weaker": 23225.60971153846,
+          "selector_primary": 17736.55591346154,
+          "selector_secondary": 17736.55591346154,
+          "JEV": 17736.55591346154,
+          "oracle": 17736.55591346154
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1822554,
+        "output_tokens": 51584,
+        "usd_total": 0.07654726800000002,
+        "usd_per_1k_questions": 0.09200392788461541
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c100__bcb-dev832__r015_solve4096",
+        "review_by_s": "20260927T170717Z__c111__bcb-dev832__r015_review4096",
+        "review_by_w": "20260927T170717Z__c110__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c105__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c100__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-32B"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 23.6,
+        "s": 32.8
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 43.26923076923077,
+        "stronger_alone": 43.75,
+        "review_by_stronger": 42.78846153846154,
+        "review_by_weaker": 41.46634615384615,
+        "selector_primary": 45.3125,
+        "selector_secondary": 45.55288461538461,
+        "JEV": 45.67307692307692,
+        "oracle": 52.04326923076923
+      },
+      "mean_tokens": {
+        "solo_w": [
+          210.00240384615384,
+          252.203125
+        ],
+        "solo_s": [
+          216.20552884615384,
+          290.7824519230769
+        ],
+        "g_of_review_by_s": [
+          210.00240384615384,
+          252.203125
+        ],
+        "review_by_s": [
+          520.2439903846154,
+          381.69591346153845
+        ],
+        "g_of_review_by_w": [
+          216.20552884615384,
+          290.7824519230769
+        ],
+        "review_by_w": [
+          578.3209134615385,
+          371.46634615384613
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 10908.05048076923,
+          "stronger_alone": 16629.205769230768,
+          "review_by_stronger": 40491.67932692307,
+          "review_by_weaker": 39044.185096153844,
+          "selector_primary": 27537.25625,
+          "selector_secondary": 27537.25625,
+          "JEV": 27537.25625,
+          "oracle": 27537.25625
+        },
+        "output_x4": {
+          "weaker_alone": 28764.031730769235,
+          "stronger_alone": 45242.199038461535,
+          "review_by_stronger": 95906.53846153847,
+          "review_by_weaker": 93956.99567307693,
+          "selector_primary": 74006.23076923077,
+          "selector_secondary": 74006.23076923077,
+          "JEV": 74006.23076923077,
+          "oracle": 74006.23076923077
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1759350,
+        "output_tokens": 51584,
+        "usd_total": 0.0738927,
+        "usd_per_1k_questions": 0.08881334134615385
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c107__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c282__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c281__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c107__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen3-8B",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Qwen3-8B",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 8.2,
+        "s": 23.6
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 42.42788461538461,
+        "stronger_alone": 43.26923076923077,
+        "review_by_stronger": 41.34615384615385,
+        "review_by_weaker": 42.1875,
+        "selector_primary": 44.23076923076923,
+        "selector_secondary": 43.75,
+        "JEV": 44.59134615384615,
+        "oracle": 52.88461538461539
+      },
+      "mean_tokens": {
+        "solo_w": [
+          216.20552884615384,
+          218.70552884615384
+        ],
+        "solo_s": [
+          210.00240384615384,
+          252.203125
+        ],
+        "g_of_review_by_s": [
+          216.20552884615384,
+          218.70552884615384
+        ],
+        "review_by_s": [
+          505.38822115384613,
+          388.2776442307692
+        ],
+        "g_of_review_by_w": [
+          210.00240384615384,
+          252.203125
+        ],
+        "review_by_w": [
+          520.2439903846154,
+          406.9579326923077
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3566.270673076923,
+          "stronger_alone": 10908.05048076923,
+          "review_by_stronger": 24656.785096153846,
+          "review_by_weaker": 18511.10625,
+          "selector_primary": 14474.321153846155,
+          "selector_secondary": 14474.321153846155,
+          "JEV": 14474.321153846155,
+          "oracle": 14474.321153846155
+        },
+        "output_x4": {
+          "weaker_alone": 8946.426682692307,
+          "stronger_alone": 28764.031730769235,
+          "review_by_stronger": 57526.99831730769,
+          "review_by_weaker": 46378.25264423077,
+          "selector_primary": 37710.45841346154,
+          "selector_secondary": 37710.45841346154,
+          "JEV": 37710.45841346154,
+          "oracle": 37710.45841346154
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1628622,
+        "output_tokens": 51584,
+        "usd_total": 0.06840212400000001,
+        "usd_per_1k_questions": 0.08221409134615386
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c101__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c291__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c292__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c101__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c106__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Seed-Coder-8B-Instruct",
+      "params_b": {
+        "w": 23.6,
+        "s": 8.25
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 43.26923076923077,
+        "stronger_alone": 43.87019230769231,
+        "review_by_stronger": 37.62019230769231,
+        "review_by_weaker": 41.22596153846154,
+        "selector_primary": 44.83173076923077,
+        "selector_secondary": 44.47115384615385,
+        "JEV": 45.91346153846154,
+        "oracle": 51.20192307692308
+      },
+      "mean_tokens": {
+        "solo_w": [
+          210.00240384615384,
+          252.203125
+        ],
+        "solo_s": [
+          226.60216346153845,
+          259.765625
+        ],
+        "g_of_review_by_s": [
+          210.00240384615384,
+          252.203125
+        ],
+        "review_by_s": [
+          561.8653846153846,
+          481.8870192307692
+        ],
+        "g_of_review_by_w": [
+          226.60216346153845,
+          259.765625
+        ],
+        "review_by_w": [
+          523.859375,
+          385.515625
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 10908.05048076923,
+          "stronger_alone": 4012.5342548076924,
+          "review_by_stronger": 19519.0078125,
+          "review_by_weaker": 25473.78425480769,
+          "selector_primary": 14920.584735576924,
+          "selector_secondary": 14920.584735576924,
+          "JEV": 14920.584735576924,
+          "oracle": 14920.584735576924
+        },
+        "output_x4": {
+          "weaker_alone": 28764.031730769235,
+          "stronger_alone": 10441.733473557691,
+          "review_by_stronger": 49301.692788461536,
+          "review_by_weaker": 59197.489723557694,
+          "selector_primary": 39205.765204326926,
+          "selector_secondary": 39205.765204326926,
+          "JEV": 39205.765204326926,
+          "oracle": 39205.765204326926
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1660316,
+        "output_tokens": 51584,
+        "usd_total": 0.069733272,
+        "usd_per_1k_questions": 0.08381402884615384
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c109__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c284__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c283__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c106__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c109__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.09,
+        "s": 7.61
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 31.129807692307693,
+        "stronger_alone": 33.89423076923077,
+        "review_by_stronger": 33.17307692307692,
+        "review_by_weaker": 32.69230769230769,
+        "selector_primary": 34.25480769230769,
+        "selector_secondary": 34.13461538461539,
+        "JEV": 37.98076923076923,
+        "oracle": 44.59134615384615
+      },
+      "mean_tokens": {
+        "solo_w": [
+          212.20552884615384,
+          208.96394230769232
+        ],
+        "solo_s": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "g_of_review_by_s": [
+          212.20552884615384,
+          208.96394230769232
+        ],
+        "review_by_s": [
+          484.16947115384613,
+          267.99759615384613
+        ],
+        "g_of_review_by_w": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "review_by_w": [
+          486.1911057692308,
+          312.4795673076923
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 1301.4136658653845,
+          "stronger_alone": 3220.4385817307693,
+          "review_by_stronger": 7025.405048076923,
+          "review_by_weaker": 5688.330961538462,
+          "selector_primary": 4521.852247596154,
+          "selector_secondary": 4521.852247596154,
+          "JEV": 4521.852247596154,
+          "oracle": 4521.852247596154
+        },
+        "output_x4": {
+          "weaker_alone": 3238.5094110576924,
+          "stronger_alone": 8037.102103365385,
+          "review_by_stronger": 15080.885913461538,
+          "review_by_weaker": 13401.680072115385,
+          "selector_primary": 11275.611514423075,
+          "selector_secondary": 11275.611514423075,
+          "JEV": 11275.611514423075,
+          "oracle": 11275.611514423075
+        }
+      },
+      "jev": {
+        "calls": 1662,
+        "questions_called": 831,
+        "input_tokens": 1553254,
+        "output_tokens": 51522,
+        "usd_total": 0.06523666800000001,
+        "usd_per_1k_questions": 0.07840945673076924
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c103__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c288__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c287__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c103__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c104__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 7.61,
+        "s": 32.8
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 33.89423076923077,
+        "stronger_alone": 43.75,
+        "review_by_stronger": 40.98557692307692,
+        "review_by_weaker": 42.1875,
+        "selector_primary": 43.99038461538461,
+        "selector_secondary": 43.99038461538461,
+        "JEV": 44.47115384615385,
+        "oracle": 50.24038461538461
+      },
+      "mean_tokens": {
+        "solo_w": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "solo_s": [
+          216.20552884615384,
+          290.7824519230769
+        ],
+        "g_of_review_by_s": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "review_by_s": [
+          490.1911057692308,
+          369.7067307692308
+        ],
+        "g_of_review_by_w": [
+          216.20552884615384,
+          290.7824519230769
+        ],
+        "review_by_w": [
+          565.9879807692307,
+          237.35576923076923
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3220.4385817307693,
+          "stronger_alone": 16629.205769230768,
+          "review_by_stronger": 31425.087620192306,
+          "review_by_weaker": 22742.65170673077,
+          "selector_primary": 19849.64435096154,
+          "selector_secondary": 19849.64435096154,
+          "JEV": 19849.64435096154,
+          "oracle": 19849.64435096154
+        },
+        "output_x4": {
+          "weaker_alone": 8037.102103365385,
+          "stronger_alone": 45242.199038461535,
+          "review_by_stronger": 72620.89344951922,
+          "review_by_weaker": 56774.47718749999,
+          "selector_primary": 53279.301141826916,
+          "selector_secondary": 53279.301141826916,
+          "JEV": 53279.301141826916,
+          "oracle": 53279.301141826916
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1701414,
+        "output_tokens": 51584,
+        "usd_total": 0.07145938800000001,
+        "usd_per_1k_questions": 0.08588868750000002
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c107__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T160000Z__c295__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T160000Z__c296__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c107__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "code",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 7.61,
+        "s": 4.0
+      },
+      "n": 832,
+      "accuracy_pct": {
+        "weaker_alone": 33.89423076923077,
+        "stronger_alone": 37.98076923076923,
+        "review_by_stronger": 36.17788461538461,
+        "review_by_weaker": 38.70192307692308,
+        "selector_primary": 38.10096153846154,
+        "selector_secondary": 38.10096153846154,
+        "JEV": 40.98557692307692,
+        "oracle": 47.47596153846154
+      },
+      "mean_tokens": {
+        "solo_w": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "solo_s": [
+          216.20552884615384,
+          219.63341346153845
+        ],
+        "g_of_review_by_s": [
+          212.20552884615384,
+          210.97956730769232
+        ],
+        "review_by_s": [
+          490.1911057692308,
+          376.39302884615387
+        ],
+        "g_of_review_by_w": [
+          216.20552884615384,
+          219.63341346153845
+        ],
+        "review_by_w": [
+          494.83533653846155,
+          282.97836538461536
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 3220.4385817307693,
+          "stronger_alone": 1743.3557692307693,
+          "review_by_stronger": 6686.775120192308,
+          "review_by_weaker": 7662.518040865384,
+          "selector_primary": 4963.794350961538,
+          "selector_secondary": 4963.794350961538,
+          "JEV": 4963.794350961538,
+          "oracle": 4963.794350961538
+        },
+        "output_x4": {
+          "weaker_alone": 8037.102103365385,
+          "stronger_alone": 4378.9567307692305,
+          "review_by_stronger": 16020.15498798077,
+          "review_by_weaker": 16758.515084134615,
+          "selector_primary": 12416.058834134617,
+          "selector_secondary": 12416.058834134617,
+          "JEV": 12416.058834134617,
+          "oracle": 12416.058834134617
+        }
+      },
+      "jev": {
+        "calls": 1664,
+        "questions_called": 832,
+        "input_tokens": 1572744,
+        "output_tokens": 51584,
+        "usd_total": 0.06605524800000001,
+        "usd_per_1k_questions": 0.07939332692307693
+      },
+      "archives": {
+        "solo_w": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "solo_s": "20260927T125345Z__c100__bcb-dev832__r015_solve4096",
+        "review_by_s": "20261002T190000Z__c299__bcb-dev832__r015_review4096",
+        "review_by_w": "20261002T190000Z__c300__bcb-dev832__r015_review4096",
+        "g_of_review_by_s": "20260927T125345Z__c104__bcb-dev832__r015_solve4096",
+        "g_of_review_by_w": "20260927T125345Z__c100__bcb-dev832__r015_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen2.5-3B-Instruct",
+      "params_b": {
+        "w": 3.21,
+        "s": 3.09
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 43.7291897891232,
+        "stronger_alone": 55.16093229744728,
+        "review_by_stronger": 47.613762486126525,
+        "review_by_weaker": 53.385127635960046,
+        "selector_primary": 55.16093229744728,
+        "selector_secondary": 55.16093229744728,
+        "JEV": 63.041065482796895,
+        "oracle": 65.92674805771365
+      },
+      "mean_tokens": {
+        "solo_w": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "solo_s": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "g_of_review_by_s": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "review_by_s": [
+          782.3762486126526,
+          345.22308546059935
+        ],
+        "g_of_review_by_w": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "review_by_w": [
+          710.4117647058823,
+          249.7602663706992
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2352.9478135405107,
+          "stronger_alone": 1966.1213873473916,
+          "review_by_stronger": 5837.229755826859,
+          "review_by_weaker": 5048.273607103218,
+          "selector_primary": 4319.069200887902,
+          "selector_secondary": 4319.069200887902,
+          "JEV": 4319.069200887902,
+          "oracle": 4319.069200887902
+        },
+        "output_x4": {
+          "weaker_alone": 6866.478579356271,
+          "stronger_alone": 5602.821609322974,
+          "review_by_stronger": 13550.978523862375,
+          "review_by_weaker": 11090.165194228635,
+          "selector_primary": 12469.300188679244,
+          "selector_secondary": 12469.300188679244,
+          "JEV": 12469.300188679244,
+          "oracle": 12469.300188679244
+        }
+      },
+      "jev": {
+        "calls": 880,
+        "questions_called": 440,
+        "input_tokens": 1477043,
+        "output_tokens": 27280,
+        "usd_total": 0.062035806000000006,
+        "usd_per_1k_questions": 0.06885217092119868
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c315__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c314__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 3.21,
+        "s": 32.8
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 43.7291897891232,
+        "stronger_alone": 77.80244173140954,
+        "review_by_stronger": 74.91675915649279,
+        "review_by_weaker": 78.57935627081021,
+        "selector_primary": 78.46836847946726,
+        "selector_secondary": 77.6914539400666,
+        "JEV": 79.13429522752497,
+        "oracle": 82.68590455049944
+      },
+      "mean_tokens": {
+        "solo_w": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "solo_s": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "g_of_review_by_s": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "review_by_s": [
+          786.3762486126526,
+          552.4384017758047
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "review_by_w": [
+          867.7769145394007,
+          157.56492785793563
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2352.9478135405107,
+          "stronger_alone": 26247.171587125413,
+          "review_by_stronger": 46266.06834628191,
+          "review_by_weaker": 29538.51890122086,
+          "selector_primary": 28600.119400665924,
+          "selector_secondary": 28600.119400665924,
+          "JEV": 28600.119400665924,
+          "oracle": 28600.119400665924
+        },
+        "output_x4": {
+          "weaker_alone": 6866.478579356271,
+          "stronger_alone": 80587.77980022196,
+          "review_by_stronger": 105139.53784683684,
+          "review_by_weaker": 85396.47736958934,
+          "selector_primary": 87454.25837957824,
+          "selector_secondary": 87454.25837957824,
+          "JEV": 87454.25837957824,
+          "oracle": 87454.25837957824
+        }
+      },
+      "jev": {
+        "calls": 988,
+        "questions_called": 494,
+        "input_tokens": 1855839,
+        "output_tokens": 30628,
+        "usd_total": 0.07794523800000001,
+        "usd_per_1k_questions": 0.08650969811320756
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c355__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c354__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "weaker": "Llama-3.2-3B-Instruct",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 3.21,
+        "s": 4.0
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 43.7291897891232,
+        "stronger_alone": 67.59156492785793,
+        "review_by_stronger": 63.4850166481687,
+        "review_by_weaker": 67.36958934517203,
+        "selector_primary": 67.70255271920088,
+        "selector_secondary": 67.36958934517203,
+        "JEV": 70.9211986681465,
+        "oracle": 74.47280799112097
+      },
+      "mean_tokens": {
+        "solo_w": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "solo_s": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "g_of_review_by_s": [
+          264.31076581576025,
+          468.6947835738069
+        ],
+        "review_by_s": [
+          786.3762486126526,
+          281.4983351831299
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "review_by_w": [
+          767.0210876803552,
+          181.46725860155382
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2352.9478135405107,
+          "stronger_alone": 2793.1054384017757,
+          "review_by_stronger": 6624.446148723639,
+          "review_by_weaker": 5837.753029966704,
+          "selector_primary": 5146.053251942286,
+          "selector_secondary": 5146.053251942286,
+          "JEV": 5146.053251942286,
+          "oracle": 5146.053251942286
+        },
+        "output_x4": {
+          "weaker_alone": 6866.478579356271,
+          "stronger_alone": 8196.701442841288,
+          "review_by_stronger": 14515.956936736959,
+          "review_by_weaker": 12988.878734739179,
+          "selector_primary": 15063.180022197557,
+          "selector_secondary": 15063.180022197557,
+          "JEV": 15063.180022197557,
+          "oracle": 15063.180022197557
+        }
+      },
+      "jev": {
+        "calls": 936,
+        "questions_called": 468,
+        "input_tokens": 1638079,
+        "output_tokens": 29016,
+        "usd_total": 0.068799318,
+        "usd_per_1k_questions": 0.07635884350721421
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c316__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c317__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c192__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "weaker": "Ministral-8B-Instruct-2410",
+      "stronger": "Qwen2.5-3B-Instruct",
+      "params_b": {
+        "w": 8.02,
+        "s": 3.09
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 51.83129855715871,
+        "stronger_alone": 55.16093229744728,
+        "review_by_stronger": 51.94228634850167,
+        "review_by_weaker": 54.827968923418425,
+        "selector_primary": 57.158712541620424,
+        "selector_secondary": 57.158712541620424,
+        "JEV": 62.93007769145394,
+        "oracle": 67.81354051054385
+      },
+      "mean_tokens": {
+        "solo_w": [
+          233.24306326304105,
+          360.9644839067703
+        ],
+        "solo_s": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "g_of_review_by_s": [
+          233.24306326304105,
+          360.9644839067703
+        ],
+        "review_by_s": [
+          668.5271920088791,
+          373.0321864594895
+        ],
+        "g_of_review_by_w": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "review_by_w": [
+          676.8479467258602,
+          185.2031076581576
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4765.544528301887,
+          "stronger_alone": 1966.1213873473916,
+          "review_by_stronger": 7983.963007769145,
+          "review_by_weaker": 8879.770843507213,
+          "selector_primary": 6731.665915649278,
+          "selector_secondary": 6731.665915649278,
+          "JEV": 6731.665915649278,
+          "oracle": 6731.665915649278
+        },
+        "output_x4": {
+          "weaker_alone": 13450.350011098779,
+          "stronger_alone": 5602.821609322974,
+          "review_by_stronger": 20126.776859045505,
+          "review_by_weaker": 16972.457835738067,
+          "selector_primary": 19053.171620421752,
+          "selector_secondary": 19053.171620421752,
+          "JEV": 19053.171620421752,
+          "oracle": 19053.171620421752
+        }
+      },
+      "jev": {
+        "calls": 802,
+        "questions_called": 401,
+        "input_tokens": 1178017,
+        "output_tokens": 24862,
+        "usd_total": 0.049476714,
+        "usd_per_1k_questions": 0.054913112097669255
+      },
+      "archives": {
+        "solo_w": "20261002T231200Z__c305__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c336__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c337__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261002T231200Z__c305__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 3.09,
+        "s": 23.6
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 55.16093229744728,
+        "stronger_alone": 71.58712541620422,
+        "review_by_stronger": 65.70477247502775,
+        "review_by_weaker": 65.48279689234184,
+        "selector_primary": 71.92008879023308,
+        "selector_secondary": 70.9211986681465,
+        "JEV": 76.47058823529412,
+        "oracle": 80.79911209766925
+      },
+      "mean_tokens": {
+        "solo_w": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "solo_s": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "g_of_review_by_s": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "review_by_s": [
+          678.8479467258602,
+          310.90899001109875
+        ],
+        "g_of_review_by_w": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "review_by_w": [
+          641.6093229744728,
+          345.8945615982242
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 1966.1213873473916,
+          "stronger_alone": 13452.811986681467,
+          "review_by_stronger": 25324.385094339625,
+          "review_by_weaker": 16504.1989900111,
+          "selector_primary": 15418.933374028858,
+          "selector_secondary": 15418.933374028858,
+          "JEV": 15418.933374028858,
+          "oracle": 15418.933374028858
+        },
+        "output_x4": {
+          "weaker_alone": 5602.821609322974,
+          "stronger_alone": 37156.03906770256,
+          "review_by_stronger": 50973.441809101,
+          "review_by_weaker": 43413.86865704773,
+          "selector_primary": 42758.86067702553,
+          "selector_secondary": 42758.86067702553,
+          "JEV": 42758.86067702553,
+          "oracle": 42758.86067702553
+        }
+      },
+      "jev": {
+        "calls": 780,
+        "questions_called": 390,
+        "input_tokens": 1073362,
+        "output_tokens": 24180,
+        "usd_total": 0.04508120400000001,
+        "usd_per_1k_questions": 0.05003463263041066
+      },
+      "archives": {
+        "solo_w": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c345__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c344__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen3-4B",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "weaker": "Qwen3-4B",
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "params_b": {
+        "w": 4.0,
+        "s": 23.6
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 67.59156492785793,
+        "stronger_alone": 71.58712541620422,
+        "review_by_stronger": 71.36514983351832,
+        "review_by_weaker": 68.59045504994451,
+        "selector_primary": 72.5860155382908,
+        "selector_secondary": 72.47502774694783,
+        "JEV": 78.80133185349611,
+        "oracle": 82.24195338512763
+      },
+      "mean_tokens": {
+        "solo_w": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "solo_s": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "g_of_review_by_s": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "review_by_s": [
+          736.2652608213097,
+          302.52497225305217
+        ],
+        "g_of_review_by_w": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "review_by_w": [
+          645.6093229744728,
+          238.72253052164262
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2793.1054384017757,
+          "stronger_alone": 13452.811986681467,
+          "review_by_stronger": 27308.554938956713,
+          "review_by_weaker": 16990.13940066593,
+          "selector_primary": 16245.917425083242,
+          "selector_secondary": 16245.917425083242,
+          "JEV": 16245.917425083242,
+          "oracle": 16245.917425083242
+        },
+        "output_x4": {
+          "weaker_alone": 8196.701442841288,
+          "stronger_alone": 37156.03906770256,
+          "review_by_stronger": 54130.91897891232,
+          "review_by_weaker": 43558.03684794673,
+          "selector_primary": 45352.740510543845,
+          "selector_secondary": 45352.740510543845,
+          "JEV": 45352.740510543845,
+          "oracle": 45352.740510543845
+        }
+      },
+      "jev": {
+        "calls": 572,
+        "questions_called": 286,
+        "input_tokens": 897326,
+        "output_tokens": 17732,
+        "usd_total": 0.037687692,
+        "usd_per_1k_questions": 0.04182873695893452
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c341__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c340__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-8B"
+      ],
+      "weaker": "Mistral-Small-24B-Instruct-2501",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 23.6,
+        "s": 8.2
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 71.58712541620422,
+        "stronger_alone": 73.80688124306326,
+        "review_by_stronger": 75.47169811320755,
+        "review_by_weaker": 75.47169811320755,
+        "selector_primary": 75.8046614872364,
+        "selector_secondary": 75.3607103218646,
+        "JEV": 80.4661487236404,
+        "oracle": 83.01886792452831
+      },
+      "mean_tokens": {
+        "solo_w": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "solo_s": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "g_of_review_by_s": [
+          235.24306326304105,
+          334.7913429522753
+        ],
+        "review_by_s": [
+          645.6093229744728,
+          532.0910099889012
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "review_by_w": [
+          924.4816870144284,
+          335.3185349611543
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 13452.811986681467,
+          "stronger_alone": 7286.350721420643,
+          "review_by_stronger": 23109.95471698113,
+          "review_by_weaker": 37017.6359600444,
+          "selector_primary": 20739.16270810211,
+          "selector_secondary": 20739.16270810211,
+          "JEV": 20739.16270810211,
+          "oracle": 20739.16270810211
+        },
+        "output_x4": {
+          "weaker_alone": 37156.03906770256,
+          "stronger_alone": 23045.17624861265,
+          "review_by_stronger": 59902.62064372919,
+          "review_by_weaker": 76517.01376248614,
+          "selector_primary": 60201.2153163152,
+          "selector_secondary": 60201.2153163152,
+          "JEV": 60201.2153163152,
+          "oracle": 60201.2153163152
+        }
+      },
+      "jev": {
+        "calls": 484,
+        "questions_called": 242,
+        "input_tokens": 917939,
+        "output_tokens": 15004,
+        "usd_total": 0.038553438,
+        "usd_per_1k_questions": 0.04278960932297447
+      },
+      "archives": {
+        "solo_w": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c342__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c343__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261002T231200Z__c306__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "weaker": "Qwen2.5-3B-Instruct",
+      "stronger": "Qwen2.5-7B-Instruct",
+      "params_b": {
+        "w": 3.09,
+        "s": 7.61
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 55.16093229744728,
+        "stronger_alone": 61.70921198668147,
+        "review_by_stronger": 58.04661487236404,
+        "review_by_weaker": 60.710321864594896,
+        "selector_primary": 61.82019977802442,
+        "selector_secondary": 61.82019977802442,
+        "JEV": 69.47835738068812,
+        "oracle": 72.91897891231964
+      },
+      "mean_tokens": {
+        "solo_w": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "solo_s": [
+          243.97669256381798,
+          337.55049944506106
+        ],
+        "g_of_review_by_s": [
+          243.97669256381798,
+          392.3085460599334
+        ],
+        "review_by_s": [
+          693.7968923418424,
+          274.7258601553829
+        ],
+        "g_of_review_by_w": [
+          243.97669256381798,
+          337.55049944506106
+        ],
+        "review_by_w": [
+          639.0455049944507,
+          346.354051054384
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 1966.1213873473916,
+          "stronger_alone": 4425.4219311875695,
+          "review_by_stronger": 9336.579533851276,
+          "review_by_weaker": 7470.306559378469,
+          "selector_primary": 6391.543318534961,
+          "selector_secondary": 6391.543318534961,
+          "JEV": 6391.543318534961,
+          "oracle": 6391.543318534961
+        },
+        "output_x4": {
+          "weaker_alone": 5602.821609322974,
+          "stronger_alone": 12131.699833518314,
+          "review_by_stronger": 19245.27114317425,
+          "review_by_weaker": 18387.286514983352,
+          "selector_primary": 17734.521442841287,
+          "selector_secondary": 17734.521442841287,
+          "JEV": 17734.521442841287,
+          "oracle": 17734.521442841287
+        }
+      },
+      "jev": {
+        "calls": 692,
+        "questions_called": 346,
+        "input_tokens": 964177,
+        "output_tokens": 21452,
+        "usd_total": 0.040495434000000004,
+        "usd_per_1k_questions": 0.04494498779134296
+      },
+      "archives": {
+        "solo_w": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c304__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c335__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c334__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261002T231200Z__c303__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c304__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "weaker": "Qwen2.5-7B-Instruct",
+      "stronger": "Qwen3-4B",
+      "params_b": {
+        "w": 7.61,
+        "s": 4.0
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 61.70921198668147,
+        "stronger_alone": 67.59156492785793,
+        "review_by_stronger": 65.14983351831299,
+        "review_by_weaker": 67.9245283018868,
+        "selector_primary": 68.03551609322975,
+        "selector_secondary": 67.03662597114318,
+        "JEV": 73.36293007769146,
+        "oracle": 76.69256381798002
+      },
+      "mean_tokens": {
+        "solo_w": [
+          243.97669256381798,
+          337.55049944506106
+        ],
+        "solo_s": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "g_of_review_by_s": [
+          243.97669256381798,
+          337.55049944506106
+        ],
+        "review_by_s": [
+          643.0455049944507,
+          244.3651498335183
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "review_by_w": [
+          751.7924528301887,
+          215.0188679245283
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 4425.4219311875695,
+          "stronger_alone": 2793.1054384017757,
+          "review_by_stronger": 7975.064550499445,
+          "review_by_weaker": 10150.539589345171,
+          "selector_primary": 7218.527369589346,
+          "selector_secondary": 7218.527369589346,
+          "JEV": 7218.527369589346,
+          "oracle": 7218.527369589346
+        },
+        "output_x4": {
+          "weaker_alone": 12131.699833518314,
+          "stronger_alone": 8196.701442841288,
+          "review_by_stronger": 18613.72425083241,
+          "review_by_weaker": 20463.016348501664,
+          "selector_primary": 20328.4012763596,
+          "selector_secondary": 20328.4012763596,
+          "JEV": 20328.4012763596,
+          "oracle": 20328.4012763596
+        }
+      },
+      "jev": {
+        "calls": 618,
+        "questions_called": 309,
+        "input_tokens": 950967,
+        "output_tokens": 19158,
+        "usd_total": 0.039940614,
+        "usd_per_1k_questions": 0.04432920532741398
+      },
+      "archives": {
+        "solo_w": "20261002T231200Z__c304__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c320__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c321__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261002T231200Z__c304__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen3-4B",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 4.0,
+        "s": 32.8
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 67.59156492785793,
+        "stronger_alone": 77.80244173140954,
+        "review_by_stronger": 76.69256381798002,
+        "review_by_weaker": 76.0266370699223,
+        "selector_primary": 78.24639289678136,
+        "selector_secondary": 77.58046614872364,
+        "JEV": 80.35516093229745,
+        "oracle": 83.46281908990011
+      },
+      "mean_tokens": {
+        "solo_w": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "solo_s": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "g_of_review_by_s": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "review_by_s": [
+          755.7924528301887,
+          413.7069922308546
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "review_by_w": [
+          857.7502774694783,
+          188.19200887902332
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2793.1054384017757,
+          "stronger_alone": 26247.171587125413,
+          "review_by_stronger": 41152.68723640399,
+          "review_by_weaker": 30430.94073251942,
+          "selector_primary": 29040.27702552719,
+          "selector_secondary": 29040.27702552719,
+          "JEV": 29040.27702552719,
+          "oracle": 29040.27702552719
+        },
+        "output_x4": {
+          "weaker_alone": 8196.701442841288,
+          "stronger_alone": 80587.77980022196,
+          "review_by_stronger": 87265.05127635959,
+          "review_by_weaker": 87029.85305216425,
+          "selector_primary": 88784.48124306326,
+          "selector_secondary": 88784.48124306326,
+          "JEV": 88784.48124306326,
+          "oracle": 88784.48124306326
+        }
+      },
+      "jev": {
+        "calls": 514,
+        "questions_called": 257,
+        "input_tokens": 1016552,
+        "output_tokens": 15934,
+        "usd_total": 0.042695184000000004,
+        "usd_per_1k_questions": 0.04738644173140955
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c351__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c350__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen3-8B",
+        "Qwen3-32B"
+      ],
+      "weaker": "Qwen3-8B",
+      "stronger": "Qwen3-32B",
+      "params_b": {
+        "w": 8.2,
+        "s": 32.8
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 73.80688124306326,
+        "stronger_alone": 77.80244173140954,
+        "review_by_stronger": 78.13540510543841,
+        "review_by_weaker": 78.35738068812431,
+        "selector_primary": 79.80022197558269,
+        "selector_secondary": 78.91231964483907,
+        "JEV": 80.91009988901222,
+        "oracle": 83.35183129855716
+      },
+      "mean_tokens": {
+        "solo_w": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "solo_s": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "g_of_review_by_s": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "review_by_s": [
+          946.0521642619312,
+          331.1065482796892
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          552.2419533851277
+        ],
+        "review_by_w": [
+          857.7502774694783,
+          422.7746947835738
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 7286.350721420643,
+          "stronger_alone": 26247.171587125413,
+          "review_by_stronger": 49177.15649278578,
+          "review_by_weaker": 36747.47635960044,
+          "selector_primary": 33533.52230854606,
+          "selector_secondary": 33533.52230854606,
+          "JEV": 33533.52230854606,
+          "oracle": 33533.52230854606
+        },
+        "output_x4": {
+          "weaker_alone": 23045.17624861265,
+          "stronger_alone": 80587.77980022196,
+          "review_by_stronger": 97516.86637069922,
+          "review_by_weaker": 101488.3420643729,
+          "selector_primary": 103632.95604883462,
+          "selector_secondary": 103632.95604883462,
+          "JEV": 103632.95604883462,
+          "oracle": 103632.95604883462
+        }
+      },
+      "jev": {
+        "calls": 390,
+        "questions_called": 195,
+        "input_tokens": 925849,
+        "output_tokens": 12090,
+        "usd_total": 0.038885658000000003,
+        "usd_per_1k_questions": 0.043158332963374034
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261003T013000Z__c353__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261003T013000Z__c352__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261002T231200Z__c307__nlreason-eval901__r014_solve4096"
+      }
+    },
+    {
+      "domain": "nl_reasoning",
+      "split": "dev",
+      "evaluation": "cv",
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "weaker": "Qwen3-4B",
+      "stronger": "Qwen3-8B",
+      "params_b": {
+        "w": 4.0,
+        "s": 8.2
+      },
+      "n": 901,
+      "accuracy_pct": {
+        "weaker_alone": 67.59156492785793,
+        "stronger_alone": 73.80688124306326,
+        "review_by_stronger": 71.1431742508324,
+        "review_by_weaker": 72.03107658157603,
+        "selector_primary": 75.13873473917869,
+        "selector_secondary": 74.25083240843507,
+        "JEV": 76.58157602663707,
+        "oracle": 79.46725860155382
+      },
+      "mean_tokens": {
+        "solo_w": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "solo_s": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "g_of_review_by_s": [
+          247.97669256381798,
+          450.299667036626
+        ],
+        "review_by_s": [
+          755.7924528301887,
+          491.3529411764706
+        ],
+        "g_of_review_by_w": [
+          247.97669256381798,
+          640.6026637069922
+        ],
+        "review_by_w": [
+          946.0521642619312,
+          195.93007769145393
+        ]
+      },
+      "cost_per_question": {
+        "main": {
+          "weaker_alone": 2793.1054384017757,
+          "stronger_alone": 7286.350721420643,
+          "review_by_stronger": 13019.697669256382,
+          "review_by_weaker": 11854.279689234185,
+          "selector_primary": 10079.456159822419,
+          "selector_secondary": 10079.456159822419,
+          "JEV": 10079.456159822419,
+          "oracle": 10079.456159822419
+        },
+        "output_x4": {
+          "weaker_alone": 8196.701442841288,
+          "stronger_alone": 23045.17624861265,
+          "review_by_stronger": 30510.57602663707,
+          "review_by_weaker": 29964.266148723636,
+          "selector_primary": 31241.877691453938,
+          "selector_secondary": 31241.877691453938,
+          "JEV": 31241.877691453938,
+          "oracle": 31241.877691453938
+        }
+      },
+      "jev": {
+        "calls": 458,
+        "questions_called": 229,
+        "input_tokens": 954945,
+        "output_tokens": 14198,
+        "usd_total": 0.04010769,
+        "usd_per_1k_questions": 0.04451463928967814
+      },
+      "archives": {
+        "solo_w": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "solo_s": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096",
+        "review_by_s": "20261001T074355Z__c197__nlreason-eval901__r014_review4096",
+        "review_by_w": "20261001T074355Z__c198__nlreason-eval901__r014_review4096",
+        "g_of_review_by_s": "20261001T074355Z__c196__nlreason-eval901__r014_solve4096",
+        "g_of_review_by_w": "20261001T074355Z__c193__nlreason-eval901__r014_solve4096"
+      }
+    }
+  ]
+}

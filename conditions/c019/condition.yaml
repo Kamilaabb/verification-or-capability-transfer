@@ -1,0 +1,70 @@
+schema_version: condition-overlay-v1
+condition_id: c019
+status: validated_development_diagnostic
+extends: conditions/c017/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c019
+  status: validated_development_diagnostic
+  purpose: qwen3_8b_solo_pass1_math_dev300_without_seeing_g
+
+  gate:
+    scope_limit: >-
+      c018's verifier is Qwen3-8B reading c017's G answer. c019 asks the same Qwen3-8B
+      revision to solve the same 300 development problems on its own, with c017's G
+      prompt, decoding and seven-scalar contract, and never shows it any G output. The
+      only behavioral change from c017 is the model. It supports a paired
+      both-correct / both-wrong / only-one-correct comparison of Qwen3-4B against
+      Qwen3-8B solo, set beside c017 G against c018 V, which saw G. Development only;
+      no confirmatory claim, no router, no Controller.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c019_v1.json
+
+  model:
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    tokenizer_revision: b968826d9c46dd6066d109eabc6255188de91218
+    provenance: null
+    identity_reused_from: c018
+    identity_reuse_reason: >-
+      Same frozen snapshot, server path and chat template as c018's verifier, whose
+      300-row same-forward capture on this revision validated under job 65120313.
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+    prompt_pass1_provenance: byte_identical_to_c017_g
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_policy: >-
+      No separate preflight. The first pass-1 row already requires exact token-ID
+      alignment, sampled-logprob identity within 1e-4 and greedy top-1 agreement, and
+      the run stops on the first failure. c018 ran the same capture backend on this
+      revision for 300 rows.
+
+  replicates:
+    plan_id: r011
+    path: replicates/r011.yaml
+    replicate_id: p01
+    base_seed: 20260924
+    seed_cell_id: c019
+
+  runnable_gate:
+    required_before_submission:
+      - model revision, server path and chat template equal c018's verifier identity
+      - thinking is false and temperature is 0
+      - prompt, decoding, capture backend and feature contract resolve identical to c017
+      - local parser and record-schema tests pass
+
+  comparison:
+    paired_sources:
+      g_qwen3_4b: 20260922T193921Z__c017__pilot300__r009_mathscalars
+      v_qwen3_8b_seeing_g: 20260923T192748Z__c018__pilot300__r010_vscalars
+    grading_for_comparison: raw_text_via_answer_text_and_grade_prediction
+    grading_note: >-
+      c017's registered grades carry the extracted_answer defect (198/300); the paired
+      comparison regrades every source from raw text through the fixed path (430d65c).
+    budget_note: >-
+      c019 keeps c017's 3072-token pass-1 budget so that only the model differs from G;
+      c018's verifier had 4096 tokens.

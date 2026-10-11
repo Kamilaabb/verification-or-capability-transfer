@@ -1,0 +1,28 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r004
+status: gate0_code_domain
+
+generator:
+  replicates:
+    - {replicate_id: g01, base_seed: 20260917}
+  note: >-
+    Temperature is 0, so the seed does not steer sampling; it is registered anyway
+    because the call-seed derivation is part of the contract and must be reproducible.
+
+verifier:
+  replicates:
+    - {replicate_id: v01, base_seed: 20260917}
+
+analysis:
+  bootstrap_seed: 20260917
+  bootstrap_repetitions: 10000
+
+absent_scopes:
+  rewrite: gate_0_skips_rewrite
+  controller_inference: gate_0_runs_no_controller
+  controller_training: deferred_until_gate_1_shows_which_cell_is_live
+
+call_seed_derivation:
+  algorithm: sha256_first_31_bits_v1
+  ordered_fields: [replicate_plan_id, scope, replicate_id, base_seed, cell_id, problem_id, sample_index]
+  same_seed_on_format_retry: true

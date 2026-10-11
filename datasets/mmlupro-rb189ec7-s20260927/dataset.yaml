@@ -1,0 +1,154 @@
+schema_version: dataset-v1
+dataset_id: mmlupro-rb189ec7-s20260927
+status: frozen_on_server
+registered_on: 2026-09-26
+purpose: >-
+  Knowledge-domain extension of docs/plan/gv_vs_max_g_v_study.md, designed in
+  docs/plan/mmlu_pro_study.md: G alone, V alone and GV in both directions with Qwen3-4B and
+  Qwen3-8B on multi-discipline multiple-choice questions.
+
+source:
+  provider: huggingface
+  name: TIGER-Lab/MMLU-Pro
+  revision: b189ec765aa7ed75c8acfea42df31fdae71f97be
+  splits_used: [test]
+  total_rows: 12032
+  composition: >-
+    MMLU questions filtered and augmented toward ten options, plus questions from STEM
+    websites (stemez), TheoremQA and SciBench; src records the origin. The 70-row validation
+    split holds the official few-shot exemplars and is not used.
+  fields_never_given_to_any_model: [answer, answer_index, cot_content]
+  license: mit
+  options_note: >-
+    Not every row has ten options: 7,482 of the 9,032 development-pool rows and 2,499 of the
+    3,000 test rows do, the rest have 3 to 9. n_options is in every manifest row and the
+    answer parser limits letters to each row's options.
+
+selection:
+  exclusions_decided_from_source_only: true
+  exclusion_rules:
+    duplicate_id: an id that occurs more than once; every copy is dropped
+    duplicate_question: identical question text and options on several rows; every copy is dropped
+    empty_question: no question text
+    options_not_strings: options are not a list of non-empty strings
+    option_count_out_of_range: fewer than 2 or more than 10 options
+    answer_not_an_option: the reference letter is not one of the row's option letters, or disagrees with answer_index
+  excluded: {}
+  rows_after_exclusion: 12032
+
+sampling:
+  strata: [category, src_origin]
+  strata_count: 29
+  test_rows: 3000
+  test_quota: proportional to stratum size by largest remainder, ties by sorted stratum key
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  split_seed: 20260927
+  dev_order_seed: 20260928
+  test_order_seed: 20260929
+  method: >-
+    sort rows by id; for each stratum in sorted key order draw one permutation from the split
+    stream and send its first quota rows to test; then permute the development pool and the
+    test once each
+  drawn_before_any_model_saw_any_problem: true
+  builder: scripts/build_mmlu_pro_manifests.py
+  builder_commit: 1cf3f28
+  built_once_on: 2026-09-26
+  build_report_sha256: d4ef13f4b73fa86c311424bac3ee917dbc4d49dc47d00ea5c8c364b2ab65cab5
+
+development_growth:
+  rule: >-
+    Development rows are always a prefix of dev_order. Start with dev1000; a larger prefix is
+    written by slicing dev_order, never by choosing rows, and rows already run stay in every
+    larger prefix.
+  planned_prefixes: [1000]
+  decision_uses_development_only: true
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  dev_order:
+    purpose: fixed_order_of_the_whole_development_pool
+    server_path: /path/to/project/data/manifests/mmlupro-rb189ec7-s20260927/dev_order.jsonl
+    rows: 9032
+    counts_by_origin: {ori_mmlu: 5113, scibench: 406, stemez: 3064, theoremQA: 449}
+    sha256: f565ec8423882e42fc3a08d490c1817777db0b524e0d572821e04e82c77bd394
+  dev1000:
+    purpose: development
+    prefix_of: dev_order
+    server_path: /path/to/project/data/manifests/mmlupro-rb189ec7-s20260927/dev1000.jsonl
+    rows: 1000
+    counts_by_origin: {ori_mmlu: 562, scibench: 41, stemez: 349, theoremQA: 48}
+    counts_by_category: {biology: 70, business: 61, chemistry: 94, computer science: 33, economics: 59,
+                         engineering: 93, health: 62, history: 28, law: 103, math: 98, other: 80,
+                         philosophy: 35, physics: 102, psychology: 82}
+    sha256: d7733053f8253d8a7a036df703cb9dcc0bf5e62f5a7e359eaaa53ac52545cee0
+  test:
+    purpose: independent_confirmatory_test
+    status: prefix_test1500_in_use
+    server_path: /path/to/project/data/manifests/mmlupro-rb189ec7-s20260927/test.jsonl
+    rows: 3000
+    counts_by_origin: {ori_mmlu: 1697, scibench: 135, stemez: 1019, theoremQA: 149}
+    sha256: dd39f21bf688670b8391e96e5f0148a0bde1a5b52db6a36d5009589ba2591bb5
+    smaller_test_rule: >-
+      the confirmatory test may need fewer rows; if so it is a prefix of this
+      file's order, and its length is registered before any test row runs
+  test1500:
+    purpose: independent_test_for_the_qwen3_4b_8b_pair
+    prefix_of: test
+    rule: >-
+      The first 1,500 rows of test, written with `head -n 1500 test.jsonl` on the server on
+      2026-09-27 after test.jsonl's sha256 was checked. test is already one fixed random
+      permutation (seed 20260929), so a prefix is a uniform random subset and no row is chosen.
+      Size chosen before any test row ran; it may later be extended to all 3,000,
+      a decision taken after seeing these results and reported as such.
+    server_path: /path/to/project/data/manifests/mmlupro-rb189ec7-s20260927/test1500.jsonl
+    rows: 1500
+    counts_by_origin: {ori_mmlu: 842, scibench: 73, stemez: 502, theoremQA: 83}
+    counts_by_category: {biology: 89, business: 98, chemistry: 134, computer science: 65, economics: 106,
+                         engineering: 123, health: 95, history: 42, law: 135, math: 167, other: 121,
+                         philosophy: 58, physics: 165, psychology: 102}
+    sha256: a22d72830c08b2010f44500e9353b948b1adce0591369e62ac7e1e6eb35c6e4e
+  row_fields: [problem_id, category, origin, n_options]
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: true
+  may_support_confirmatory_claims: false
+  test_may_support_confirmatory_claims: true
+  independent_test_required_after_tuning: true
+  test_manifest_is_single_use: true
+  test_status: in_use_test1500_prefix
+
+test_use_log:
+  - {conditions: [c392, c393], manifest: test1500, purpose: prompt-variant sanity check (Qwen3-8B reviews c120,
+     Qwen2.5-7B reviews c081 with the commit-first prompt), plan: docs/plan/prompt_variant_test500.md}
+  - {conditions: [c388, c389], manifest: test1500, purpose: self-review sanity check (Qwen3-8B, Qwen2.5-7B
+     review their own test solos c082, c122), plan: docs/plan/self_review_test1500.md}
+  - {conditions: [c081, c082, c083, c084], manifest: test1500, pair: Qwen3-4B / Qwen3-8B,
+     plan: docs/plan/mmlu_pro_study.md section 10}
+  - {conditions: [c089], manifest: test1500, model: Mistral-Small-24B alone, purpose: dev/test stability check,
+     plan: docs/plan/mmlu_pro_study.md section 12}
+  - {conditions: [c120, c121, c122, c123, c124, c125], manifest: test1500,
+     models: Llama-3.2-3B / Qwen2.5-3B / Qwen2.5-7B / Ministral-8B / Qwen3-32B / Qwen2.5-72B alone,
+     plan: docs/plan/mmlu_pro_study.md section 13}
+  - {conditions: [c136, c137, c138, c139, c140, c141, c142, c143, c144, c145, c146, c147], manifest: test1500,
+     pairs: stratified selection (both GV directions of six pairs),
+     plan: docs/plan/mmlu_pro_study.md section 15}
+  - {conditions: [c176, c177, c178, c179, c180, c181, c182, c183], manifest: test1500,
+     pairs: stratified pairs with a strong model (both GV directions of four pairs),
+     plan: docs/plan/mmlu_pro_study.md section 16}
+  - {conditions: [c188, c189, c190, c191], manifest: test1500,
+     pairs: strong/strong cell, Qwen3-32B x Mistral-Small-24B and Qwen2.5-72B x Mistral-Small-24B,
+     plan: docs/plan/mmlu_pro_study.md section 16}
+  - {conditions: [c274, c275, c276, c277], manifest: test1500,
+     pairs: the originally planned Qwen2.5-7B x Qwen2.5-72B and Llama-3.2-3B x Qwen2.5-72B,
+     plan: docs/plan/mmlu_pro_study.md section 20}

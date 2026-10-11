@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_checkpoint_manifest_v1.json",
+  "title": "c008 final development-trained controller checkpoint manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "condition_id", "controller_id", "feature_ablation", "feature_names", "training_rows", "target_order", "selected_C", "implementation_versions", "checkpoint_file", "checkpoint_sha256", "source_evidence_sha256", "source_targets_sha256", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "controller-checkpoint-manifest-v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c008"},
+    "controller_id": {"const": "C-logistic-code-scalar-v1"},
+    "feature_ablation": {"const": "S2_program_and_critique_content"},
+    "feature_names": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "training_rows": {"const": 832},
+    "target_order": {"const": ["M0", "M1", "M2"]},
+    "selected_C": {"enum": [0.01, 0.1, 1.0, 10.0]},
+    "implementation_versions": {
+      "type": "object", "additionalProperties": false, "required": ["python", "numpy", "scipy", "scikit_learn", "joblib"],
+      "properties": {"python": {"type": "string"}, "numpy": {"type": "string"}, "scipy": {"type": "string"}, "scikit_learn": {"const": "1.9.1"}, "joblib": {"type": "string"}}
+    },
+    "checkpoint_file": {"const": "controller/final_s2.joblib"},
+    "checkpoint_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_targets_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  }
+}

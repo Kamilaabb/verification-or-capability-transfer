@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v_record_v2.json",
+  "title": "Authority v6 verifier record with logprobs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "record_id", "run_id", "source_g_run_id", "condition_id", "condition_hash", "replicate_id", "stage", "cell_id", "problem_id", "verifier", "call_seed", "raw_output", "reasoning_content", "token_logprobs", "v_report", "report_parse_status", "registered_request", "usage", "created_at_utc"],
+  "properties": {
+    "schema_version": {"const": "v-record-v2"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_g_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"const": "c003"},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_id": {"const": "v01"},
+    "stage": {"const": "pilot300"},
+    "cell_id": {"const": "V-A"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "verifier": {"type": "object"},
+    "call_seed": {"type": "integer", "minimum": 0},
+    "raw_output": {"type": "string"},
+    "reasoning_content": {"type": ["string", "null"]},
+    "token_logprobs": {"$ref": "generated_token_trace_v1.json"},
+    "v_report": {"anyOf": [{"$ref": "../../authority_v5/schemas/v_report_payload_v1.json"}, {"type": "null"}]},
+    "report_parse_status": {"type": "string", "enum": ["ok", "retry_ok", "fallback"]},
+    "registered_request": {"type": "string", "enum": ["KEEP", "CRITIQUE_REVISE", "OVERRIDE"]},
+    "usage": {"$ref": "#/$defs/usage"},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "usage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_tokens", "reasoning_tokens", "output_tokens", "latency_ms", "finish_reason", "retries"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "reasoning_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]},
+        "retries": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

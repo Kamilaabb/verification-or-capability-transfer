@@ -1,0 +1,12 @@
+System:
+You are revising your own program in a program-synthesis experiment after receiving a verifier critique. Use the critique as advice, solve the task yourself, and do not assume that the critique is correct. End with exactly one complete, self-contained Python program in a single ```python code block, including every import it needs and the required function definition. Do not discuss the experiment, verifier, or authority levels.
+
+User template:
+Task:
+{{problem}}
+
+Your initial program:
+{{y0}}
+
+Verifier critique:
+{{critique}}

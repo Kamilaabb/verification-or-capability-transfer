@@ -1,0 +1,66 @@
+schema_version: condition-overlay-v1
+condition_id: c049
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c049
+  status: registered_pending_run
+  purpose: llama_32_3b_instruct_reviewer_of_c026_mathfull_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: Llama-3.2-3B-Instruct reviews c026's Qwen3-8B outputs on mathfull dev1000 under the frozen
+      review prompt v2, requested by the user as one direction of the Qwen3-8B / Llama-3.2-3B pair; the
+      other direction is registered beside it. c027 with the reviewer's identity taken from its own solo
+      condition c029 and the generator source changed; delivery, decoding, budget, capture and evidence
+      contract are c027's. Development only; the sealed test manifest is not touched.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c049_v1.json
+  generator_source:
+    condition_id: c026
+    artifact_path: /path/to/project/artifacts/20260925T172823Z__c026__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260925T172823Z__c026__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen3-8B
+    reuse_records_byte_for_byte: true
+  model:
+    chat_template_hash: 5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4
+    chat_template_kwargs:
+      date_string: 26 Jul 2024
+    identity_reuse_reason: null
+    identity_reused_from: null
+    model_id: meta-llama/Llama-3.2-3B-Instruct
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for c027; a mismatch
+      stops the run before its row is kept.
+    preflight_reuse_reason: null
+    provenance: conditions/c029/model_provenance.json
+    revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+    server_path: /path/to/scratch/authority-allocation/models/meta-llama--Llama-3.2-3B-Instruct/0cb88a4f764b7a12671c53f0838cd831a0843b95
+    tokenizer_revision: 0cb88a4f764b7a12671c53f0838cd831a0843b95
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c049
+  stages:
+    run:
+    - reuse_c026_g
+    - review_with_same_forward_logit_capture
+    - scalar_evidence
+    - grade
+    - analyze
+    skip:
+    - generate_g
+    - verifier_verdict
+    - controller_training
+  runnable_gate:
+    required_before_submission:
+    - c049 differs from c027 only in the reviewer identity, which must equal c029's, generator source,
+      evidence schema id, stages and seeds
+    - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+    - the c026 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its
+      pass-1 run id equals generator_source.pass1_run_id
+    - temperature is 0
+    - local parser and record-schema tests pass

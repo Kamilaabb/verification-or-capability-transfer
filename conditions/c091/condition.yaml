@@ -1,0 +1,32 @@
+schema_version: condition-overlay-v1
+condition_id: c091
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c091
+  status: registered_pending_run
+  purpose: qwen3_8b_reviewer_of_c054_mathfull_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: >-
+      Qwen3-8B reviews c054's Mistral-Small-24B-Instruct-2501 outputs on mathfull dev1000 under the
+      frozen review prompt v2, the other direction of the Qwen3-8B / Mistral-Small-24B pair. c027
+      with only the generator source changed. Development only.
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c091_v1.json
+  generator_source:
+    condition_id: c054
+    artifact_path: /path/to/project/artifacts/20260926T183451Z__c054__mathfull-dev1000__r012_solo4096
+    pass1_run_id: 20260926T183451Z__c054__mathfull-dev1000__r012_solo4096__pass1__p01
+    model_id: mistralai/Mistral-Small-24B-Instruct-2501
+    reuse_records_byte_for_byte: true
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c091
+  stages:
+    run: [reuse_c054_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]

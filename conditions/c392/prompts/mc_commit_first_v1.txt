@@ -1,0 +1,14 @@
+System:
+Answer the multiple-choice question provided by the user. A proposed solution is also given, but do not use it until you have committed to your own answer.
+First, think step by step and answer the question independently, and state your answer on its own line in the form "My answer: X", where X is the letter of one option. Only then read the proposed solution and compare it with your own. Either one may be correct or incorrect: carefully check the facts, the reasoning, and the final choice of both, and decide which option is correct.
+Return a complete final solution to the original question. The last line of your response must be of the form "Answer: X", where X is the letter of exactly one option.
+
+User template:
+Question:
+{{question}}
+
+Options:
+{{options}}
+
+Proposed solution:
+{{y0}}

@@ -1,0 +1,3721 @@
+{
+  "math": [
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Llama-3.2-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Llama-3.1-8B-Instruct",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Llama-3.2-3B-Instruct": 382,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {
+          "dev": "c227",
+          "test": "c245"
+        },
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c226",
+          "test": "c258"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Ministral-8B-Instruct-2410": 493,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Ministral-8B-Instruct-2410": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen2.5-3B-Instruct": 578,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen2.5-72B-Instruct": 763,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.1-8B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Llama-3.1-8B-Instruct": 403,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.1-8B-Instruct": {
+          "dev": "c216",
+          "test": "c236"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c217",
+          "test": "c237"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Ministral-8B-Instruct-2410": 493,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c228",
+          "test": "c246"
+        },
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c229",
+          "test": "c247"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen2.5-3B-Instruct": 578,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "test": "c058"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "test": "c059"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen2.5-72B-Instruct": 763,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c224",
+          "test": "c242"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c225",
+          "test": "c243"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 382,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen2.5-3B-Instruct": 578,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c222",
+          "test": "c152"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c223",
+          "test": "c153"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen2.5-72B-Instruct": 763,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 493,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c214",
+          "test": "c234"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c215",
+          "test": "c235"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen2.5-3B-Instruct": 578,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen2.5-72B-Instruct": 763,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c218",
+          "test": "c238"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c219",
+          "test": "c239"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c210",
+          "test": "c230"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c211",
+          "test": "c231"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 642,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 578,
+        "Qwen2.5-72B-Instruct": 763,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 578,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c220",
+          "test": "c240"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c221",
+          "test": "c241"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 578,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c212",
+          "test": "c232"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c213",
+          "test": "c233"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 578,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 578,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 763,
+        "Qwen2.5-7B-Instruct": 682,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 763,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {
+          "dev": "c264",
+          "test": "c268"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c265",
+          "test": "c269"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 763,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {
+          "dev": "c262",
+          "test": "c266"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c263",
+          "test": "c267"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 763,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 682,
+        "Qwen3-32B": 841,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 682,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "test": "c065"
+        },
+        "G=Qwen3-4B": {
+          "test": "c064"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 682,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "test": "c156"
+        },
+        "G=Qwen3-8B": {
+          "test": "c157"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 841,
+        "Qwen3-4B": 769,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 841,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen3-32B": {
+          "dev": "c251",
+          "test": "c253"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c250",
+          "test": "c252"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen3-4B": 769,
+        "Qwen3-8B": 788,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen3-4B": {
+          "dev": "c248",
+          "test": "c042"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c249",
+          "test": "c043"
+        }
+      }
+    }
+  ],
+  "knowledge": [
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Ministral-8B-Instruct-2410": 384,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Ministral-8B-Instruct-2410": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c174",
+          "test": "c182"
+        },
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c175",
+          "test": "c183"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen2.5-3B-Instruct": 426,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c131",
+          "test": "c143"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c130",
+          "test": "c142"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen2.5-72B-Instruct": 722,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c272",
+          "test": "c276"
+        },
+        "G=Qwen2.5-72B-Instruct": {
+          "dev": "c273",
+          "test": "c277"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen2.5-7B-Instruct": 564,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 361,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c135",
+          "test": "c147"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c134",
+          "test": "c146"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen2.5-3B-Instruct": 426,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c129",
+          "test": "c141"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c128",
+          "test": "c140"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen2.5-72B-Instruct": 722,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen2.5-7B-Instruct": 564,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 384,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "weak"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen2.5-3B-Instruct": 426,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen2.5-72B-Instruct": 722,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "low",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c186",
+          "test": "c190"
+        },
+        "G=Qwen2.5-72B-Instruct": {
+          "dev": "c187",
+          "test": "c191"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen2.5-7B-Instruct": 564,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c171",
+          "test": "c179"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c170",
+          "test": "c178"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c184",
+          "test": "c188"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c185",
+          "test": "c189"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 670,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c088",
+          "test": "c177"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c087",
+          "test": "c176"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 426,
+        "Qwen2.5-72B-Instruct": 722,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen2.5-72B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 426,
+        "Qwen2.5-7B-Instruct": 564,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c133",
+          "test": "c145"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c132",
+          "test": "c144"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 426,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c172",
+          "test": "c180"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c173",
+          "test": "c181"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 426,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 426,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 722,
+        "Qwen2.5-7B-Instruct": 564,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {
+          "dev": "c271",
+          "test": "c275"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c270",
+          "test": "c274"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 722,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 722,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-72B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-72B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-72B-Instruct": 722,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-72B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 564,
+        "Qwen3-32B": 694,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 564,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c086",
+          "test": "c137"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c085",
+          "test": "c136"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 564,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c127",
+          "test": "c139"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c126",
+          "test": "c138"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 694,
+        "Qwen3-4B": 605,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 694,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen3-4B": 605,
+        "Qwen3-8B": 637,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-4B": {
+          "dev": "c072",
+          "test": "c083"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c073",
+          "test": "c084"
+        }
+      }
+    }
+  ],
+  "code": [
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Ministral-8B-Instruct-2410": 312,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Ministral-8B-Instruct-2410": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen2.5-3B-Instruct": 259,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen2.5-7B-Instruct": 282,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c290"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c289"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen2.5-Coder-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c199"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c148"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 205,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c302"
+        },
+        "G=Seed-Coder-8B-Instruct": {
+          "dev": "c298"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c293"
+        },
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c294"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen2.5-3B-Instruct": 259,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen2.5-7B-Instruct": 282,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c286"
+        },
+        "G=Qwen2.5-Coder-7B-Instruct": {
+          "dev": "c285"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c111"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c110"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 312,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "weak"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen2.5-3B-Instruct": 259,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-3B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "weak"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen2.5-7B-Instruct": 282,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen2.5-Coder-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c282"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c281"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c292"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c291"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 360,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "low",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c284"
+        },
+        "G=Seed-Coder-8B-Instruct": {
+          "dev": "c283"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Qwen2.5-7B-Instruct": 282,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c288"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c287"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen2.5-Coder-7B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 259,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen2.5-Coder-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 282,
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c149"
+        },
+        "G=Qwen2.5-Coder-7B-Instruct": {
+          "dev": "c278"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 282,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c295"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c296"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 282,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c299"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c300"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 282,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 282,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-Coder-7B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "Qwen3-32B": 364,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-Coder-7B-Instruct": {},
+        "G=Qwen3-32B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-Coder-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-Coder-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-Coder-7B-Instruct": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-Coder-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-Coder-7B-Instruct": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-Coder-7B-Instruct",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-Coder-7B-Instruct": 339,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-Coder-7B-Instruct": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 364,
+        "Qwen3-4B": 316,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Qwen3-4B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 364,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Qwen3-8B": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen3-32B": 364,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-32B": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen3-4B": 316,
+        "Qwen3-8B": 353,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-4B": {
+          "dev": "c112"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c114"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen3-4B": 316,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-4B": {},
+        "G=Seed-Coder-8B-Instruct": {}
+      }
+    },
+    {
+      "models": [
+        "Qwen3-8B",
+        "Seed-Coder-8B-Instruct"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Seed-Coder-8B-Instruct",
+      "stronger_from": {
+        "Qwen3-8B": 353,
+        "Seed-Coder-8B-Instruct": 365,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-8B": {
+          "dev": "c301"
+        },
+        "G=Seed-Coder-8B-Instruct": {
+          "dev": "c280"
+        }
+      }
+    }
+  ],
+  "nl_reasoning": [
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Ministral-8B-Instruct-2410"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Ministral-8B-Instruct-2410",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Ministral-8B-Instruct-2410": 467,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c333"
+        },
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c332"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Mistral-Small-24B-Instruct-2501"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Mistral-Small-24B-Instruct-2501": 645,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c310"
+        },
+        "G=Mistral-Small-24B-Instruct-2501": {}
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Qwen2.5-3B-Instruct": 497,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c315"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c314"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Qwen2.5-7B-Instruct": 556,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c331"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c330"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-32B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Qwen3-32B": 701,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c355"
+        },
+        "G=Qwen3-32B": {
+          "dev": "c354"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Qwen3-4B": 609,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "low",
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c316"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c317"
+        }
+      }
+    },
+    {
+      "models": [
+        "Llama-3.2-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Llama-3.2-3B-Instruct": 394,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Llama-3.2-3B-Instruct": {
+          "dev": "c194"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c195"
+        }
+      }
+    },
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "weak"
+      ],
+      "stronger": "Qwen2.5-3B-Instruct",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 467,
+        "Qwen2.5-3B-Instruct": 497,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "weak-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c336"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c337"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen2.5-3B-Instruct"
+      ],
+      "tiers": [
+        "strong",
+        "weak"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 645,
+        "Qwen2.5-3B-Instruct": 497,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c344"
+        },
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c345"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Mistral-Small-24B-Instruct-2501",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 645,
+        "Qwen3-4B": 609,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c340"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c341"
+        }
+      }
+    },
+    {
+      "models": [
+        "Mistral-Small-24B-Instruct-2501",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Mistral-Small-24B-Instruct-2501": 645,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "high",
+      "directions": {
+        "G=Mistral-Small-24B-Instruct-2501": {
+          "dev": "c342"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c343"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen2.5-7B-Instruct"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen2.5-7B-Instruct",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 497,
+        "Qwen2.5-7B-Instruct": 556,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-weak",
+      "headroom": "high",
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c335"
+        },
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c334"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "weak",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 497,
+        "Qwen3-4B": 609,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c318"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c319"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-3B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "weak",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-3B-Instruct": 497,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-3B-Instruct": {
+          "dev": "c324"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c325"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "middle",
+        "middle"
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 556,
+        "Qwen3-4B": 609,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "middle-middle",
+      "headroom": "only",
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c320"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c321"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen2.5-7B-Instruct",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen2.5-7B-Instruct": 556,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen2.5-7B-Instruct": {
+          "dev": "c326"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c327"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-4B"
+      ],
+      "tiers": [
+        "strong",
+        "middle"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 701,
+        "Qwen3-4B": 609,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen3-32B": {
+          "dev": "c350"
+        },
+        "G=Qwen3-4B": {
+          "dev": "c351"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-32B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "strong",
+        "strong"
+      ],
+      "stronger": "Qwen3-32B",
+      "stronger_from": {
+        "Qwen3-32B": 701,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-strong",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen3-32B": {
+          "dev": "c352"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c353"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        "middle",
+        "strong"
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Qwen3-4B": 609,
+        "Qwen3-8B": 665,
+        "split": "dev"
+      },
+      "in_design_sample": true,
+      "cell": "strong-middle",
+      "headroom": "low",
+      "directions": {
+        "G=Qwen3-4B": {
+          "dev": "c197"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c198"
+        }
+      }
+    }
+  ],
+  "math_olympiad": [
+    {
+      "models": [
+        "Ministral-8B-Instruct-2410",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        null,
+        null
+      ],
+      "stronger": "Qwen3-8B",
+      "stronger_from": {
+        "Ministral-8B-Instruct-2410": 160,
+        "Qwen3-8B": 303,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Ministral-8B-Instruct-2410": {
+          "dev": "c256"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c257"
+        }
+      }
+    },
+    {
+      "models": [
+        "Qwen3-4B",
+        "Qwen3-8B"
+      ],
+      "tiers": [
+        null,
+        null
+      ],
+      "stronger": "Qwen3-4B",
+      "stronger_from": {
+        "Qwen3-4B": 313,
+        "Qwen3-8B": 303,
+        "split": "dev"
+      },
+      "in_design_sample": false,
+      "cell": null,
+      "headroom": null,
+      "directions": {
+        "G=Qwen3-4B": {
+          "dev": "c260"
+        },
+        "G=Qwen3-8B": {
+          "dev": "c261"
+        }
+      }
+    }
+  ]
+}

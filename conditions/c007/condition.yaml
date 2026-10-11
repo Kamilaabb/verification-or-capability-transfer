@@ -1,0 +1,285 @@
+schema_version: condition-v1
+condition_id: c007
+status: frozen_validated_gate_1
+purpose: gate_1_add_rewrite_over_the_full_development_split_for_complete_z0_z1_z2
+path_base: repository_root
+
+gate:
+  id: gate_1
+  runs_stages: [generate, verify, rewrite, grade, analyze]
+  skips_stages: [controller_evidence, controller]
+  skips_stages_because: >-
+    Gate 1 asks whether M0, M1 and M2 separate often enough, and in both directions, to
+    be worth arbitrating. That is answered by counting outcomes, not by running a
+    Controller. Which scalars a Controller should see depends on which cell turns out to
+    be live, so a feature contract frozen now would be a guess. See
+    conditions/c006/condition.yaml no_feature_contract_because, which said the same
+    thing one gate earlier.
+  measures:
+    - all eight (z0, z1, z2) patterns with counts
+    - z1 - z0 repair and harm event counts
+    - z2 - z1 repair and harm event counts
+    - acc_G, mean(u1), mean(u2) over the full 832
+    - KEEP / CRITIQUE_REVISE / OVERRIDE distribution over the full 832
+    - P(request != KEEP | u0 = 1) over the full 832, against the 300-row c006 value
+  decision_criteria: protocols/authority_v6/README.md section 3
+  primary_hypothesis_under_test: >-
+    M1 and M2 differ on enough OVERRIDE rows, in both directions, to make the authority
+    choice a real decision rather than a dominated one. c006 measured OVERRIDE at 21.3%,
+    which extrapolates to about 177 rows out of 832; if the conditional divergence is as
+    rare as c003's 19/72 the count is roughly 47, and reporting non-identifiability is a
+    permitted outcome.
+  unidentifiability_is_a_result_not_a_failure: >-
+    protocols/authority_v6/README.md section 3 requires reporting sparse counterfactual
+    difference as such. Repeated retuning to manufacture separation is forbidden.
+
+protocol:
+  id: authority_v6
+  path: protocols/authority_v6/README.md
+  grader_contract: protocols/authority_v6/grader_bigcodebench_v1.yaml
+  record_schemas:
+    generator_reused: protocols/authority_v6/schemas/g_record_single_v2.json
+    verifier_reused: protocols/authority_v6/schemas/v_record_v2.json
+    generator_new: protocols/authority_v6/schemas/g_record_single_v3.json
+    verifier_new: protocols/authority_v6/schemas/v_record_v3.json
+    rewrite_source: protocols/authority_v6/schemas/rewrite_record_v2.json
+    grade_source: protocols/authority_v6/schemas/code_grade_record_v1.json
+    counterfactual_source: protocols/authority_v6/schemas/counterfactual_record_v2.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+  two_record_generations_because: >-
+    The 300 reused rows are c006's archive. They carry schema_version g-record-single-v2
+    and v-record-v2, and the generator rows carry condition_id c005, because c006 reused
+    c005's generator output verbatim. Completed runs are immutable, including the shape
+    they were written in, so those rows stay under v2 and only the 532 new rows are v3.
+    v3 is v2 with identity fields unpinned and g's parse_status extended to include
+    deferred_to_grader, which the runner has written since c005.
+  extraction_is_deferred_to_the_grader: >-
+    No stage extracts a program. Whether one can be recovered is decided by the
+    sanitizer that will execute it, inside the grading sandbox, for y0, y1 and y2 alike.
+    rewrite_record_v2 therefore cannot report ok or model_invalid and reports
+    deferred_to_grader instead.
+  failure_fallback_ownership: >-
+    protocols/authority_v5/README.md section 5 makes an unusable rewrite fall back to
+    KEEP, so that branch scores u0 and keeps u1 null. Under deferred extraction the
+    rewrite stage cannot see that failure. It records failure_fallback_action only for
+    call_error, where no text exists at all; the unusable-program fallback is recorded by
+    the grade stage, which is the first place it is visible. Neither stage may assume the
+    other did it.
+
+dataset:
+  id: bigcodebench-b74c0d0-instruct-s20260917
+  path: datasets/bigcodebench-b74c0d0-instruct-s20260917/dataset.yaml
+  manifest: development
+  manifest_rows: 832
+  manifest_sha256: 5fc23a137b20357ca254f4a73fc9d72d4bca24adb05ca03b947a92d4917b4a30
+  gate0_is_the_first_300_rows_in_the_same_order: true
+  test_manifest_stays_unread: true
+
+generator:
+  role_id: G
+  kind: llm
+  model_id: Qwen/Qwen2.5-Coder-7B-Instruct
+  revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-Coder-7B-Instruct/c03e6d358207e414f1eca0bb1891e29f1db0e242
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  chat_template_shared_with: Qwen/Qwen2.5-7B-Instruct
+  thinking: false
+  prompt_initial: conditions/c005/prompts/g_initial_v1.txt
+  prompt_initial_provenance: byte_identical_to_c005_and_c006
+  prompt_rewrite: conditions/c007/prompts/g_rewrite_v1.txt
+  prompt_rewrite_provenance: new_in_this_condition
+  prompt_rewrite_rationale: >-
+    The only prior rewrite prompt is conditions/c002/prompts/g_rewrite_v1.txt, which ends
+    "exactly one final answer in LaTeX boxed form". The port keeps c002's structure and
+    adopts c005's g_initial output contract verbatim. Its one non-lossless substitution
+    is c002's "do not assume that the verifier supplied a correct final answer", which
+    has no referent here because the rewriter is never shown a candidate program; it now
+    reads "do not assume that the critique is correct". See
+    docs/plan/gate1_c007_design.md section 3.
+  prompt_rewrite_probe: >-
+    Job 65099276, twelve archived non-KEEP rows: 12/12 produced a program that compiles
+    and defines the entry point, 11/12 differed from y0, zero length finishes, longest
+    775 tokens. The probe rules out the case where the rewriter reproduces itself and
+    Gate 1 has no events; at n=12 it estimates nothing finer.
+  initial_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    y0_selection: sample_index_0_unconditionally
+    output_logprobs:
+      enabled: true
+      mode: raw_logprobs
+      sampled_token_logprob: true
+      top_logprobs: 0
+      return_token_ids: true
+      require_exact_content_alignment: true
+  rewrite_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    max_new_tokens_rationale: >-
+      Same cap as the initial call, so one model in one role does not carry two
+      contracts. The probe's longest rewrite was 775 tokens with no length finishes, so
+      the headroom is free: generation stops at EOS.
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    output_logprobs:
+      enabled: false
+      disabled_because: >-
+        Rewrite output is post-action. No registered feature reads it, and the Controller
+        is forbidden from seeing y1 at all (protocols/authority_v5/README.md section 6).
+        Capturing a trace nothing may consume would only invite it to be consumed.
+
+verifiers:
+  - cell_id: V-A
+    kind: llm
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    backend: vllm_openai
+    backend_version: 0.29.0
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+    chat_template_hash_basis: tokenizer_config.chat_template_utf8
+    thinking: true
+    reasoning_parser: qwen3
+    prompt: conditions/c005/prompts/v_report_v1.txt
+    prompt_provenance: byte_identical_to_c005_and_c006
+    prompt_unchanged_rationale: >-
+      The 300 reused V reports were produced under this prompt. Changing it would make
+      the reused prefix and the new 532 rows two different measurements.
+    structured_outputs_backend: guidance
+    structured_outputs_backend_rationale: >-
+      c006 established it. Under auto the model emitted zero backslashes across 287
+      reports and could not write a newline inside a JSON string.
+    decoding:
+      samples: 1
+      temperature: 0.6
+      top_p: 0.95
+      top_k: 20
+      min_p: 0.0
+      max_new_tokens: 8192
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+      output_logprobs:
+        enabled: true
+        mode: raw_logprobs
+        sampled_token_logprob: true
+        top_logprobs: 0
+        return_token_ids: true
+        require_exact_content_alignment: true
+        format_repair_features_missing: true
+
+replicates:
+  plan_id: r005
+  path: replicates/r005.yaml
+  seed_discontinuity_across_the_reused_prefix: see replicates/r005.yaml
+
+reuse_policy:
+  source_condition_id: c006
+  source_condition_hash: a98b448c0d758cd942c1869615774368269eae95dbd4afef28d231388e3fbe48
+  source_run_id: 20260918T105538Z__c006__gate0__r004__analysis__r004
+  source_artifact_path: /path/to/project/artifacts/20260918T105538Z__c006__gate0__r004
+  reuse_pattern: as c004 reused c003
+  reuse_g_outputs: first_300_rows_only
+  reuse_v_reports_and_token_traces: first_300_rows_only
+  reuse_rewrites: false
+  reuse_rewrites_because: gate_0_ran_no_rewrite_stage
+  rerun_from: generate_for_rows_301_to_832
+  rewrite_covers_all_832_rows_because: >-
+    Gate 0 produced no u1 at all, so the reused prefix needs its rewrites as much as the
+    new rows do. Rewrite still runs only where the registered request is not KEEP.
+  reuse_is_row_exact_because: >-
+    The dataset records that gate0 is the first 300 rows of development in the same
+    shuffled order, so the prefix is identical by construction, not by matching.
+
+stages:
+  gate1:
+    dataset_manifest: development
+    registered_role: development
+    purpose: complete_counterfactual_outcome_measurement
+    may_tune_condition: true
+    may_support_confirmatory_claims: false
+
+preferred_runtime:
+  partition: gpu-h100
+  gpus: 1
+  minimum_single_gpu_vram_gb: 40
+  max_model_len: 32768
+  grading_runs_on_cpu_partition: true
+  grading_memory_minimum_gb: 48
+  grading_memory_rationale: >-
+    The child rlimit is looser than the cgroup at max_as_limit 30720, so too small a
+    --mem makes the cgroup OOM killer fire first: grading stays correct but Slurm marks
+    the job FAILED, and a FAILED job cannot be registered as validated.
+
+job_split:
+  required: true
+  required_because: >-
+    Priced by stage the work is about 10 hours against a 12-hour limit: 7.3 for verify on
+    532 rows at the measured 49.4s each, 1.4 for their generate, and 1.3 for rewrite on
+    about 499 rows at the measured 8.3s each. Fifteen percent headroom is not enough to
+    stake a run on, and the dominant variance is the V fallback rate, which was 1/300 in
+    c006 and would lengthen verify first if it rose. See docs/analysis/gate0_c006.md
+    section 5.1.
+  resume_is_not_a_scheduling_strategy: >-
+    slurm/c006_gate0_inference.sbatch already resumes by key under a condition guard, but
+    a job that reaches --time terminates as TIMEOUT, and a run whose jobs are not
+    COMPLETED 0:0 cannot be registered validated. Resume is for crashes.
+  jobs:
+    - id: generate_verify
+      stages: [generate, verify]
+      rows: rows_301_to_832
+      estimated_hours: 8.7
+    - id: rewrite
+      stages: [rewrite]
+      rows: all_832_where_request_is_not_KEEP
+      estimated_hours: 1.3
+      depends_on: generate_verify
+    - id: grade_analyze
+      stages: [grade, analyze]
+      partition: cpu
+      depends_on: rewrite
+
+successor_plan:
+  gate2_condition: c008
+  gate2_adds: [controller_evidence, controller]
+  gate2_blocked_until: >-
+    Gate 1 reports which of M0, M1 and M2 actually separate. A feature contract frozen
+    before that is a guess about which cell is live.
+  diagnostics_owed_before_gate_2:
+    - token logprob exact alignment text_mismatch
+    - retry usage aggregation
+  diagnostics_owed_because: >-
+    Both are inputs to a feature contract, and both must be settled without reading the
+    test manifest. See docs/analysis/gate0_c006.md section 6.
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [resolved_behavioral_condition_fields, referenced_prompt_bytes, protocol_component_hashes, immutable_model_revisions, chat_template_hashes, logprob_capture_mode]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id, timestamps, run_id]
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true

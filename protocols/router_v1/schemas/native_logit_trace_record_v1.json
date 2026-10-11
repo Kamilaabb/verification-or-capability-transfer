@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "native_logit_trace_record_v1.json",
+  "title": "Router v1 same-forward vLLM logit summaries",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "run_id", "source_pass1_run_id",
+    "condition_id", "condition_hash", "problem_id", "capture_id", "capture_backend", "status",
+    "same_forward", "exact_token_match", "identity_max_abs_error", "positions",
+    "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "native-logit-trace-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_pass1_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "problem_id": {"type": "string", "minLength": 1},
+    "capture_id": {"type": "string", "minLength": 1},
+    "capture_backend": {"const": "vllm_same_forward_logits_processor_v1"},
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok", "source_trace_missing", "raw_trace_missing", "token_mismatch",
+        "identity_mismatch", "non_greedy"
+      ]
+    },
+    "same_forward": {"const": true},
+    "exact_token_match": {"type": "boolean"},
+    "identity_max_abs_error": {"type": ["number", "null"], "minimum": 0},
+    "positions": {
+      "type": "array",
+      "description": "One compact summary per generated output token. The full-vocabulary tensor is reduced inside the vLLM sampler and is never stored.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "index", "token_id", "sampled_raw_logit", "sampled_logprob",
+          "max_raw_logit", "logsumexp", "entropy", "top1_top2_margin",
+          "top20_token_ids", "top20_raw_logits"
+        ],
+        "properties": {
+          "index": {"type": "integer", "minimum": 0},
+          "token_id": {"type": "integer", "minimum": 0},
+          "sampled_raw_logit": {"type": "number"},
+          "sampled_logprob": {"type": "number", "maximum": 0},
+          "max_raw_logit": {"type": "number"},
+          "logsumexp": {"type": "number"},
+          "entropy": {"type": "number", "minimum": 0},
+          "top1_top2_margin": {"type": "number", "minimum": 0},
+          "top20_token_ids": {
+            "type": "array", "minItems": 20, "maxItems": 20,
+            "uniqueItems": true,
+            "items": {"type": "integer", "minimum": 0}
+          },
+          "top20_raw_logits": {
+            "type": "array", "minItems": 20, "maxItems": 20,
+            "items": {"type": "number"}
+          }
+        }
+      }
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "description": "Same-forward vLLM evidence. Normalized sampled-token logprob comes from vLLM's ordinary response, while a no-op sampler hook reduces that request's exact raw-logit tensor online. No full-vocabulary logits are persisted."
+}

@@ -1,0 +1,7 @@
+System:
+Complete the Python programming task provided by the user. Use sound reasoning to produce a correct and complete solution.
+End with exactly one complete, self-contained Python code block (```python ... ```) that includes all required imports and the requested function definition.
+
+User template:
+Task:
+{{problem}}

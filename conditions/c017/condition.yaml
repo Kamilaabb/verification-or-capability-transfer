@@ -1,0 +1,115 @@
+schema_version: condition-v1
+condition_id: c017
+status: validated_development_diagnostic
+purpose: qwen3_4b_thinking_off_all_math_expression_logit_scalars_math_dev300
+path_base: repository_root
+
+protocol:
+  id: math_expression_scalar_v1
+  path: protocols/math_expression_scalar_v1/README.md
+  feature_contract: protocols/math_expression_scalar_v1/features.yaml
+  grader_contract: protocols/authority_v5/grader_math_verify_v1.yaml
+  record_schemas:
+    pass1: protocols/authority_v6/schemas/g_record_single_v3.json
+    native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+    scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: math500-r6e4ed1-l3to5-dev300-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-dev300-s20260910/dataset.yaml
+  manifest: pilot300
+  manifest_rows: 300
+  manifest_sha256: 82b81514679262eac8c3e970a774ab083d769df1c38b0f43a470ef7927c90971
+  development_only: true
+
+model:
+  role_ids: [pass1]
+  y0_selection: sample_index_0_unconditionally
+  kind: llm
+  model_id: Qwen/Qwen3-4B
+  revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  provenance: conditions/c014/model_provenance.json
+  identity_reused_from: c014
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-4B/1cfa9a7208912126459214e8b04321603b3df60c
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  thinking: false
+  prompt_pass1: conditions/c002/prompts/g_initial_v1.txt
+  prompt_pass1_provenance: byte_identical_to_c014
+  pass1_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  pass2_decoding:
+    compatibility_only_for_shared_c014_capture_runner: true
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  pass1_logit_capture:
+    backend: vllm_same_forward_logits_processor_v1
+    server_logprobs_mode: raw_logprobs
+    return_token_ids: true
+    per_token_fields: [sampled_raw_logit, sampled_logprob, max_raw_logit,
+      logsumexp, entropy, top1_top2_margin, top20_token_ids, top20_raw_logits]
+    top_k_persisted: 20
+    full_vocabulary_logits_persisted: false
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_must_equal_top1_tolerance: 0.000001
+  preflight_job: 65103081
+  preflight_reused_from: c014
+  preflight_reuse_reason: exact_same_model_tokenizer_prompt_decoding_and_capture_backend
+
+features:
+  contract: protocols/math_expression_scalar_v1/features.yaml
+  count: 7
+  evidence_written_before_grading: true
+
+replicates:
+  plan_id: r009
+  path: replicates/r009.yaml
+  replicate_id: p01
+  base_seed: 20260922
+  seed_cell_id: c017
+
+stages:
+  run: [pass1_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+  skip: [pass2, verifier, controller_training]
+
+analysis:
+  confirmatory_claims: forbidden
+  required_metrics: [accuracy, answer_parseable_rate, math_span_coverage,
+    math_token_coverage, scalar_missingness, scalar_summaries, output_tokens]
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [behavioral_condition_fields, referenced_file_bytes, immutable_model_revision,
+    chat_template_hash, logprob_capture_mode, math_expression_parser]
+  exclude: [status, purpose, node, gpu_uuid, slurm_job_id, timestamps, run_id, preflight_job]
+
+change_policy:
+  completed_runs_are_immutable: true
+  model_prompt_temperature_feature_parser_or_algorithm_change_creates_new_condition: true
+  seed_change_creates_new_replicate: true
+
+runnable_gate:
+  required_before_submission:
+    - frozen model identity and c014 provenance agree
+    - thinking is false and temperature is 0
+    - same-forward raw-logit preflight is valid for the exact model revision
+    - local parser and record-schema tests pass

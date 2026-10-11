@@ -1,0 +1,58 @@
+schema_version: condition-overlay-v1
+condition_id: c042
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c042
+  status: registered_pending_run
+  purpose: qwen3_8b_reviewer_of_c040_g_mathfull_test_4096_review_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Confirmatory test run (docs/plan/test_mathfull_v2.md): c027 on the sealed mathfull
+      test manifest, reviewing c040's Qwen3-4B test outputs instead of c025's. Qwen3-8B as
+      reviewer under the frozen review prompt v2, same delivery rule, greedy, thinking off,
+      4096 tokens, same-forward native trace capture, seven-scalar evidence on the
+      reviewer's own output.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test
+    manifest_rows: 3298
+    manifest_sha256: 9b93abcf4a94b5f917166124f9cb73e4f481bf20f1c9f522747b6b197e4c2cd4
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c042_v1.json
+
+  generator_source:
+    condition_id: c040
+    artifact_path: /path/to/project/artifacts/20260926T091114Z__c040__mathfull-test__r012_solo4096
+    pass1_run_id: 20260926T091114Z__c040__mathfull-test__r012_solo4096__pass1__p01
+    model_id: Qwen/Qwen3-4B
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c042
+
+  stages:
+    run: [reuse_c040_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c042 differs from c027 only in the dataset manifest, generator source, evidence schema id, stages and seeds
+      - the test plan docs/plan/test_mathfull_v2.md and the frozen selector are committed before any test run
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the c040 source archive passes its checksums, holds exactly 3298 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

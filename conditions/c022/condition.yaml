@@ -1,0 +1,51 @@
+schema_version: condition-overlay-v1
+condition_id: c022
+status: registered_pending_run
+extends: conditions/c017/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c022
+  status: registered_pending_run
+  purpose: qwen3_4b_solo_pass1_mathfull_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      G alone on the mathfull development prefix dev1000, for
+      docs/plan/gv_vs_max_g_v_study.md sections 4.4-4.5. c017's Qwen3-4B, prompt, greedy
+      decoding, thinking off, same-forward native trace capture and seven-scalar contract,
+      with the budget raised to 4096 so G and solo V (c023) share one budget. No V, no
+      grading beyond G's own answer, no selector. Development only; the sealed test
+      manifest is not touched.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: dev1000
+    manifest_rows: 1000
+    manifest_sha256: d6de6e4816ab52a46d1813ef05be0dc298d32eec81a2284f85dd3fc72e3d2126
+    development_only: true
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c022_v1.json
+
+  model:
+    pass1_decoding:
+      max_new_tokens: 4096
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c022
+
+  runnable_gate:
+    required_before_submission:
+      - c022 differs from c017 only in dataset, pass-1 budget, seeds and evidence schema id
+      - the manifest hash equals the one in the dataset registration
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

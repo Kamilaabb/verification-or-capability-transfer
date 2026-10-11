@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vl_review_record_v1.json",
+  "title": "MMMU-Pro review record: V reviewing G's output, with its token trace and visual input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "run_id",
+    "condition_id",
+    "condition_hash",
+    "dataset_id",
+    "replicate_id",
+    "stage",
+    "problem_id",
+    "problem_text",
+    "generator",
+    "outputs",
+    "y0_sample_index",
+    "created_at_utc",
+    "visual_input",
+    "source_g_run_id",
+    "source_g_record_id",
+    "source_g_output_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "vl-review-record-v1"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "dataset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replicate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "integer",
+          "boolean",
+          "null"
+        ]
+      }
+    },
+    "generator": {
+      "type": "object"
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_index",
+          "call_seed",
+          "raw_output",
+          "extracted_answer",
+          "parse_status",
+          "token_logprobs",
+          "usage"
+        ],
+        "properties": {
+          "sample_index": {
+            "const": 0
+          },
+          "call_seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "raw_output": {
+            "type": "string"
+          },
+          "extracted_answer": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-J]$"
+          },
+          "parse_status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "model_invalid"
+            ]
+          },
+          "token_logprobs": {
+            "$ref": "generated_token_trace_v1.json"
+          },
+          "usage": {
+            "$ref": "#/$defs/usage"
+          }
+        }
+      }
+    },
+    "y0_sample_index": {
+      "const": 0
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "visual_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "image_numbers",
+        "image_sha256",
+        "num_images",
+        "expected_visual_tokens",
+        "num_visual_tokens",
+        "min_pixels",
+        "max_pixels"
+      ],
+      "properties": {
+        "image_numbers": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "image_sha256": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "num_images": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "expected_visual_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "num_visual_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "min_pixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_pixels": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "description": "Images in the order the model saw them, each byte-identical to the dataset's image audit, and the <|image_pad|> count of the served prompt, which must equal the count the registered pixel limits imply."
+    },
+    "source_g_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_g_record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_g_output_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "latency_ms",
+        "finish_reason",
+        "retries"
+      ],
+      "properties": {
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "latency_ms": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "finish_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "description": "Derived from g_record_single_v3. extracted_answer is the registered answer letter (authority_allocation.mmmu_pro.parse_answer_letter) or null; problem_text is the question with its <image n> tags, options excluded."
+}

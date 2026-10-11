@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c036
+status: registered_pending_run
+extends: conditions/c033/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c036
+  status: registered_pending_run
+  purpose: qwen3_vl_4b_solo_mmmu_pro_dev_4096
+
+  gate:
+    scope_limit: >-
+      VL-G alone for docs/plan/vision_mmmu_pro_study.md: c033 with only the output budget
+      lowered from 8,192 to 4,096 tokens, as the math domain uses. c033 was stopped after 176
+      rows (docs/plan/vision_mmmu_pro_study.md section 9.3): 36% of its outputs ran to 8,192
+      tokens without an answer, mostly greedy repetition loops, while finished outputs had a
+      median of about 450 tokens and one above 4,096. Under greedy single-sequence decoding
+      the 4,096-token output is the prefix of the 8,192-token one, so only rows finishing
+      between 4,096 and 8,192 tokens change. Development only; the sealed test manifest is
+      not touched.
+
+  model:
+    pass1_decoding:
+      max_new_tokens: 4096
+
+  replicates:
+    seed_cell_id: c036
+
+  runnable_gate:
+    required_before_submission:
+      - c036 differs from c033 only in max_new_tokens, seed cell and text
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmmu_pro.FROZEN_PROMPTS
+      - model identity fields equal conditions/c033/model_provenance.json
+      - the manifest and image-audit hashes equal the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

@@ -1,0 +1,16 @@
+You are checking a solution to a mathematics problem.
+
+Problem:
+{{problem}}
+
+Proposed solution:
+{{prior_solution}}
+
+Check the proposed solution. Decide whether its final answer is correct.
+
+Then give a final answer for the problem. If the proposed solution's final answer is
+correct, repeat that same answer. If it is not correct, give the correct answer.
+
+Reply with a single JSON object and nothing else:
+
+{"verdict": "correct" | "incorrect" | "uncertain", "reasoning": "<your check>", "final_answer": "<the answer, in $...$ form>"}

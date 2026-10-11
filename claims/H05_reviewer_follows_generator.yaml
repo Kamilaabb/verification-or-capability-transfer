@@ -1,0 +1,30 @@
+schema_version: claim-card-v1
+id: H05
+written: '2026-10-04'
+story: 问题二
+statement_zh: 在两个模型一对一错的题上，审阅后的对错多半跟着被审者走（锚定）。
+estimand: 每个审阅方向，只看 G、V 独立作答一对一错的题：Δ = P(审阅后对错 = 被审者) − P(审阅后对错 = 审阅者)。
+estimand_id: follows_generator_on_disagreement
+expected_sign: positive
+stronger_side: higher development solo accuracy (all solo data where a domain has no split)
+splits:
+  math:
+  - dev
+  - test
+  knowledge:
+  - dev
+  - test
+  code:
+  - dev
+  nl_reasoning:
+  - dev
+bootstrap:
+  reps: 2000
+  seed: 20261003
+decision_rule: 逐域报告平均 Δ 和 95% 区间。区间不含 0 且与预期同号 → 该域成立；不含 0 且反号 → 该域相反；含 0 → 该域看不出差别。结论按域写，四个域都成立才说普遍成立。看过哪些域只作透明记录。
+seen_when_written:
+  math: seen
+  knowledge: seen
+  code: seen
+  nl_reasoning: not seen (still running on 2026-10-04)
+result: null

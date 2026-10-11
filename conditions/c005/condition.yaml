@@ -1,0 +1,178 @@
+schema_version: condition-v1
+condition_id: c005
+status: ready_for_gate_0
+purpose: gate_0_code_domain_screen_generate_verify_grade
+path_base: repository_root
+
+gate:
+  id: gate_0
+  runs_stages: [generate, verify, grade, analyze]
+  skips_stages: [rewrite, controller_evidence, controller]
+  skips_stages_because: >-
+    Gate 0 answers whether the domain change delivered decision-relevant density. Every
+    one of its measures comes off generate -> verify -> grade, because grading scores
+    candidate_answer unconditionally. Rewrite would cost inference on a question Gate 0
+    does not ask.
+  no_feature_contract_because: >-
+    Which scalars matter depends on which cell is live, and Gate 1 decides that. Freezing
+    a feature set now would be guessing.
+  measures:
+    - acc_G = mean(u0)
+    - mean(u2)
+    - (u0, u2) cross table for capability match and error complementarity
+    - KEEP / CRITIQUE_REVISE / OVERRIDE distribution
+    - P(request != KEEP | u0 = 1)
+  decision_criteria: docs/analysis/c003_decision_structure.md section 5
+  primary_hypothesis_under_test: >-
+    P(request != KEEP | u0 = 1) rises materially above the 2.4% measured in c003. That
+    over-correction rate, not difficulty alone, is what the domain change bets on.
+
+protocol:
+  id: authority_v6
+  path: protocols/authority_v6/README.md
+  grader_contract: protocols/authority_v6/grader_bigcodebench_v1.yaml
+  record_schemas:
+    generator_source: protocols/authority_v6/schemas/g_record_single_v2.json
+    verifier_source: protocols/authority_v6/schemas/v_record_v2.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+
+dataset:
+  id: bigcodebench-b74c0d0-instruct-s20260917
+  path: datasets/bigcodebench-b74c0d0-instruct-s20260917/dataset.yaml
+
+generator:
+  role_id: G
+  kind: llm
+  model_id: Qwen/Qwen2.5-Coder-7B-Instruct
+  revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-Coder-7B-Instruct/c03e6d358207e414f1eca0bb1891e29f1db0e242
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  chat_template_shared_with: Qwen/Qwen2.5-7B-Instruct
+  thinking: false
+  preflight_job: 65087578
+  prompt_initial: conditions/c005/prompts/g_initial_v1.txt
+  initial_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    max_new_tokens_raised_from: 2048
+    max_new_tokens_rationale: >-
+      A truncated program is graded model_invalid and depresses acc(G), which is the
+      quantity Gate 0 exists to measure.
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+    stop: model_eos_only
+    y0_selection: sample_index_0_unconditionally
+    output_logprobs:
+      enabled: true
+      mode: raw_logprobs
+      sampled_token_logprob: true
+      top_logprobs: 0
+      return_token_ids: true
+      require_exact_content_alignment: true
+      alignment_verified_by_job: 65087578
+
+verifiers:
+  - cell_id: V-A
+    kind: llm
+    model_id: Qwen/Qwen3-8B
+    revision: b968826d9c46dd6066d109eabc6255188de91218
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-8B/b968826d9c46dd6066d109eabc6255188de91218
+    backend: vllm_openai
+    backend_version: 0.29.0
+    dtype: bfloat16
+    quantization: none
+    chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+    chat_template_hash_basis: tokenizer_config.chat_template_utf8
+    thinking: true
+    reasoning_parser: qwen3
+    prompt: conditions/c005/prompts/v_report_v1.txt
+    prompt_provenance: neutral_port_of_conditions/c002/prompts/v_report_v1.txt
+    prompt_port_rule: >-
+      Only answer -> program substitutions, plus candidate_answer now naming a complete
+      program instead of reasoning with a boxed answer. The action-threshold sentence is
+      byte-identical to the math condition, so the measured over-correction rate is a
+      property of the domain and not of prompt design.
+    decoding:
+      samples: 1
+      temperature: 0.6
+      top_p: 0.95
+      top_k: 20
+      min_p: 0.0
+      max_new_tokens: 8192
+      max_new_tokens_raised_from: 4096
+      max_new_tokens_rationale: >-
+        candidate_answer must now hold a complete program. c003's successful reports had
+        a median of 932 tokens while its 22 length-fallbacks hit the cap twice over; the
+        legitimate need is genuinely larger here. This does not fix runaway reasoning,
+        which remains unaddressed and must be re-measured on this run.
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+      repetition_penalty: 1.0
+      stop: model_eos_only
+      constrained_schema: protocols/authority_v5/schemas/v_report_payload_v1.json
+      output_logprobs:
+        enabled: true
+        mode: raw_logprobs
+        sampled_token_logprob: true
+        top_logprobs: 0
+        return_token_ids: true
+        require_exact_content_alignment: true
+        format_repair_features_missing: true
+
+replicates:
+  plan_id: r004
+  path: replicates/r004.yaml
+
+stages:
+  gate0:
+    dataset_manifest: gate0
+    registered_role: development
+    purpose: code_domain_decision_density_screen
+    may_tune_condition: true
+    may_support_confirmatory_claims: false
+
+preferred_runtime:
+  partition: gpu-h100
+  gpus: 1
+  minimum_single_gpu_vram_gb: 40
+  max_model_len: 32768
+  max_model_len_rationale: >-
+    Prompt, an 8192-token report and the registered 4096-token format-repair budget must
+    all fit. KV cache measured at 1,275,744 tokens on an H100, so the headroom is free.
+  grading_runs_on_cpu_partition: true
+  grading_memory_minimum_gb: 48
+  grading_memory_rationale: >-
+    The child's rlimit is looser than the cgroup at max_as_limit 30720, so too small a
+    --mem makes the cgroup OOM killer fire first: grading stays correct but Slurm marks
+    the job FAILED, and a FAILED job cannot be registered as validated.
+
+successor_plan:
+  gate1_condition: c006
+  gate1_adds: [rewrite]
+  gate1_reuses: [g_outputs, v_reports_and_token_traces]
+  gate1_reuse_pattern: as c004 reused c003
+  embedding_contingency: >-
+    If scalars cannot express the gap, an embedding overlay reruns from embedding
+    evidence only. G and V record schemas both require raw_output, so archived text is
+    sufficient and no inference has to be repeated. See
+    conditions/examples/c002_embedding_overlay.example.yaml.
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [resolved_behavioral_condition_fields, referenced_prompt_bytes, protocol_component_hashes, immutable_model_revisions, chat_template_hashes, logprob_capture_mode]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id, timestamps, run_id]
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true

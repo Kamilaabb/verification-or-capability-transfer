@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c103
+status: registered_pending_run
+extends: conditions/c100/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c103
+  status: registered_pending_run
+  purpose: qwen25_3b_instruct_solo_bigcodebench_instruct_development832_4096
+
+  gate:
+    scope_limit: >-
+      Qwen2.5-3B-Instruct alone on the 832 BigCodeBench development rows for
+      docs/plan/code_bigcodebench_study.md: c100 with only the model changed, to c030's registered identity (including its chat-template inputs).
+      Same frozen code solve prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0
+      sent, same-forward capture, evidence before grading. Its generation_config carries a repetition_penalty other than 1.0, which the registered request overrides with 1.0. Development only; the test
+      manifest is not read.
+
+  model:
+    model_id: Qwen/Qwen2.5-3B-Instruct
+    revision: aa8e72537993ba99e69dfaafa59ed015b17504d1
+    tokenizer_revision: aa8e72537993ba99e69dfaafa59ed015b17504d1
+    provenance: conditions/c030/model_provenance.json
+    identity_reference: c030
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-3B-Instruct/aa8e72537993ba99e69dfaafa59ed015b17504d1
+    chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+    chat_template_kwargs: null
+
+  replicates:
+    seed_cell_id: c103
+
+  runnable_gate:
+    required_before_submission:
+      - c103 differs from c100 only in model identity, seed cell and text
+      - model identity fields, chat-template inputs included, equal c030's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass

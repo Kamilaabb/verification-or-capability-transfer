@@ -1,0 +1,29 @@
+{
+  "chat_template_hash": "3934d199bfe5b6fab5cba1b5f8ee475e8d5738ac315f21cb09545b4e665cc005",
+  "config_sha256": "ff5f8d1747db4e16def20db719d867e74d0b764330249357351b2b44520b8001",
+  "repo_id": "mistralai/Mistral-Small-24B-Instruct-2501",
+  "resolved_from": "main",
+  "revision": "9527884be6e5616bdd54de542f9ae13384489724",
+  "schema_version": "model-provenance-v1",
+  "server_path": "/path/to/scratch/authority-allocation/models/mistralai--Mistral-Small-24B-Instruct-2501/9527884be6e5616bdd54de542f9ae13384489724",
+  "tokenizer_file_sha256": {
+    "special_tokens_map.json": "5bc5d1c106bf86895473568ef5211f3fde8415e6fdee039223d6db8ca52cbe01",
+    "tokenizer.json": "b76085f9923309d873994d444989f7eb6ec074b06f25b58f1e8d7b7741070949",
+    "tokenizer_config.json": "85090a231c4b1432c95cf62d5857777df08c0939fc698bf89b91ccc96f92400e"
+  },
+  "tokenizer_revision": "9527884be6e5616bdd54de542f9ae13384489724",
+  "tokenizer_revision_note": "The tokenizer ships inside the same snapshot, so it carries the weights' commit by construction. It is recorded explicitly because a sampled token id interpreted against a different vocabulary is a different token.",
+  "total_bytes": 47162200602,
+  "weight_file_sha256": {
+    "model-00001-of-00010.safetensors": "75a14c708eea501700a723dc74bc886cf36a1393686a3fb098ee106b160da32f",
+    "model-00002-of-00010.safetensors": "1ff40fbfd9e042b7dab3f3c9442f870a4701f53e394dda769807a160ba40f32a",
+    "model-00003-of-00010.safetensors": "4cc2d059fded71efd2947a414f32053b4ed3fa84383edf97b6d91fd9f04e4235",
+    "model-00004-of-00010.safetensors": "aa0e9acacf161c45ae0d71ca3f7e4ec9ee55dae2153398da52f81ee4f9e1b8d2",
+    "model-00005-of-00010.safetensors": "dafb696763d31a1fda58010b73ecc05c19d395da8ec2c24aa9c41da33f2230d3",
+    "model-00006-of-00010.safetensors": "d9a433b19fd4d6986660a616a0d6fc7d02d9e8c0ab3c9b98940217ee6bd4e053",
+    "model-00007-of-00010.safetensors": "5ac5c7b042491f917016c3e9635583177058f736be5fa315019b959fc3c43b63",
+    "model-00008-of-00010.safetensors": "3c460c5b957ab3ac81f03bb20c0348820225dd9b819fa4487ae733b1e696e573",
+    "model-00009-of-00010.safetensors": "304f66de1aeb55f0b4e1181885e3d15b65b485d5ce5c93b4adcdf7dd2c2d8cc5",
+    "model-00010-of-00010.safetensors": "c4c3bcedc02f4dd7e04c8b0fe1199f4f27de7a37790d1510a8772ffe05093543"
+  }
+}

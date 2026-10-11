@@ -1,0 +1,41 @@
+schema_version: condition-overlay-v1
+condition_id: c021
+status: registered_pending_run
+extends: conditions/c019/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c021
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_pass1_math_dev300_budget_matched_to_c018
+
+  gate:
+    scope_limit: >-
+      Design A of docs/plan/gv_vs_max_g_v_study.md. c019's solo Qwen3-8B had a 3072-token
+      budget and 17 of its 300 outputs stopped at that cap, while c018's verifier, the
+      same model seeing G, had 4096 and exceeded 3072 on only 3 rows that also hit 4096.
+      The budget therefore disadvantaged the solo side only. c021 is c019 with the
+      budget raised to c018's 4096 and nothing else changed, so that solo-versus-
+      collaboration differs only in what is inherent to the two systems: the prompt and
+      whether G's answer is shown. Development only; no confirmatory claim.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c021_v1.json
+
+  model:
+    pass1_decoding:
+      max_new_tokens: 4096
+    pass1_budget_matched_to: c018_verifier_decoding_max_new_tokens
+
+  runnable_gate:
+    required_before_submission:
+      - c021 resolves identical to c019 except pass1_decoding.max_new_tokens and identity fields
+      - pass1_decoding.max_new_tokens equals c018's verifier max_new_tokens
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass
+
+  comparison:
+    budget_note: >-
+      Solo V now has c018's 4096-token budget. G (c017) keeps 3072, which is the G of
+      the GV system being compared, so G alone and GV share the same G.

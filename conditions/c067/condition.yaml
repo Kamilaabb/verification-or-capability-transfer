@@ -1,0 +1,63 @@
+schema_version: condition-overlay-v1
+condition_id: c067
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c067
+  status: registered_pending_run
+  purpose: llama31_8b_instruct_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Llama-3.1-8B-Instruct alone on mathfull dev1000 under the frozen solve prompt v2,
+      requested by the user on 2026-09-28 as a further model. c025 with only the model
+      changed: same prompt file, greedy decoding, 4096 tokens, same-forward native trace
+      capture and seven-scalar contract. The snapshot was copied from the cluster-shared
+      /reference/LLM library (excluding original/) and every file verified against its
+      recorded HF etag. Its chat template writes a knowledge-cutoff line and "Today Date"
+      into the system turn with a constant default; the date is pinned to that same value,
+      as for c029, so the rendered prompt cannot depend on the template version. There is
+      no thinking mode; thinking stays false and the template ignores enable_thinking.
+      Development only.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c067_v1.json
+
+  # Every identity field equals conditions/c067/model_provenance.json, written from one scan
+  # of the snapshot on the login node (2026-09-28); check-runnable enforces it.
+  model:
+    model_id: meta-llama/Llama-3.1-8B-Instruct
+    revision: 0e9e39f249a16976918f6564b8830bc894c89659
+    tokenizer_revision: 0e9e39f249a16976918f6564b8830bc894c89659
+    server_path: /path/to/scratch/authority-allocation/models/meta-llama--Llama-3.1-8B-Instruct/0e9e39f249a16976918f6564b8830bc894c89659
+    provenance: conditions/c067/model_provenance.json
+    chat_template_hash: e10ca381b1ccc5cf9db52e371f3b6651576caee0a630b452e2816b2d404d4b65
+    chat_template_kwargs:
+      date_string: 26 Jul 2024
+    identity_reused_from: null
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_reuse_reason: null
+    preflight_policy: >-
+      No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for
+      c029-c032, c054/c055 and c066; a mismatch stops the run before its row is kept.
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c067
+
+  runnable_gate:
+    required_before_submission:
+      - c067 differs from c025 only in the model identity, pinned chat-template date, seeds and evidence schema id
+      - the model identity fields equal conditions/c067/model_provenance.json
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the manifest hash equals the one in the dataset registration
+      - temperature is 0
+      - local parser and record-schema tests pass

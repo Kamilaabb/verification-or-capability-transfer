@@ -1,0 +1,131 @@
+schema_version: condition-overlay-v1
+condition_id: c008
+status: frozen_validated_gate2_development
+extends: conditions/c007/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c008
+  status: frozen_validated_gate2_development
+  purpose: gate2_train_and_crossfit_a_low_capacity_three_head_scalar_controller
+
+  gate:
+    id: gate_2
+    runs_stages: [controller_evidence, controller_targets, controller_crossfit, controller_final_fit, analyze]
+    skips_stages: [generate, verify, rewrite, grade, counterfactual]
+    reuses_c007_counterfactuals: true
+    primary_question: >-
+      Whether registered action-preceding scalar information predicts enough of the
+      M0-M1 repair/harm boundary to improve a three-cap policy over fixed caps. M1-M2
+      remains a measured under-identification result and is not retuned away.
+    development_result_is_design_evidence_only: true
+
+  protocol:
+    feature_contract: protocols/authority_v6/features_code_scalar_v1.yaml
+    feature_set_id: code_scalar_v1
+    input_schema: protocols/authority_v6/schemas_code_scalar_v1/controller_input_payload_code_scalar_v1.json
+    training_label_contract: protocols/authority_v6/labels_cap_outcomes_v1.yaml
+    training_target_schema: protocols/authority_v6/schemas/controller_training_target_v1.json
+    schemas_directory: protocols/authority_v6/schemas_code_scalar_v1
+    record_schemas:
+      evidence: protocols/authority_v6/schemas_code_scalar_v1/controller_evidence_record_code_scalar_v1.json
+      training_target: protocols/authority_v6/schemas/controller_training_target_v1.json
+      prediction: protocols/authority_v6/schemas_code_scalar_v1/controller_crossfit_prediction_v1.json
+      checkpoint_manifest: protocols/authority_v6/schemas_code_scalar_v1/controller_checkpoint_manifest_v1.json
+
+  controller:
+    controller_id: C-logistic-code-scalar-v1
+    kind: trained_probabilistic_classifier
+    implementation: scikit-learn
+    implementation_version: 1.9.1
+    algorithm: three_independent_LogisticRegression_heads
+    feature_set_id: code_scalar_v1
+    target_order: [M0, M1, M2]
+    target_rule: cap_outcomes_v1
+    cumulative_feature_ablations:
+      S0_self_report: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override]
+      S1_confidence_and_difficulty: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, g_output_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_answer_mean_logprob, problem_chars_log, g_code_lexemes_log, critique_words_log]
+      S2_program_and_critique_content: [v_verdict_correct, v_verdict_incorrect, v_verdict_uncertain, v_request_keep, v_request_revise, v_request_override, g_output_mean_logprob, v_verdict_mean_logprob, v_request_mean_logprob, v_candidate_answer_mean_logprob, problem_chars_log, g_code_lexemes_log, critique_words_log, gv_unique_call_names_log_abs_delta, gv_control_flow_log_abs_delta, gv_literals_log_abs_delta, critique_category_interface, critique_category_edge_case, critique_category_api_library, critique_category_logic_algorithm, critique_category_robustness]
+    primary_feature_ablation: S2_program_and_critique_content
+    menus:
+      live_edge: [M0, M1]
+      legacy_extremes: [M0, M2]
+      full: [M0, M1, M2]
+    decision_rule:
+      primary: highest_predicted_cap_correctness
+      exact_tie: lowest_authority
+      primary_lower_authority_tolerance: 0.0
+      sensitivity_tolerances: [0.01, 0.02, 0.05]
+      tolerance_selection_from_development: forbidden
+    training:
+      enabled: true
+      split_contract: nested_grouped_crossfit_by_problem_id
+      outer_folds: 5
+      outer_split_seeds: [20260920, 20260921, 20260922, 20260923, 20260924]
+      inner_folds: 4
+      preprocessing:
+        missing_values: median_fit_on_training_fold_only
+        missing_indicators: explicit_for_every_registered_feature
+        scaling: StandardScaler_fit_on_training_fold_only
+      estimator:
+        class: LogisticRegression
+        solver: lbfgs
+        l1_ratio: 0.0
+        class_weight: null
+        max_iter: 2000
+        fit_intercept: true
+      regularization_selection:
+        C_grid: [0.01, 0.1, 1.0, 10.0]
+        metric: mean_binary_log_loss_across_three_heads
+        exact_tie: smallest_C_strongest_regularization
+      calibration:
+        extra_calibrator: none
+        report: [binary_log_loss, brier_score, calibration_curve]
+      primary_policy_metric: cross_fitted_policy_accuracy_full_menu
+      required_diagnostics:
+        - p_z1_minus_p_z0_AUC_on_the_74_M0_M1_discordant_rows
+        - repair_and_harm_relative_to_each_fixed_cap
+        - selection_counts_by_cap
+        - per_outer_seed_results_without_best_seed_selection
+        - cumulative_feature_ablation_results
+    final_fit:
+      data: all_832_development_rows
+      hyperparameter_selection: same_inner_grouped_C_selection
+      checkpoint_format: joblib_plus_JSON_manifest
+      purpose: frozen_input_for_a_later_confirmatory_test_run
+
+  replicates:
+    plan_id: r006
+    path: replicates/r006.yaml
+
+  stages:
+    gate2:
+      dataset_manifest: development
+      registered_role: development_training_validation_and_feature_ablation
+      purpose: nested_crossfit_and_final_development_fit
+      may_tune_condition: true
+      may_support_confirmatory_claims: false
+      test_manifest_must_stay_unread: true
+
+  reuse_policy:
+    source_condition_id: c007
+    source_condition_hash: 654406e22692a74cc83ff2749e971c17008277abd7222a59c21bdaba622184f6
+    source_analysis_run_id: 20260919T051824Z__c007__gate1__r005__analysis__r005
+    source_artifact_path: /path/to/project/artifacts/20260919T051824Z__c007__gate1__r005
+    reuse_g_outputs: true
+    reuse_v_reports_and_token_traces: true
+    reuse_rewrites: true
+    reuse_counterfactual_labels: true
+    rerun_from: controller_evidence
+
+  job_split:
+    required: false
+    jobs:
+      - id: gate2_cpu
+        stages: [controller_evidence, controller_targets, controller_crossfit, controller_final_fit, analyze]
+        partition: cpu
+        gpus: 0
+
+  successor_plan:
+    confirmatory_test_condition: new_condition_after_c008_is_validated_and_frozen
+    test_manifest_stays_unread_until: c008_feature_contract_algorithm_and_checkpoint_are_frozen

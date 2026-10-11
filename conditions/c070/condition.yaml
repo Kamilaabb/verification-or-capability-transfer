@@ -1,0 +1,119 @@
+schema_version: condition-v1
+condition_id: c070
+status: registered_pending_run
+purpose: qwen3_4b_solo_mmlu_pro_dev1000_4096
+path_base: repository_root
+
+gate:
+  scope_limit: >-
+    G alone for docs/plan/mmlu_pro_study.md: Qwen3-4B answers the 1,000 MMLU-Pro dev1000 rows
+    under the frozen solve prompt, thinking off, greedy, 4,096 output tokens, same-forward
+    native logit capture and text_mc_scalar_v1 evidence written before grading. The same
+    prompt file serves Qwen3-8B alone (c071). Development only; the sealed test manifest is
+    not touched.
+
+protocol:
+  id: text_mc_v1
+  path: protocols/text_mc_v1/README.md
+  feature_contract: protocols/text_mc_v1/features.yaml
+  grader: letter_equality_with_the_reference_answer (scripts/run_mmlu_pro.py grade)
+  record_schemas:
+    pass1: protocols/text_mc_v1/schemas/mc_record_v1.json
+    native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+    scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_v1.json
+
+dataset:
+  id: mmlupro-rb189ec7-s20260927
+  path: datasets/mmlupro-rb189ec7-s20260927/dataset.yaml
+  manifest: dev1000
+  manifest_rows: 1000
+  manifest_sha256: d7733053f8253d8a7a036df703cb9dcc0bf5e62f5a7e359eaaa53ac52545cee0
+  development_only: true
+  source_loader: scripts/run_mmlu_pro.py load_mmlu_pro_rows
+
+model:
+  role_ids: [pass1]
+  y0_selection: sample_index_0_unconditionally
+  kind: llm
+  model_id: Qwen/Qwen3-4B
+  revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  provenance: conditions/c014/model_provenance.json
+  identity_reference: c025
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-4B/1cfa9a7208912126459214e8b04321603b3df60c
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  thinking: false
+  prompt_pass1: conditions/c070/prompts/mc_solve_v1.txt
+  prompt_pass1_provenance: user_approved_mmlu_pro_solve_prompt_v1_frozen_2026-09-26
+  pass1_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 4096
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  serving:
+    max_model_len: 16384
+    max_num_batched_tokens: 16384
+    max_num_seqs: 1
+    enforce_eager: true
+  pass1_logit_capture:
+    backend: vllm_same_forward_logits_processor_v1
+    server_logprobs_mode: raw_logprobs
+    return_token_ids: true
+    per_token_fields: [sampled_raw_logit, sampled_logprob, max_raw_logit, logsumexp, entropy,
+                       top1_top2_margin, top20_token_ids, top20_raw_logits]
+    top_k_persisted: 20
+    full_vocabulary_logits_persisted: false
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_must_equal_top1_tolerance: 1.0e-06
+  preflight_policy: >-
+    the identity is c025's, whose capture ran on the same snapshot and backend; every job's
+    smoke call still checks exact token alignment and a paired native capture before any row
+
+features:
+  contract: protocols/text_mc_v1/features.yaml
+  count: 22
+  evidence_written_before_grading: true
+
+replicates:
+  plan_id: r014
+  path: replicates/r014.yaml
+  replicate_id: p01
+  base_seed: 20260927
+  seed_cell_id: c070
+
+stages:
+  run: [pass1_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+  skip: [review, controller_training]
+
+analysis:
+  confirmatory_claims: forbidden
+  required_metrics: [accuracy, answer_parseable_rate, truncated_rows, output_tokens,
+                     official_parser_accuracy_without_random, scalar_missingness]
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [behavioral_condition_fields, referenced_file_bytes, immutable_model_revision,
+            chat_template_hash, logprob_capture_mode]
+  exclude: [status, purpose, node, gpu_uuid, slurm_job_id, timestamps, run_id, preflight_job]
+
+change_policy:
+  completed_runs_are_immutable: true
+  model_prompt_temperature_feature_parser_or_algorithm_change_creates_new_condition: true
+  seed_change_creates_new_replicate: true
+
+runnable_gate:
+  required_before_submission:
+    - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+    - model identity fields equal c025's resolved model block
+    - the manifest hash equals the dataset registration
+    - temperature is 0, thinking is false, max_new_tokens is 4096
+    - local parser and record-schema tests pass

@@ -1,0 +1,88 @@
+schema_version: dataset-v1
+dataset_id: bigcodebench-b74c0d0-instruct-s20260917
+status: frozen_on_server
+
+source:
+  provider: huggingface
+  name: bigcode/bigcodebench
+  revision: b74c0d0bf70d2c0bc459be537895cca163007f1a
+  split: v0.1.4
+  total_rows: 1140
+  prompt_field: instruct_prompt
+  prompt_field_rationale: >-
+    Instruct is harder than Complete, and a lower acc(G) directly enlarges the OVERRIDE
+    denominator, which c003 measured to be the binding constraint on decision-relevant
+    sample density.
+  split_equivalence_verified: >-
+    v0.1.4 holds exactly the id set the container's get_bigcodebench(subset="full")
+    returns, so the manifest and the grader cannot disagree about which tasks exist.
+
+grader:
+  contract: protocols/authority_v6/grader_bigcodebench_v1.yaml
+  excluded_rows: 8
+  usable_rows: 1132
+  ground_truth_noise_floor_offline: 0.0070
+
+selection:
+  method: exclude_measured_failures_then_PCG64_seed_20260917_permutation
+  boundary_moved_from: development 732 / test 400
+  boundary_moved_because: >-
+    Every manifest is a prefix slice of one fixed permutation, so moving the boundary
+    moves which tasks fall either side of it without reshuffling. Redrawn before any
+    model had seen any task; gate0's sha256 is bit identical across the two draws.
+  seed: 20260917
+  drawn_before_any_model_saw_any_task: true
+  builder: scripts/build_bigcodebench_manifests.py
+  partition:
+    development: 832
+    test: 300
+    reserve: 0
+  nesting: gate0 is the first 300 rows of development in the same shuffled order
+  nesting_rationale: >-
+    Gate 1 extends the Gate 0 run rather than starting over, so Gate 0's G and V records
+    stay reusable exactly as c004 reused c003's.
+  reserve_is_empty_because: >-
+    The domain's hard ceiling is 1132 tasks, so holding tasks back does not help. If
+    decision-relevant rows are short, the lever is multiple samples per task with
+    task-grouped cross-validation, not more tasks.
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  gate0:
+    purpose: gate_0_screen_generate_verify_grade
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/gate0.jsonl
+    rows: 300
+    sha256: 8e51cb5dc58bd0a5bc418618729e1964f2a5f492428adaf5e8a1cd347e99064e
+    subset_of: development
+  development:
+    purpose: development_training_validation_and_feature_ablation
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/development.jsonl
+    rows: 832
+    sha256: 5fc23a137b20357ca254f4a73fc9d72d4bca24adb05ca03b947a92d4917b4a30
+  test:
+    purpose: independent_confirmatory_test
+    server_path: /path/to/project/data/manifests/bigcodebench-b74c0d0-instruct-s20260917/test.jsonl
+    rows: 300
+    sha256: 6f263a53a76357e801cd84226003f296cb51df64825cd7a1360a3e37b8c25e23
+    status: untouched
+    may_be_read_before_development_is_frozen: false
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures: forbidden
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: true
+  may_train_controller: true
+  may_select_features_and_thresholds: true
+  may_support_confirmatory_claims: false
+  independent_test_required_after_tuning: true
+  test_manifest_is_single_use: true
+  test_manifest_is_single_use_because: >-
+    The reserve is empty, so a test set consumed by an exploratory look cannot be
+    replaced from within this dataset.

@@ -1,0 +1,56 @@
+schema_version: condition-overlay-v1
+condition_id: c228
+status: registered_pending_run
+extends: conditions/c027/condition.yaml
+overrides:
+  schema_version: condition-v1
+  condition_id: c228
+  status: registered_pending_run
+  purpose: ministral_8b_reviewer_of_c208_mathfull_testpool_dev1000_4096_review_prompt_v2
+  gate:
+    scope_limit: >-
+      Ministral-8B-Instruct-2410 reviews c208's Llama-3.2-3B-Instruct outputs on testpool_dev1000 (the re-split development set,
+      docs/plan/testpool_dev1000.md) under the frozen review prompt v2, one direction of the Llama-3.2-3B / Ministral-8B
+      pair (weak-weak, low-headroom end); the other direction is c229. c027 with the reviewer's identity taken from its own solo condition c032, the development manifest
+      and the generator source changed; delivery, decoding, budget, capture and evidence contract are c027's.
+      Development only.
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: testpool_dev1000
+    manifest_rows: 1000
+    manifest_sha256: 52c6c79d0285f40d3ac711ad6331b8102d6cf138374a8fd93a5cdc6b3756971a
+    development_only: true
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c228_v1.json
+  generator_source:
+    condition_id: c208
+    artifact_path: /path/to/project/artifacts/20260929T030000Z__c208__mathfull-testpool_dev1000__r012_solo4096
+    pass1_run_id: 20260929T030000Z__c208__mathfull-testpool_dev1000__r012_solo4096__pass1__p01
+    model_id: meta-llama/Llama-3.2-3B-Instruct
+    reuse_records_byte_for_byte: true
+  model:
+    chat_template_hash: e4676cb56dffea7782fd3e2b577cfaf1e123537e6ef49b3ec7caa6c095c62272
+    identity_reused_from: null
+    model_id: mistralai/Ministral-8B-Instruct-2410
+    pass1_budget_matched_to: c023_and_c018_verifier_4096
+    preflight_policy: No separate preflight. The smoke call and every pass-1 row require exact token-ID alignment
+      between the served content trace and the same-forward capture, as for c027 and c029-c031; a mismatch stops the
+      run before its row is kept.
+    preflight_reuse_reason: null
+    provenance: conditions/c032/model_provenance.json
+    revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Ministral-8B-Instruct-2410/2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    tokenizer_revision: 2f494a194c5b980dfb9772cb92d26cbb671fce5a
+    identity_reuse_reason: null
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c228
+  stages:
+    run: [reuse_c208_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, verifier_verdict, controller_training]

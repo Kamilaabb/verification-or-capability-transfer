@@ -1,0 +1,10 @@
+System:
+Answer the multiple-choice question provided by the user, using the image(s) and text it contains. Think step by step before answering.
+The last line of your response must be of the form "Answer: X", where X is the letter of exactly one option.
+
+User template:
+Question:
+{{question}}
+
+Options:
+{{options}}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_input_payload_single_v1.json",
+  "title": "Exact single-sample payload visible to the authority Controller",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["features", "missingness"],
+  "properties": {
+    "features": {"$ref": "controller_evidence_record_single_v1.json#/$defs/features"},
+    "missingness": {"$ref": "controller_evidence_record_single_v1.json#/$defs/missingness"}
+  }
+}

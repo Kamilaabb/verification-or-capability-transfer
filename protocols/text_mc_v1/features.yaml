@@ -1,0 +1,39 @@
+schema_version: feature-contract-v1
+feature_set_id: text_mc_scalar_v1
+representation: scalar
+decision_time: after_the_model_call_before_grading
+implementation: src/authority_allocation/text_mc_features.py
+derived_from: >-
+  protocols/vision_mc_v1/features.yaml (vision_mc_scalar_v1) without n_images and
+  num_visual_tokens; the remaining 22 scalars are computed by the same code
+answer_parser: {id: mmmu_pro_answer_line_v1, source: src/authority_allocation/mmmu_pro.py parse_answer_letter}
+answer_token: the single generated token whose UTF-8 bytes cover the answer letter; null if not exactly one
+low_confidence_threshold: log(0.5), as in scripts/selector_dev1000.py
+unpaired_tokens: null_aggregates
+
+features:
+  - {name: n_options, type: integer, range: 2_to_10}
+  - {name: question_char_count, type: integer, range: nonnegative}
+  - {name: prompt_tokens, type: integer, source: usage.input_tokens}
+  - {name: answer_parseable, type: binary}
+  - {name: output_token_count, type: integer}
+  - {name: truncated, type: binary, rule: finish_reason is length}
+  - {name: out_lp_mean, type: number_or_null}
+  - {name: out_lp_min, type: number_or_null}
+  - {name: out_lp_p10, type: number_or_null}
+  - {name: out_lp_std, type: number_or_null}
+  - {name: out_ent_mean, type: number_or_null}
+  - {name: out_ent_p90, type: number_or_null}
+  - {name: out_ent_max, type: number_or_null}
+  - {name: out_margin_mean, type: number_or_null}
+  - {name: out_margin_p10, type: number_or_null}
+  - {name: out_max_logit_mean, type: number_or_null, note: raw pre-softmax maximum, not a log transform}
+  - {name: out_lowconf_frac, type: number_or_null}
+  - {name: out_lowconf_run, type: number_or_null}
+  - {name: ans_lp, type: number_or_null}
+  - {name: ans_ent, type: number_or_null}
+  - {name: ans_margin, type: number_or_null}
+  - {name: ans_max_logit, type: number_or_null}
+
+audit_fields: [content_token_count, paired_token_count, answer_token_index]
+prohibited_fields: [answer, answer_index, cot_content, grader_output, u0, u_review, u_gv, correctness]

@@ -1,0 +1,64 @@
+schema_version: condition-overlay-v1
+condition_id: c011
+status: frozen_validated_gate0_gate1_stopped
+extends: conditions/c009/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c011
+  status: frozen_validated_gate0_gate1_stopped
+  purpose: gate_0_measure_complete_prompt_seed_coder_against_the_frozen_qwen3_verifier
+
+  gate:
+    id: gate_0
+    decision_criteria: >-
+      Continue to a new Gate 1 only if Seed-Coder remains capability-matched (acc_G
+      between 0.35 and 0.50), P(request != KEEP | u0 = 1) is at least 0.15, and deployed
+      u0/u2 error complementarity exceeds c006's 0.100. The primary paired comparison
+      is c009: same tasks, models, prompts, decoding and seeds, with only the dataset
+      problem field changed from instruct_prompt to complete_prompt.
+    primary_hypothesis_under_test: >-
+      Changing the task presentation to complete_prompt raises deployed generator/verifier
+      error complementarity above 0.100 without removing code-domain over-correction or
+      introducing a capability mismatch.
+    c009_deployed_reference:
+      condition_id: c009
+      prompt_field: instruct_prompt
+      acc_G: 0.41333333333333333
+      mean_u2: 0.40268456375838924
+      error_complementarity: 0.053691275167785234
+      over_correction_rate: 0.45161290322580644
+
+  dataset:
+    id: bigcodebench-b74c0d0-complete-s20260917
+    path: datasets/bigcodebench-b74c0d0-complete-s20260917/dataset.yaml
+    prompt_field: complete_prompt
+    manifest: gate0
+    manifest_rows: 300
+    manifest_sha256: 8e51cb5dc58bd0a5bc418618729e1964f2a5f492428adaf5e8a1cd347e99064e
+    test_manifest_stays_unread: true
+
+  generator:
+    problem_field: complete_prompt
+    service_smoke_job: 65101965
+    capability_probe_job: null
+    capability_probe_scope: null
+
+  replicates:
+    plan_id: r004
+    path: replicates/r004.yaml
+    paired_with_c009: >-
+      Reusing r004 and the identical task order preserves G/V call seeds. The problem
+      field change belongs to the condition and dataset identities, not a new replicate.
+
+  reuse_policy:
+    reuse_g_outputs: false
+    reuse_v_reports_and_token_traces: false
+    rerun_from: generate
+    reason: the problem text changes, invalidating G and every downstream artifact
+
+  successor_plan:
+    gate1_condition_id: c012
+    create_only_after: c011_is_validated_and_decision_criteria_pass
+    gate1_reuses: [first_300_g_outputs, first_300_v_reports_and_token_traces]
+    gate1_reruns_from: generate_for_rows_301_to_832

@@ -1,0 +1,115 @@
+schema_version: dataset-v1
+dataset_id: olympiadbench-r91184b5-oe-to-maths-en-s20261001
+status: frozen_on_server
+registered_on: 2026-10-01
+purpose: >-
+  The second math dataset of the GV vs max(G, V) study, run for one pre-chosen pair only
+  (Ministral-8B / Qwen3-8B; docs/plan/olympiadbench_extension.md). Harder and differently
+  sourced than MATH, it asks whether the MATH findings are specific to MATH. Nothing is fit,
+  tuned or chosen on it.
+
+source:
+  provider: huggingface
+  name: Hothan/OlympiadBench
+  config: OE_TO_maths_en_COMP
+  revision: 91184b52131e7fc9455fef848035173aea8cc01a
+  splits_used: [train]
+  total_rows: 674
+  composition: >-
+    English, text-only, open-ended competition maths problems (OlympiadBench's OE_TO_maths_en_COMP
+    subset; every row checked to be Text-only, English and Open-ended). Each row has one
+    final_answer string; about a third carry $...$ delimiters, which the loader strips
+    (run_mathfull_solo.olympiad_gold) because math_parse_gold adds its own.
+  license_note: the source card declares apache-2.0.
+
+selection:
+  exclusions_decided_from_source_only: true
+  exclusion_rules:
+    multiple_answer: is_multiple_answer is true; the frozen prompts ask for one boxed answer
+    has_unit: the reference answer carries a unit, which the grader does not compare
+    source_error_flag: the source marks the row with an error note
+    duplicate_id: an id that occurs more than once; every copy is dropped (none found)
+    duplicate_problem_text: exact question text that occurs more than once; every copy is dropped (none found)
+    empty_answer: no reference answer (none found)
+    gold_unparseable: run_c002_dev30.math_parse_gold cannot parse the reference answer
+    gold_nonfinite: it parses to zoo or nan (the mathfull ungradeable-gold rule, applied up front; none found)
+  excluded:
+    multiple_answer:
+      ["olympiadbench/1618", "olympiadbench/1664", "olympiadbench/1709", "olympiadbench/1737",
+       "olympiadbench/1760", "olympiadbench/1766", "olympiadbench/1800", "olympiadbench/1807",
+       "olympiadbench/1929", "olympiadbench/1930", "olympiadbench/1938", "olympiadbench/1940",
+       "olympiadbench/1962", "olympiadbench/2000", "olympiadbench/2012", "olympiadbench/2024",
+       "olympiadbench/2099", "olympiadbench/2111", "olympiadbench/2171", "olympiadbench/2193",
+       "olympiadbench/2203", "olympiadbench/2216", "olympiadbench/2235", "olympiadbench/2238",
+       "olympiadbench/2254", "olympiadbench/2268", "olympiadbench/2277", "olympiadbench/2282",
+       "olympiadbench/2287", "olympiadbench/2289", "olympiadbench/2292", "olympiadbench/2301",
+       "olympiadbench/2303", "olympiadbench/2313", "olympiadbench/2317", "olympiadbench/2318",
+       "olympiadbench/2323", "olympiadbench/2326", "olympiadbench/2330", "olympiadbench/2332",
+       "olympiadbench/2336", "olympiadbench/2338", "olympiadbench/2340", "olympiadbench/2346",
+       "olympiadbench/2349", "olympiadbench/2356", "olympiadbench/2369", "olympiadbench/2370",
+       "olympiadbench/2375", "olympiadbench/2376", "olympiadbench/2382", "olympiadbench/2391",
+       "olympiadbench/2397", "olympiadbench/2420", "olympiadbench/2421", "olympiadbench/2423",
+       "olympiadbench/2427", "olympiadbench/2439", "olympiadbench/2443", "olympiadbench/2445",
+       "olympiadbench/2453", "olympiadbench/2460", "olympiadbench/2467", "olympiadbench/2469",
+       "olympiadbench/2472", "olympiadbench/2486", "olympiadbench/2490", "olympiadbench/2498",
+       "olympiadbench/2501", "olympiadbench/2509", "olympiadbench/2521", "olympiadbench/2523",
+       "olympiadbench/2524", "olympiadbench/2532", "olympiadbench/2536", "olympiadbench/2539",
+       "olympiadbench/2544", "olympiadbench/2549", "olympiadbench/2560", "olympiadbench/2568",
+       "olympiadbench/2570", "olympiadbench/2574", "olympiadbench/2575", "olympiadbench/2639",
+       "olympiadbench/2679", "olympiadbench/2684", "olympiadbench/2702", "olympiadbench/2753",
+       "olympiadbench/2754", "olympiadbench/2771", "olympiadbench/2862", "olympiadbench/2863",
+       "olympiadbench/2950"]
+    has_unit:
+      ["olympiadbench/2253", "olympiadbench/2334", "olympiadbench/2419", "olympiadbench/2426",
+       "olympiadbench/2444", "olympiadbench/2522", "olympiadbench/2592", "olympiadbench/2817"]
+    gold_unparseable: ["olympiadbench/1782", "olympiadbench/2045"]
+  rows_before_exclusion: 674
+  rows_after_exclusion: 571
+  note: >-
+    One source row has both is_multiple_answer and a unit and is counted under multiple_answer
+    only; the one row carrying a source error note was already excluded by an earlier rule.
+
+sampling:
+  sort_key: numeric source id
+  sort_order: ascending
+  rng: numpy.Generator.PCG64
+  numpy_version: 2.5.3
+  order_seed: 20261001
+  method: sort by id, then one fixed permutation used only for batching; every included row is used
+  drawn_before_any_model_saw_any_problem: true
+  builder: scripts/build_olympiadbench_manifests.py
+  builder_commit: 748f74b
+  built_once_on: 2026-10-01
+  build_report_sha256: d3c714f451f903b7e4218e0c0a7703ee9ba6b45c89cbd95ae851f90692d03401
+
+storage:
+  mode: server_only
+  local_files_required: false
+  server_repository_root: /path/to/project
+  huggingface_cache_root: /path/to/scratch/huggingface
+
+manifests:
+  eval:
+    purpose: one_pair_extension_reported_in_full
+    server_path: /path/to/project/data/manifests/olympiadbench-r91184b5-oe-to-maths-en-s20261001/eval.jsonl
+    rows: 571
+    counts_by_subject: {"Algebra": 207, "Combinatorics": 144, "Geometry": 114, "Number Theory": 106}
+    counts_by_answer_type: {"Expression": 56, "Interval": 5, "Numerical": 501, "Tuple": 9}
+    sha256: ebc2e872eef4255b81e99a12bd4df59147db0468ee36856118eb67054f3ebe78
+
+use_log:
+  - {conditions: [c254, c255, c256, c257], manifest: eval, pair: Ministral-8B / Qwen3-8B,
+     plan: docs/plan/olympiadbench_extension.md}
+  - {conditions: [c259, c260, c261], manifest: eval, pair: Qwen3-4B / Qwen3-8B (reuses c255),
+     plan: docs/plan/olympiadbench_extension.md section 7, added before any result}
+
+policies:
+  resample: forbidden
+  manual_manifest_edits: forbidden
+  replace_failures_with_unused_rows: forbidden
+  all_conditions_share_problem_ids: true
+  server_sha256_check_required_before_run: true
+  development_may_tune_design: false
+  may_support_confirmatory_claims: true
+  pair_fixed_before_any_run: true
+  nothing_chosen_on_this_dataset: true

@@ -1,0 +1,14 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r008
+status: c016_thinking_pass1_math_dev300
+
+pass1:
+  deterministic_decoding_expected: true
+  replicates:
+    - {replicate_id: p01, call_seed: 42}
+
+call_seed_contract:
+  mode: constant_for_every_problem
+  value: 42
+  reason: ollama_style_seed_42_comparison
+  select_best_seed: forbidden

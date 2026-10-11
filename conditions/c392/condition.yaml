@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c392
+status: registered_pending_run
+extends: conditions/c147/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c392
+  status: registered_pending_run
+  purpose: qwen3_8b_commit_first_review_of_c120_mmlu_pro_test1500_4096
+
+  gate:
+    scope_limit: >-
+      Prompt-variant sanity check (docs/plan/prompt_variant_test500.md, user request 2026-10-09): c147 with only the
+      review prompt changed to the frozen commit-first prompt, which asks the reviewer to answer the question
+      independently and write its own answer ("My answer: ...") before reading the proposed solution, then compare,
+      without the instruction to retain a correct proposed answer. The first
+      500 test1500 rows are analysed. Nothing measured here changes any registered result.
+
+  model:
+    prompt_pass1: conditions/c392/prompts/mc_commit_first_v1.txt
+    prompt_pass1_provenance: user_approved_commit_first_mc_review_prompt_v1_frozen_2026-10-09
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c392_c393_v1.json
+
+  replicates:
+    seed_cell_id: c392
+
+  runnable_gate:
+    required_before_submission:
+      - c392 differs from c147 only in the review prompt, evidence schema id, seed cell and text
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the c120 source archive passes its checksums, holds exactly 1500 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

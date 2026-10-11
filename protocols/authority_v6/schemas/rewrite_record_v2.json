@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rewrite_record_v2.json",
+  "title": "Authority v6 critique-and-revise branch record, code domain, pre-grading",
+  "description": "Differs from rewrite_record_v1 in one respect: extraction is the grader's job, so this record cannot say whether a usable program was produced. v1's ok/model_invalid split is replaced by deferred_to_grader, and the failure fallback for an unusable program is decided at grading rather than here. Identity fields are not pinned to one condition, dataset or stage; g_record_single_v2 pins all three to c003 and was registered unchanged by two code-domain conditions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "run_id", "source_v_run_id", "source_v_record_id",
+    "condition_id", "condition_hash", "dataset_id", "replicate_id", "stage", "cell_id",
+    "problem_id", "registered_request", "rewrite_ran", "call_seed", "raw_output",
+    "extracted_answer", "status", "failure_fallback_action", "usage", "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "rewrite-record-v2"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_v_run_id": {"type": "string", "minLength": 1},
+    "source_v_record_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "dataset_id": {"type": "string", "minLength": 1},
+    "replicate_id": {"type": "string", "minLength": 1},
+    "stage": {"type": "string", "minLength": 1},
+    "cell_id": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "problem_metadata": {"type": "object", "additionalProperties": {"type": ["string", "number", "integer", "boolean", "null"]}},
+    "registered_request": {"type": "string", "enum": ["KEEP", "CRITIQUE_REVISE", "OVERRIDE"]},
+    "rewrite_ran": {"type": "boolean"},
+    "call_seed": {"type": ["integer", "null"], "minimum": 0},
+    "raw_output": {"type": ["string", "null"]},
+    "extracted_answer": {
+      "type": "null",
+      "description": "Always null. Whether a program can be recovered is decided by the same sanitizer that will run it, inside the grading sandbox. Deciding it twice is how the two answers drift apart."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["not_requested", "deferred_to_grader", "call_error"],
+      "description": "deferred_to_grader means the call returned text. Whether that text holds a program that compiles and defines the entry point is not known until grading."
+    },
+    "failure_fallback_action": {
+      "type": ["string", "null"],
+      "enum": ["KEEP", null],
+      "description": "Set here only for call_error, where no text exists at all. An unusable program is also a fallback to KEEP under protocol v5 section 5, but that is recorded by the grade stage, which is the first place it is visible."
+    },
+    "usage": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens", "latency_ms", "finish_reason", "retries"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]},
+        "retries": {"type": "integer", "minimum": 0}
+      }
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"registered_request": {"const": "KEEP"}}, "required": ["registered_request"]},
+      "then": {"properties": {"status": {"const": "not_requested"}}}
+    },
+    {
+      "if": {"properties": {"registered_request": {"enum": ["CRITIQUE_REVISE", "OVERRIDE"]}}, "required": ["registered_request"]},
+      "then": {"properties": {"rewrite_ran": {"const": true}, "status": {"enum": ["deferred_to_grader", "call_error"]}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "not_requested"}}, "required": ["status"]},
+      "then": {"properties": {"rewrite_ran": {"const": false}, "call_seed": {"type": "null"}, "raw_output": {"type": "null"}, "failure_fallback_action": {"type": "null"}, "usage": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "deferred_to_grader"}}, "required": ["status"]},
+      "then": {"properties": {"rewrite_ran": {"const": true}, "call_seed": {"type": "integer"}, "raw_output": {"type": "string"}, "failure_fallback_action": {"type": "null"}, "usage": {"type": "object"}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "call_error"}}, "required": ["status"]},
+      "then": {"properties": {"rewrite_ran": {"const": true}, "raw_output": {"type": "null"}, "failure_fallback_action": {"const": "KEEP"}}}
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+schema_version: condition-overlay-v1
+condition_id: c138
+status: registered_pending_run
+extends: conditions/c126/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c138
+  status: registered_pending_run
+  purpose: qwen25_7b_reviewer_of_c082_mmlu_pro_test1500_4096
+
+  gate:
+    scope_limit: >-
+      Test for docs/plan/mmlu_pro_study.md section 15, requested by the user: Qwen2.5-7B reviews c082's Qwen3-8B test1500 outputs: c126 with only the manifest, the source of the reviewed outputs, evidence schema id and seed cell changed.
+      The same 1,500 test rows as c081-c084. Nothing measured on these rows is used to fit, tune or choose anything.
+
+  dataset:
+    manifest: test1500
+    manifest_rows: 1500
+    manifest_sha256: a22d72830c08b2010f44500e9353b948b1adce0591369e62ac7e1e6eb35c6e4e
+    development_only: false
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c126_c147_v1.json
+
+  generator_source:
+    condition_id: c082
+    artifact_path: /path/to/project/artifacts/20260927T184802Z__c082__mmlupro-test1500__r014_solve4096
+    pass1_run_id: 20260927T184802Z__c082__mmlupro-test1500__r014_solve4096__pass1__p01
+    model_id: Qwen/Qwen3-8B
+    reuse_records_byte_for_byte: true
+
+  replicates:
+    seed_cell_id: c138
+
+  runnable_gate:
+    required_before_submission:
+      - c138 differs from c126 only in the dataset manifest, evidence schema id, seed cell, generator source and text
+      - the manifest hash equals the test1500 registration in the dataset file
+      - the c082 source archive passes its checksums, holds exactly 1500 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

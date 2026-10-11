@@ -1,0 +1,45 @@
+schema_version: condition-overlay-v1
+condition_id: c023
+status: registered_pending_run
+extends: conditions/c021/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c023
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_pass1_mathfull_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      V alone on the mathfull development prefix dev1000, paired with c022. c021's
+      Qwen3-8B solving with G's prompt, never shown any G output, greedy, thinking off,
+      4096 tokens, same-forward native trace capture and the seven-scalar contract. "V
+      having seen G" is deliberately not run here; it waits for its prompt to be final.
+      Development only; the sealed test manifest is not touched.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: dev1000
+    manifest_rows: 1000
+    manifest_sha256: d6de6e4816ab52a46d1813ef05be0dc298d32eec81a2284f85dd3fc72e3d2126
+    development_only: true
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c023_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c023
+
+  runnable_gate:
+    required_before_submission:
+      - c023 differs from c021 only in dataset, seeds and evidence schema id
+      - the manifest hash equals the one in the dataset registration
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

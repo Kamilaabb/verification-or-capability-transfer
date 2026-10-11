@@ -1,0 +1,47 @@
+schema_version: condition-overlay-v1
+condition_id: c041
+status: registered_pending_run
+extends: conditions/c026/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c041
+  status: registered_pending_run
+  purpose: qwen3_8b_solo_pass1_mathfull_test_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Confirmatory test run (docs/plan/test_mathfull_v2.md): c026 on the sealed mathfull
+      test manifest, nothing else changed. Qwen3-8B alone under the frozen solve prompt
+      v2, greedy, thinking off, 4096 tokens, same-forward native trace capture and the
+      seven-scalar contract. Its outputs are the V side of the frozen selector and the G
+      reviewed in c043.
+
+  dataset:
+    id: mathfull-r465bcdb-l3to5-s20260924
+    path: datasets/mathfull-r465bcdb-l3to5-s20260924/dataset.yaml
+    manifest: test
+    manifest_rows: 3298
+    manifest_sha256: 9b93abcf4a94b5f917166124f9cb73e4f481bf20f1c9f522747b6b197e4c2cd4
+    development_only: false
+    source_loader: scripts/run_mathfull_solo.py load_mathfull_rows
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c041_v1.json
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c041
+
+  runnable_gate:
+    required_before_submission:
+      - c041 differs from c026 only in the dataset manifest, seeds and evidence schema id
+      - the test plan docs/plan/test_mathfull_v2.md and the frozen selector are committed before any test run
+      - the manifest hash equals the test entry of the dataset registration
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - thinking is false and temperature is 0
+      - local parser and record-schema tests pass

@@ -1,0 +1,41 @@
+schema_version: condition-overlay-v1
+condition_id: c301
+status: registered_pending_run
+extends: conditions/c279/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c301
+  status: registered_pending_run
+  purpose: seed_coder_8b_reviewer_of_c101_qwen3_8b_bigcodebench_development832_4096_empty_token_bytes_repair
+
+  gate:
+    scope_limit: >-
+      Replaces c279 (docs/plan/code_bigcodebench_study.md section 13). c279 stopped at its 256th row
+      (BigCodeBench/1020), on two attempts: vLLM returned one sampled token (id 1663, whose vocabulary
+      entry spells the bytes EF BF BD, U+FFFD) with empty bytes, so the token bytes did not reassemble
+      the returned text and the registered alignment rule stopped the run, as c113 did. c301 is c279 with
+      the rule c114 registered added: a token returned with no bytes gets the exact bytes of its
+      vocabulary entry by token id, then the content is located with the unchanged strict rule and the
+      run still stops on any mismatch. Checked offline on the stopped row before registration: the
+      repair fills only token 1663 and the trace then aligns. Repaired tokens are listed in
+      records/token_byte_repairs.jsonl and counted in the report. Development only.
+
+  model:
+    pass1_logit_capture:
+      empty_token_bytes_repair: vocabulary_bytes_by_token_id_v1
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/code_solve_v1/schemas/code_review_evidence_record_c301_v1.json
+
+  replicates:
+    seed_cell_id: c301
+
+  runnable_gate:
+    required_before_submission:
+      - c301 differs from c279 only in the empty-token-bytes repair rule, evidence schema id, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the c101 source archive passes its checksums, holds exactly 832 record and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass, including the repair tests

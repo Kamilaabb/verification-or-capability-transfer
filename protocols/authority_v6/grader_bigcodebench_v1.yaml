@@ -1,0 +1,80 @@
+schema_version: grader-contract-v1
+grader_id: bigcodebench_untrusted_check_v1
+library: bigcodebench
+version: 0.2.4
+adapter: scripts/bigcodebench_grade.py
+
+sandbox:
+  image: bigcodebench-evaluate.sif
+  image_sha256: 286b4e68f3604864ef7c10c48da83bba554b986fcd1f40ce6c092b695a410ad9
+  image_bytes: 9110036480
+  server_path: /path/to/scratch/authority-allocation/containers/bigcodebench-evaluate.sif
+  network: disabled_via_apptainer_net_none
+  network_required_because: four tasks otherwise pass only by reaching the network
+  slurm_memory_must_exceed_max_as_limit: true
+  slurm_memory_minimum_gb: 48
+
+call:
+  primitive: bigcodebench.eval.untrusted_check(code, test, entry_point, ...)
+  official_cli_not_used: true
+  official_cli_not_used_because: >-
+    bigcodebench.evaluate asserts samples is not None before the check_gt_only branch,
+    so it cannot grade a single prediction
+  batched_per_stage: true
+  batched_per_stage_because: one container start and one dataset load serve a whole stage
+
+extraction:
+  library: bigcodebench.sanitize
+  function: sanitize(code, entrypoint)
+  syntax_check_required: true
+  applies_to: [y0, y1, y2]
+  gold_and_prediction_use_same_config: not_applicable_execution_grader
+  empty_or_unextractable_program: model_invalid_output
+
+limits:
+  max_as_limit: 30720
+  max_data_limit: 30720
+  max_stack_limit: 10
+  min_time_limit: 5.0
+  gt_time_limit: 60.0
+  frozen_because: a pass rate that moves with machine load is not a measurement
+  observed_wall_clock_for_hard_crash_seconds: 242
+
+exclusions:
+  ground_truth_failing: [BigCodeBench/205, BigCodeBench/363, BigCodeBench/590, BigCodeBench/1005]
+  network_dependent: [BigCodeBench/101, BigCodeBench/176, BigCodeBench/314, BigCodeBench/1012]
+  excluded_total: 8
+  usable: 1132
+  grading_an_excluded_task_is_an_error: true
+  measured_by_jobs: [65076891, 65081056]
+
+noise_floor:
+  ground_truth_pass_rate_networked: 0.9965
+  ground_truth_pass_rate_offline: 0.9930
+  measured_on: 2026-09-16
+
+outcomes:
+  tests_all_pass: 1
+  tests_fail: 0
+  model_invalid_output: 0
+  execution_timeout: 0
+  driver_exception: null
+  harness_pass_with_failing_details: null
+
+timeout_divergence_from_math_grader:
+  math_grader_maps_timeout_to: null
+  this_grader_maps_timeout_to: 0
+  rationale: >-
+    A program that does not finish inside the frozen budget is unusable, which is a
+    property of the answer rather than of the grader; mapping it to null would void the
+    whole run over an ordinary wrong answer.
+  known_limitation: >-
+    BigCodeBench/461, 1040 and 1104 legitimately need more than 60s, so on those tasks a
+    correct-but-slow program is indistinguishable from a hang. The timeout rate must be
+    reported; if it is material the limits need revisiting, not the label.
+
+validation:
+  any_null_due_to_grader_error_blocks_run_validation: true
+  same_rules_for_y0_y1_y2: true
+  audit_before_model_predictions: true
+  contract_mapping_verified_by_job: 65087598

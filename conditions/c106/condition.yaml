@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c106
+status: registered_pending_run
+extends: conditions/c100/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c106
+  status: registered_pending_run
+  purpose: mistral_small_24b_instruct_2501_solo_bigcodebench_instruct_development832_4096
+
+  gate:
+    scope_limit: >-
+      Mistral-Small-24B-Instruct-2501 alone on the 832 BigCodeBench development rows for
+      docs/plan/code_bigcodebench_study.md: c100 with only the model changed, to c054's registered identity (including its chat-template inputs).
+      Same frozen code solve prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0
+      sent, same-forward capture, evidence before grading. Served on one H100: the bf16 weights do not fit a 40 GB A100. Development only; the test
+      manifest is not read.
+
+  model:
+    model_id: mistralai/Mistral-Small-24B-Instruct-2501
+    revision: 9527884be6e5616bdd54de542f9ae13384489724
+    tokenizer_revision: 9527884be6e5616bdd54de542f9ae13384489724
+    provenance: conditions/c054/model_provenance.json
+    identity_reference: c054
+    server_path: /path/to/scratch/authority-allocation/models/mistralai--Mistral-Small-24B-Instruct-2501/9527884be6e5616bdd54de542f9ae13384489724
+    chat_template_hash: 3934d199bfe5b6fab5cba1b5f8ee475e8d5738ac315f21cb09545b4e665cc005
+    chat_template_kwargs: {date_string: 26 Jul 2024}
+
+  replicates:
+    seed_cell_id: c106
+
+  runnable_gate:
+    required_before_submission:
+      - c106 differs from c100 only in model identity, seed cell and text
+      - model identity fields, chat-template inputs included, equal c054's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.bigcodebench_study.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local record-schema and runner tests pass

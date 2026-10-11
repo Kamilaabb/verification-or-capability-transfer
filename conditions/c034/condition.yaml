@@ -1,0 +1,37 @@
+schema_version: condition-overlay-v1
+condition_id: c034
+status: abandoned_incomplete_superseded_by_c037
+extends: conditions/c033/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c034
+  status: abandoned_incomplete_superseded_by_c037
+  purpose: qwen3_vl_8b_solo_mmmu_pro_dev_8192
+
+  gate:
+    scope_limit: >-
+      VL-V alone for docs/plan/vision_mmmu_pro_study.md, paired with c033: c033 with only the
+      model changed to Qwen3-VL-8B-Instruct, never shown any G output. Same frozen solve
+      prompt file, greedy, 8,192 output tokens, pixel limits, same-forward capture and
+      evidence contract. Development only; the sealed test manifest is not touched.
+
+  model:
+    model_id: Qwen/Qwen3-VL-8B-Instruct
+    revision: 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b
+    tokenizer_revision: 0c351dd01ed87e9c1b53cbc748cba10e6187ff3b
+    provenance: conditions/c034/model_provenance.json
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-VL-8B-Instruct/0c351dd01ed87e9c1b53cbc748cba10e6187ff3b
+    chat_template_hash: 3636d0f0bd6bef02654cdffdc447b79cb2cef8ab02cc75267345946291a489e4
+
+  replicates:
+    seed_cell_id: c034
+
+  runnable_gate:
+    required_before_submission:
+      - c034 differs from c033 only in model identity, seed cell and text
+      - c034 and c033 use the same frozen solve prompt file
+      - model identity fields equal conditions/c034/model_provenance.json
+      - the manifest and image-audit hashes equal the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 8192
+      - local parser and record-schema tests pass

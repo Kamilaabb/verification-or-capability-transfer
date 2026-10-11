@@ -1,0 +1,24 @@
+{
+  "chat_template_hash": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "config_sha256": "c0242402ad6a13b331ea320feea8c7e3776ffb7a4eff0757b9cd667e116d9a28",
+  "repo_id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "resolved_from": "main",
+  "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+  "schema_version": "model-provenance-v1",
+  "server_path": "/path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-Coder-7B-Instruct/c03e6d358207e414f1eca0bb1891e29f1db0e242",
+  "tokenizer_file_sha256": {
+    "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+    "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "tokenizer_config.json": "959e7f1d9a1b7641a6d6ce05ca97b75c7894fcb66cbe5a040406458fb1128ee4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "tokenizer_revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+  "tokenizer_revision_note": "The tokenizer ships inside the same snapshot, so it carries the weights' commit by construction. It is recorded explicitly because a sampled token id interpreted against a different vocabulary is a different token.",
+  "total_bytes": 15242811439,
+  "weight_file_sha256": {
+    "model-00001-of-00004.safetensors": "0b6f069918b07c064cbba8ae4f00f529aa9bbf84b7cdfcb7fc2694a40f6aa8ef",
+    "model-00002-of-00004.safetensors": "c3d46733e7aa054ea7b063fbccd0a5a08446e7bd1814bef26936c5aa1331da62",
+    "model-00003-of-00004.safetensors": "9fe45dacee087385b3d2d6dd27a7413a8a56d95f145772facc148fa86fc73446",
+    "model-00004-of-00004.safetensors": "5aa6e5cbe642377fd441fb4e60e83cca96b2bcd9820e245b9ea06d94653f17f2"
+  }
+}

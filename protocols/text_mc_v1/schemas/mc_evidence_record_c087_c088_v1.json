@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mc_evidence_record_c087_c088_v1.json",
+  "title": "text_mc_scalar_v1 evidence for one model output, written before grading",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "run_id",
+    "source_record_run_id",
+    "source_logit_run_id",
+    "condition_id",
+    "condition_hash",
+    "problem_id",
+    "role",
+    "feature_contract",
+    "features",
+    "missingness",
+    "audit",
+    "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "mc-evidence-record-v1"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_record_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_logit_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_id": {
+      "type": "string",
+      "enum": [
+        "c087",
+        "c088"
+      ]
+    },
+    "condition_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "problem_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "solve",
+        "review"
+      ]
+    },
+    "feature_contract": {
+      "const": "text_mc_scalar_v1"
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_options",
+        "question_char_count",
+        "prompt_tokens",
+        "answer_parseable",
+        "output_token_count",
+        "truncated",
+        "out_lp_mean",
+        "out_lp_min",
+        "out_lp_p10",
+        "out_lp_std",
+        "out_ent_mean",
+        "out_ent_p90",
+        "out_ent_max",
+        "out_margin_mean",
+        "out_margin_p10",
+        "out_max_logit_mean",
+        "out_lowconf_frac",
+        "out_lowconf_run",
+        "ans_lp",
+        "ans_ent",
+        "ans_margin",
+        "ans_max_logit"
+      ],
+      "properties": {
+        "n_options": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "question_char_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prompt_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "answer_parseable": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "output_token_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "truncated": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lp_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lp_min": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lp_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lp_std": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_ent_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_ent_p90": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_ent_max": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_margin_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_margin_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_max_logit_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lowconf_frac": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "out_lowconf_run": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ans_lp": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ans_ent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ans_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ans_max_logit": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_options",
+        "question_char_count",
+        "prompt_tokens",
+        "answer_parseable",
+        "output_token_count",
+        "truncated",
+        "out_lp_mean",
+        "out_lp_min",
+        "out_lp_p10",
+        "out_lp_std",
+        "out_ent_mean",
+        "out_ent_p90",
+        "out_ent_max",
+        "out_margin_mean",
+        "out_margin_p10",
+        "out_max_logit_mean",
+        "out_lowconf_frac",
+        "out_lowconf_run",
+        "ans_lp",
+        "ans_ent",
+        "ans_margin",
+        "ans_max_logit"
+      ],
+      "properties": {
+        "n_options": {
+          "type": "boolean"
+        },
+        "question_char_count": {
+          "type": "boolean"
+        },
+        "prompt_tokens": {
+          "type": "boolean"
+        },
+        "answer_parseable": {
+          "type": "boolean"
+        },
+        "output_token_count": {
+          "type": "boolean"
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "out_lp_mean": {
+          "type": "boolean"
+        },
+        "out_lp_min": {
+          "type": "boolean"
+        },
+        "out_lp_p10": {
+          "type": "boolean"
+        },
+        "out_lp_std": {
+          "type": "boolean"
+        },
+        "out_ent_mean": {
+          "type": "boolean"
+        },
+        "out_ent_p90": {
+          "type": "boolean"
+        },
+        "out_ent_max": {
+          "type": "boolean"
+        },
+        "out_margin_mean": {
+          "type": "boolean"
+        },
+        "out_margin_p10": {
+          "type": "boolean"
+        },
+        "out_max_logit_mean": {
+          "type": "boolean"
+        },
+        "out_lowconf_frac": {
+          "type": "boolean"
+        },
+        "out_lowconf_run": {
+          "type": "boolean"
+        },
+        "ans_lp": {
+          "type": "boolean"
+        },
+        "ans_ent": {
+          "type": "boolean"
+        },
+        "ans_margin": {
+          "type": "boolean"
+        },
+        "ans_max_logit": {
+          "type": "boolean"
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_token_count",
+        "paired_token_count",
+        "answer_token_index"
+      ],
+      "properties": {
+        "content_token_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "paired_token_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answer_token_index": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "description": "mc_evidence_record_v1 for c087-c088; a separate file so no schema a completed or running condition registers changes its bytes."
+}

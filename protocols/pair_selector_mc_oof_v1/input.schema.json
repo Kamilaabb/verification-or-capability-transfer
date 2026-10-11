@@ -1,0 +1,1292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "features",
+    "missingness"
+  ],
+  "properties": {
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "g_n_options",
+        "g_question_char_count",
+        "g_prompt_tokens",
+        "g_answer_parseable",
+        "g_output_token_count",
+        "g_truncated",
+        "g_out_lp_mean",
+        "g_out_lp_min",
+        "g_out_lp_p10",
+        "g_out_lp_std",
+        "g_out_ent_mean",
+        "g_out_ent_p90",
+        "g_out_ent_max",
+        "g_out_margin_mean",
+        "g_out_margin_p10",
+        "g_out_max_logit_mean",
+        "g_out_lowconf_frac",
+        "g_out_lowconf_run",
+        "g_ans_lp",
+        "g_ans_ent",
+        "g_ans_margin",
+        "g_ans_max_logit",
+        "g_opt_p_chosen",
+        "g_opt_mass",
+        "g_opt_entropy",
+        "g_opt_margin",
+        "g_opt_n_plausible",
+        "g_opt_logit_gap",
+        "g_opt_chosen_is_top",
+        "g_n_letters_mentioned",
+        "g_n_answer_lines",
+        "g_first_letter_is_final",
+        "g_n_hedges",
+        "g_n_eliminations",
+        "g_n_selfcorrect",
+        "g_digit_share",
+        "g_n_numbers",
+        "g_n_equals",
+        "v_n_options",
+        "v_question_char_count",
+        "v_prompt_tokens",
+        "v_answer_parseable",
+        "v_output_token_count",
+        "v_truncated",
+        "v_out_lp_mean",
+        "v_out_lp_min",
+        "v_out_lp_p10",
+        "v_out_lp_std",
+        "v_out_ent_mean",
+        "v_out_ent_p90",
+        "v_out_ent_max",
+        "v_out_margin_mean",
+        "v_out_margin_p10",
+        "v_out_max_logit_mean",
+        "v_out_lowconf_frac",
+        "v_out_lowconf_run",
+        "v_ans_lp",
+        "v_ans_ent",
+        "v_ans_margin",
+        "v_ans_max_logit",
+        "v_opt_p_chosen",
+        "v_opt_mass",
+        "v_opt_entropy",
+        "v_opt_margin",
+        "v_opt_n_plausible",
+        "v_opt_logit_gap",
+        "v_opt_chosen_is_top",
+        "v_n_letters_mentioned",
+        "v_n_answer_lines",
+        "v_first_letter_is_final",
+        "v_n_hedges",
+        "v_n_eliminations",
+        "v_n_selfcorrect",
+        "v_digit_share",
+        "v_n_numbers",
+        "v_n_equals",
+        "category_biology",
+        "category_business",
+        "category_chemistry",
+        "category_computer_science",
+        "category_economics",
+        "category_engineering",
+        "category_health",
+        "category_history",
+        "category_law",
+        "category_math",
+        "category_other",
+        "category_philosophy",
+        "category_physics",
+        "category_psychology",
+        "origin_ori_mmlu",
+        "origin_stemez",
+        "origin_theoremQA",
+        "origin_scibench",
+        "same_letter",
+        "both_parseable",
+        "xor_parseable",
+        "xor_truncated",
+        "option_js",
+        "g_letter_rank_in_v",
+        "v_letter_rank_in_g",
+        "v_prob_of_g_letter",
+        "g_prob_of_v_letter",
+        "diff_out_lp_mean",
+        "diff_out_ent_mean",
+        "diff_out_margin_mean",
+        "diff_out_lowconf_frac",
+        "diff_ans_lp",
+        "diff_ans_ent",
+        "diff_ans_margin",
+        "diff_opt_p_chosen",
+        "diff_opt_entropy",
+        "diff_opt_margin",
+        "diff_output_token_count",
+        "diff_n_letters_mentioned"
+      ],
+      "properties": {
+        "g_n_options": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_question_char_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_prompt_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_answer_parseable": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_output_token_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_truncated": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lp_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lp_min": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lp_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lp_std": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_ent_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_ent_p90": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_ent_max": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_margin_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_margin_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_max_logit_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lowconf_frac": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_out_lowconf_run": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_ans_lp": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_ans_ent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_ans_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_ans_max_logit": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_p_chosen": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_mass": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_entropy": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_n_plausible": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_logit_gap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_opt_chosen_is_top": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_letters_mentioned": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_answer_lines": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_first_letter_is_final": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_hedges": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_eliminations": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_selfcorrect": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_digit_share": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_numbers": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_n_equals": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_options": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_question_char_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_prompt_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_answer_parseable": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_output_token_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_truncated": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lp_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lp_min": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lp_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lp_std": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_ent_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_ent_p90": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_ent_max": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_margin_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_margin_p10": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_max_logit_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lowconf_frac": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_out_lowconf_run": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_ans_lp": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_ans_ent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_ans_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_ans_max_logit": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_p_chosen": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_mass": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_entropy": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_n_plausible": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_logit_gap": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_opt_chosen_is_top": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_letters_mentioned": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_answer_lines": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_first_letter_is_final": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_hedges": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_eliminations": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_selfcorrect": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_digit_share": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_numbers": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_n_equals": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_biology": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_business": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_chemistry": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_computer_science": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_economics": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_engineering": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_health": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_history": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_law": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_math": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_other": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_philosophy": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_physics": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "category_psychology": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "origin_ori_mmlu": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "origin_stemez": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "origin_theoremQA": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "origin_scibench": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "same_letter": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "both_parseable": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "xor_parseable": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "xor_truncated": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "option_js": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_letter_rank_in_v": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_letter_rank_in_g": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "v_prob_of_g_letter": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "g_prob_of_v_letter": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_out_lp_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_out_ent_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_out_margin_mean": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_out_lowconf_frac": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_ans_lp": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_ans_ent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_ans_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_opt_p_chosen": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_opt_entropy": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_opt_margin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_output_token_count": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "diff_n_letters_mentioned": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "g_n_options",
+        "g_question_char_count",
+        "g_prompt_tokens",
+        "g_answer_parseable",
+        "g_output_token_count",
+        "g_truncated",
+        "g_out_lp_mean",
+        "g_out_lp_min",
+        "g_out_lp_p10",
+        "g_out_lp_std",
+        "g_out_ent_mean",
+        "g_out_ent_p90",
+        "g_out_ent_max",
+        "g_out_margin_mean",
+        "g_out_margin_p10",
+        "g_out_max_logit_mean",
+        "g_out_lowconf_frac",
+        "g_out_lowconf_run",
+        "g_ans_lp",
+        "g_ans_ent",
+        "g_ans_margin",
+        "g_ans_max_logit",
+        "g_opt_p_chosen",
+        "g_opt_mass",
+        "g_opt_entropy",
+        "g_opt_margin",
+        "g_opt_n_plausible",
+        "g_opt_logit_gap",
+        "g_opt_chosen_is_top",
+        "g_n_letters_mentioned",
+        "g_n_answer_lines",
+        "g_first_letter_is_final",
+        "g_n_hedges",
+        "g_n_eliminations",
+        "g_n_selfcorrect",
+        "g_digit_share",
+        "g_n_numbers",
+        "g_n_equals",
+        "v_n_options",
+        "v_question_char_count",
+        "v_prompt_tokens",
+        "v_answer_parseable",
+        "v_output_token_count",
+        "v_truncated",
+        "v_out_lp_mean",
+        "v_out_lp_min",
+        "v_out_lp_p10",
+        "v_out_lp_std",
+        "v_out_ent_mean",
+        "v_out_ent_p90",
+        "v_out_ent_max",
+        "v_out_margin_mean",
+        "v_out_margin_p10",
+        "v_out_max_logit_mean",
+        "v_out_lowconf_frac",
+        "v_out_lowconf_run",
+        "v_ans_lp",
+        "v_ans_ent",
+        "v_ans_margin",
+        "v_ans_max_logit",
+        "v_opt_p_chosen",
+        "v_opt_mass",
+        "v_opt_entropy",
+        "v_opt_margin",
+        "v_opt_n_plausible",
+        "v_opt_logit_gap",
+        "v_opt_chosen_is_top",
+        "v_n_letters_mentioned",
+        "v_n_answer_lines",
+        "v_first_letter_is_final",
+        "v_n_hedges",
+        "v_n_eliminations",
+        "v_n_selfcorrect",
+        "v_digit_share",
+        "v_n_numbers",
+        "v_n_equals",
+        "category_biology",
+        "category_business",
+        "category_chemistry",
+        "category_computer_science",
+        "category_economics",
+        "category_engineering",
+        "category_health",
+        "category_history",
+        "category_law",
+        "category_math",
+        "category_other",
+        "category_philosophy",
+        "category_physics",
+        "category_psychology",
+        "origin_ori_mmlu",
+        "origin_stemez",
+        "origin_theoremQA",
+        "origin_scibench",
+        "same_letter",
+        "both_parseable",
+        "xor_parseable",
+        "xor_truncated",
+        "option_js",
+        "g_letter_rank_in_v",
+        "v_letter_rank_in_g",
+        "v_prob_of_g_letter",
+        "g_prob_of_v_letter",
+        "diff_out_lp_mean",
+        "diff_out_ent_mean",
+        "diff_out_margin_mean",
+        "diff_out_lowconf_frac",
+        "diff_ans_lp",
+        "diff_ans_ent",
+        "diff_ans_margin",
+        "diff_opt_p_chosen",
+        "diff_opt_entropy",
+        "diff_opt_margin",
+        "diff_output_token_count",
+        "diff_n_letters_mentioned"
+      ],
+      "properties": {
+        "g_n_options": {
+          "type": "boolean"
+        },
+        "g_question_char_count": {
+          "type": "boolean"
+        },
+        "g_prompt_tokens": {
+          "type": "boolean"
+        },
+        "g_answer_parseable": {
+          "type": "boolean"
+        },
+        "g_output_token_count": {
+          "type": "boolean"
+        },
+        "g_truncated": {
+          "type": "boolean"
+        },
+        "g_out_lp_mean": {
+          "type": "boolean"
+        },
+        "g_out_lp_min": {
+          "type": "boolean"
+        },
+        "g_out_lp_p10": {
+          "type": "boolean"
+        },
+        "g_out_lp_std": {
+          "type": "boolean"
+        },
+        "g_out_ent_mean": {
+          "type": "boolean"
+        },
+        "g_out_ent_p90": {
+          "type": "boolean"
+        },
+        "g_out_ent_max": {
+          "type": "boolean"
+        },
+        "g_out_margin_mean": {
+          "type": "boolean"
+        },
+        "g_out_margin_p10": {
+          "type": "boolean"
+        },
+        "g_out_max_logit_mean": {
+          "type": "boolean"
+        },
+        "g_out_lowconf_frac": {
+          "type": "boolean"
+        },
+        "g_out_lowconf_run": {
+          "type": "boolean"
+        },
+        "g_ans_lp": {
+          "type": "boolean"
+        },
+        "g_ans_ent": {
+          "type": "boolean"
+        },
+        "g_ans_margin": {
+          "type": "boolean"
+        },
+        "g_ans_max_logit": {
+          "type": "boolean"
+        },
+        "g_opt_p_chosen": {
+          "type": "boolean"
+        },
+        "g_opt_mass": {
+          "type": "boolean"
+        },
+        "g_opt_entropy": {
+          "type": "boolean"
+        },
+        "g_opt_margin": {
+          "type": "boolean"
+        },
+        "g_opt_n_plausible": {
+          "type": "boolean"
+        },
+        "g_opt_logit_gap": {
+          "type": "boolean"
+        },
+        "g_opt_chosen_is_top": {
+          "type": "boolean"
+        },
+        "g_n_letters_mentioned": {
+          "type": "boolean"
+        },
+        "g_n_answer_lines": {
+          "type": "boolean"
+        },
+        "g_first_letter_is_final": {
+          "type": "boolean"
+        },
+        "g_n_hedges": {
+          "type": "boolean"
+        },
+        "g_n_eliminations": {
+          "type": "boolean"
+        },
+        "g_n_selfcorrect": {
+          "type": "boolean"
+        },
+        "g_digit_share": {
+          "type": "boolean"
+        },
+        "g_n_numbers": {
+          "type": "boolean"
+        },
+        "g_n_equals": {
+          "type": "boolean"
+        },
+        "v_n_options": {
+          "type": "boolean"
+        },
+        "v_question_char_count": {
+          "type": "boolean"
+        },
+        "v_prompt_tokens": {
+          "type": "boolean"
+        },
+        "v_answer_parseable": {
+          "type": "boolean"
+        },
+        "v_output_token_count": {
+          "type": "boolean"
+        },
+        "v_truncated": {
+          "type": "boolean"
+        },
+        "v_out_lp_mean": {
+          "type": "boolean"
+        },
+        "v_out_lp_min": {
+          "type": "boolean"
+        },
+        "v_out_lp_p10": {
+          "type": "boolean"
+        },
+        "v_out_lp_std": {
+          "type": "boolean"
+        },
+        "v_out_ent_mean": {
+          "type": "boolean"
+        },
+        "v_out_ent_p90": {
+          "type": "boolean"
+        },
+        "v_out_ent_max": {
+          "type": "boolean"
+        },
+        "v_out_margin_mean": {
+          "type": "boolean"
+        },
+        "v_out_margin_p10": {
+          "type": "boolean"
+        },
+        "v_out_max_logit_mean": {
+          "type": "boolean"
+        },
+        "v_out_lowconf_frac": {
+          "type": "boolean"
+        },
+        "v_out_lowconf_run": {
+          "type": "boolean"
+        },
+        "v_ans_lp": {
+          "type": "boolean"
+        },
+        "v_ans_ent": {
+          "type": "boolean"
+        },
+        "v_ans_margin": {
+          "type": "boolean"
+        },
+        "v_ans_max_logit": {
+          "type": "boolean"
+        },
+        "v_opt_p_chosen": {
+          "type": "boolean"
+        },
+        "v_opt_mass": {
+          "type": "boolean"
+        },
+        "v_opt_entropy": {
+          "type": "boolean"
+        },
+        "v_opt_margin": {
+          "type": "boolean"
+        },
+        "v_opt_n_plausible": {
+          "type": "boolean"
+        },
+        "v_opt_logit_gap": {
+          "type": "boolean"
+        },
+        "v_opt_chosen_is_top": {
+          "type": "boolean"
+        },
+        "v_n_letters_mentioned": {
+          "type": "boolean"
+        },
+        "v_n_answer_lines": {
+          "type": "boolean"
+        },
+        "v_first_letter_is_final": {
+          "type": "boolean"
+        },
+        "v_n_hedges": {
+          "type": "boolean"
+        },
+        "v_n_eliminations": {
+          "type": "boolean"
+        },
+        "v_n_selfcorrect": {
+          "type": "boolean"
+        },
+        "v_digit_share": {
+          "type": "boolean"
+        },
+        "v_n_numbers": {
+          "type": "boolean"
+        },
+        "v_n_equals": {
+          "type": "boolean"
+        },
+        "category_biology": {
+          "type": "boolean"
+        },
+        "category_business": {
+          "type": "boolean"
+        },
+        "category_chemistry": {
+          "type": "boolean"
+        },
+        "category_computer_science": {
+          "type": "boolean"
+        },
+        "category_economics": {
+          "type": "boolean"
+        },
+        "category_engineering": {
+          "type": "boolean"
+        },
+        "category_health": {
+          "type": "boolean"
+        },
+        "category_history": {
+          "type": "boolean"
+        },
+        "category_law": {
+          "type": "boolean"
+        },
+        "category_math": {
+          "type": "boolean"
+        },
+        "category_other": {
+          "type": "boolean"
+        },
+        "category_philosophy": {
+          "type": "boolean"
+        },
+        "category_physics": {
+          "type": "boolean"
+        },
+        "category_psychology": {
+          "type": "boolean"
+        },
+        "origin_ori_mmlu": {
+          "type": "boolean"
+        },
+        "origin_stemez": {
+          "type": "boolean"
+        },
+        "origin_theoremQA": {
+          "type": "boolean"
+        },
+        "origin_scibench": {
+          "type": "boolean"
+        },
+        "same_letter": {
+          "type": "boolean"
+        },
+        "both_parseable": {
+          "type": "boolean"
+        },
+        "xor_parseable": {
+          "type": "boolean"
+        },
+        "xor_truncated": {
+          "type": "boolean"
+        },
+        "option_js": {
+          "type": "boolean"
+        },
+        "g_letter_rank_in_v": {
+          "type": "boolean"
+        },
+        "v_letter_rank_in_g": {
+          "type": "boolean"
+        },
+        "v_prob_of_g_letter": {
+          "type": "boolean"
+        },
+        "g_prob_of_v_letter": {
+          "type": "boolean"
+        },
+        "diff_out_lp_mean": {
+          "type": "boolean"
+        },
+        "diff_out_ent_mean": {
+          "type": "boolean"
+        },
+        "diff_out_margin_mean": {
+          "type": "boolean"
+        },
+        "diff_out_lowconf_frac": {
+          "type": "boolean"
+        },
+        "diff_ans_lp": {
+          "type": "boolean"
+        },
+        "diff_ans_ent": {
+          "type": "boolean"
+        },
+        "diff_ans_margin": {
+          "type": "boolean"
+        },
+        "diff_opt_p_chosen": {
+          "type": "boolean"
+        },
+        "diff_opt_entropy": {
+          "type": "boolean"
+        },
+        "diff_opt_margin": {
+          "type": "boolean"
+        },
+        "diff_output_token_count": {
+          "type": "boolean"
+        },
+        "diff_n_letters_mentioned": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

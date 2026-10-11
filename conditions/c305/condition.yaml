@@ -1,0 +1,40 @@
+schema_version: condition-overlay-v1
+condition_id: c305
+status: registered_pending_run
+extends: conditions/c077/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c305
+  status: registered_pending_run
+  purpose: ministral_8b_solo_nlreason_eval901_4096
+
+  gate:
+    scope_limit: >-
+      Ministral-8B-Instruct-2410 (c077's identity) alone on the NL-reasoning domain (docs/plan/nl_reasoning_study.md), solo
+      run added as an option for more pairs (user decision 2026-10-03). c077 with only the dataset, evidence schema id,
+      seed cell and text changed: same frozen solve prompt, identity, thinking off, greedy, 4,096 tokens,
+      same-forward capture, evidence before grading. Measurement only; nothing is chosen on this dataset.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c303_c307_v1.json
+
+  dataset:
+    id: nlreason-gpqad-reclorval-foliov2-s20261001
+    path: datasets/nlreason-gpqad-reclorval-foliov2-s20261001/dataset.yaml
+    manifest: eval
+    manifest_rows: 901
+    manifest_sha256: 8863943a027a11525ce2ffc999fd00724a117b99ece466cf4253d431cee19990
+    development_only: false
+    source_loader: scripts/run_nl_reasoning.py load_nl_rows
+
+  replicates:
+    seed_cell_id: c305
+
+  runnable_gate:
+    required_before_submission:
+      - c305 differs from c077 only in dataset, evidence schema id, seed cell and text
+      - the manifest hash equals the dataset registration and the content file's sha256 equals source_rows.sha256
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

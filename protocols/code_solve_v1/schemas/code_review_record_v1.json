@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "code_review_record_v1.json",
+  "title": "BigCodeBench review record: one model reviewing the other's output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "run_id",
+    "condition_id",
+    "condition_hash",
+    "dataset_id",
+    "replicate_id",
+    "stage",
+    "problem_id",
+    "problem_text",
+    "generator",
+    "outputs",
+    "y0_sample_index",
+    "created_at_utc",
+    "problem_metadata",
+    "source_g_run_id",
+    "source_g_record_id",
+    "source_g_output_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "code-review-record-v1"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "dataset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replicate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entry_point",
+        "libs"
+      ],
+      "properties": {
+        "entry_point": {
+          "type": "string",
+          "minLength": 1
+        },
+        "libs": {
+          "type": "string"
+        }
+      }
+    },
+    "generator": {
+      "type": "object"
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_index",
+          "call_seed",
+          "raw_output",
+          "python_block_count",
+          "token_logprobs",
+          "usage"
+        ],
+        "properties": {
+          "sample_index": {
+            "const": 0
+          },
+          "call_seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "raw_output": {
+            "type": "string"
+          },
+          "python_block_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "token_logprobs": {
+            "$ref": "generated_token_trace_v1.json"
+          },
+          "usage": {
+            "$ref": "#/$defs/usage"
+          }
+        }
+      }
+    },
+    "y0_sample_index": {
+      "const": 0
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_g_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_g_record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_g_output_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "$defs": {
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "latency_ms",
+        "finish_reason",
+        "retries"
+      ],
+      "properties": {
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "latency_ms": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "finish_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "description": "code_record_v1 for a review call (c110, c111): the reviewer's complete output, plus the id and sha256 of the reviewed output it was shown as {{y0}}."
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_evidence_record_v1.json",
+  "title": "Authority v5 controller evidence (strict, pre-grading)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "run_id", "source_g_run_id", "source_v_run_id",
+    "condition_id", "condition_hash", "replicate_id", "stage", "cell_id", "problem_id",
+    "feature_set_id", "feature_contract_sha256", "features", "missingness",
+    "evidence_sha256", "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "controller-evidence-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "source_g_run_id": {"type": "string", "minLength": 1},
+    "source_v_run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_id": {"type": "string", "minLength": 1},
+    "stage": {"type": "string", "enum": ["dev30", "pilot300", "test"]},
+    "cell_id": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "feature_set_id": {"const": "scalar_v1"},
+    "feature_contract_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "features": {"$ref": "#/$defs/features"},
+    "missingness": {"$ref": "#/$defs/missingness"},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "nullable_unit": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "nullable_boolean": {"type": ["boolean", "null"]},
+    "binary": {"type": "integer", "enum": [0, 1]},
+    "nullable_binary": {"type": ["integer", "null"], "enum": [0, 1, null]},
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "g_support_y0_valid", "g_mode_share_valid", "g_answer_entropy_norm", "g_valid_fraction", "g_y0_is_mode",
+        "v_verdict_correct", "v_verdict_incorrect", "v_verdict_uncertain",
+        "v_request_keep", "v_request_revise", "v_request_override",
+        "gv_final_answer_equivalent", "gv_support_y2_valid", "gv_y2_is_g_mode"
+      ],
+      "properties": {
+        "g_support_y0_valid": {"$ref": "#/$defs/nullable_unit"},
+        "g_mode_share_valid": {"$ref": "#/$defs/nullable_unit"},
+        "g_answer_entropy_norm": {"$ref": "#/$defs/nullable_unit"},
+        "g_valid_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+        "g_y0_is_mode": {"$ref": "#/$defs/nullable_boolean"},
+        "v_verdict_correct": {"$ref": "#/$defs/nullable_binary"},
+        "v_verdict_incorrect": {"$ref": "#/$defs/nullable_binary"},
+        "v_verdict_uncertain": {"$ref": "#/$defs/nullable_binary"},
+        "v_request_keep": {"$ref": "#/$defs/binary"},
+        "v_request_revise": {"$ref": "#/$defs/binary"},
+        "v_request_override": {"$ref": "#/$defs/binary"},
+        "gv_final_answer_equivalent": {"$ref": "#/$defs/nullable_boolean"},
+        "gv_support_y2_valid": {"$ref": "#/$defs/nullable_unit"},
+        "gv_y2_is_g_mode": {"$ref": "#/$defs/nullable_boolean"}
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "g_support_y0_valid", "g_mode_share_valid", "g_answer_entropy_norm", "g_valid_fraction", "g_y0_is_mode",
+        "v_verdict_correct", "v_verdict_incorrect", "v_verdict_uncertain",
+        "v_request_keep", "v_request_revise", "v_request_override",
+        "gv_final_answer_equivalent", "gv_support_y2_valid", "gv_y2_is_g_mode"
+      ],
+      "properties": {
+        "g_support_y0_valid": {"type": "boolean"},
+        "g_mode_share_valid": {"type": "boolean"},
+        "g_answer_entropy_norm": {"type": "boolean"},
+        "g_valid_fraction": {"type": "boolean"},
+        "g_y0_is_mode": {"type": "boolean"},
+        "v_verdict_correct": {"type": "boolean"},
+        "v_verdict_incorrect": {"type": "boolean"},
+        "v_verdict_uncertain": {"type": "boolean"},
+        "v_request_keep": {"type": "boolean"},
+        "v_request_revise": {"type": "boolean"},
+        "v_request_override": {"type": "boolean"},
+        "gv_final_answer_equivalent": {"type": "boolean"},
+        "gv_support_y2_valid": {"type": "boolean"},
+        "gv_y2_is_g_mode": {"type": "boolean"}
+      }
+    }
+  }
+}

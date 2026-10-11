@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "logit_trace_record_v1.json",
+  "title": "Router v1 teacher-forced pre-softmax logit summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "run_id",
+    "source_pass1_run_id",
+    "condition_id",
+    "condition_hash",
+    "problem_id",
+    "status",
+    "positions",
+    "identity_max_abs_error",
+    "archive_max_abs_error",
+    "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "logit-trace-record-v1"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_pass1_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "condition_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "problem_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "misaligned",
+        "trace_missing",
+        "call_error"
+      ],
+      "description": "ok requires that the teacher-forced sampled-token logprobs reproduce the archived pass-1 trace within the registered tolerance."
+    },
+    "positions": {
+      "type": "array",
+      "description": "One entry per pass-1 content token, in generation order. Full vocabulary logits are never stored: max_logit and logsumexp are jointly sufficient for every registered feature, since log p(sampled) = max_logit - logsumexp under greedy decoding.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "index",
+          "max_logit",
+          "logsumexp",
+          "sampled_logprob"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "max_logit": {
+            "type": "number"
+          },
+          "logsumexp": {
+            "type": "number"
+          },
+          "sampled_logprob": {
+            "type": "number",
+            "maximum": 0
+          }
+        }
+      }
+    },
+    "identity_max_abs_error": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "max over positions of |sampled_logprob - (max_logit - logsumexp)|. Must be at or below the contract's 1e-4 tolerance for status ok. A larger value means the capture is not the distribution that produced the archived output, and the record must be rejected rather than reported."
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "archive_max_abs_error": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "max over positions of |recomputed sampled_logprob - the logprob archived by pass 1|. identity_max_abs_error checks that decoding was greedy; this checks that the teacher-forced pass reproduces the ORIGINAL run. Both must hold for status ok: the first alone would pass on a correctly-greedy forward over the wrong weights or the wrong prompt rendering."
+    }
+  },
+  "description": "Recovers the pre-softmax logit scale that a log-probability discards. It needs no regeneration: pass 1 ran greedily at temperature 0, so the archived output is the decoding path and a single teacher-forced forward pass over prompt + raw_output sees exactly the distribution each token was drawn from."
+}

@@ -1,0 +1,44 @@
+schema_version: condition-overlay-v1
+condition_id: c076
+status: registered_pending_run
+extends: conditions/c070/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c076
+  status: registered_pending_run
+  purpose: qwen25_7b_solo_mmlu_pro_dev1000_4096
+
+  gate:
+    scope_limit: >-
+      Qwen2.5-7B-Instruct alone on MMLU-Pro dev1000 for docs/plan/mmlu_pro_study.md, requested by the user
+      to run every mathfull model in the knowledge domain: c070 with only the model changed,
+      to c031's registered identity (including its chat-template inputs). Same frozen solve
+      prompt, thinking off, greedy, 4,096 tokens, repetition_penalty 1.0 sent, same-forward
+      capture. Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/text_mc_v1/schemas/mc_evidence_record_c074_c079_v1.json
+
+  model:
+    model_id: Qwen/Qwen2.5-7B-Instruct
+    revision: a09a35458c702b33eeacc393d103063234e8bc28
+    tokenizer_revision: a09a35458c702b33eeacc393d103063234e8bc28
+    provenance: conditions/c031/model_provenance.json
+    identity_reference: c031
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-7B-Instruct/a09a35458c702b33eeacc393d103063234e8bc28
+    chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+    chat_template_kwargs: null
+
+  replicates:
+    seed_cell_id: c076
+
+  runnable_gate:
+    required_before_submission:
+      - c076 differs from c070 only in model identity, evidence schema id, seed cell and text
+      - model identity fields, chat-template inputs included, equal c031's resolved model block
+      - the prompt file's LF-normalized sha256 equals authority_allocation.mmlu_pro.FROZEN_PROMPTS
+      - the manifest hash equals the dataset registration
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

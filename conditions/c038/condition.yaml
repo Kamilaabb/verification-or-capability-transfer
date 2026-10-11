@@ -1,0 +1,58 @@
+schema_version: condition-overlay-v1
+condition_id: c038
+status: registered_pending_run
+extends: conditions/c037/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c038
+  status: registered_pending_run
+  purpose: qwen3_vl_8b_reviewer_of_c036_g_mmmu_pro_dev_4096
+
+  gate:
+    scope_limit: >-
+      VL-GV for docs/plan/vision_mmmu_pro_study.md: Qwen3-VL-8B-Instruct (c037's identity)
+      reviews c036's Qwen3-VL-4B-Instruct outputs under the frozen review prompt, seeing the
+      same images plus G's full output as plain text. c037 with only the prompt, the
+      generator source, record schemas, stages and seed cell changed. Delivery: V's letter,
+      G's letter when V's is unparseable (primary); V unparseable counts as wrong (strict).
+      Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      review: protocols/vision_mc_v1/schemas/vl_review_record_v1.json
+      generator_source: protocols/vision_mc_v1/schemas/vl_record_v1.json
+      native_logit_trace: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+      scalar_evidence: protocols/vision_mc_v1/schemas/vl_evidence_record_v1.json
+
+  generator_source:
+    condition_id: c036
+    artifact_path: /path/to/project/artifacts/20260926T140307Z__c036__mmmupro-dev__r013_solve4096
+    pass1_run_id: 20260926T140307Z__c036__mmmupro-dev__r013_solve4096__pass1__p01
+    model_id: Qwen/Qwen3-VL-4B-Instruct
+    reuse_records_byte_for_byte: true
+
+  model:
+    prompt_pass1: conditions/c035/prompts/vl_review_v1.txt
+    prompt_pass1_provenance: user_approved_vision_review_prompt_v1_frozen_2026-09-26
+    prompt_inputs: [question, options, y0]
+
+  delivery:
+    primary: V's registered answer letter; G's letter when V's is unparseable
+    strict: V's letter; V unparseable counts as wrong
+    report_fallback_rows: true
+
+  replicates:
+    seed_cell_id: c038
+
+  stages:
+    run: [reuse_c036_g, review_with_same_forward_logit_capture, scalar_evidence, grade, analyze]
+    skip: [generate_g, controller_training]
+
+  runnable_gate:
+    required_before_submission:
+      - c038 differs from c037 only in prompt, generator source, record schemas, delivery, stages, seed cell and text
+      - the review prompt file's LF-normalized sha256 equals authority_allocation.mmmu_pro.FROZEN_PROMPTS
+      - the c036 source archive passes its checksums, holds exactly 1000 G and native-trace rows, and its pass-1 run id equals generator_source.pass1_run_id
+      - temperature is 0, thinking is false, max_new_tokens is 4096
+      - local parser and record-schema tests pass

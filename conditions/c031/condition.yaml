@@ -1,0 +1,63 @@
+schema_version: condition-overlay-v1
+condition_id: c031
+status: registered_pending_run
+extends: conditions/c025/condition.yaml
+
+overrides:
+  schema_version: condition-v1
+  condition_id: c031
+  status: registered_pending_run
+  purpose: qwen25_7b_solo_pass1_mathfull_dev1000_4096_solve_prompt_v2
+
+  gate:
+    scope_limit: >-
+      Qwen2.5-7B-Instruct alone on mathfull dev1000 under the frozen solve prompt v2
+      (docs/plan/gv_vs_max_g_v_study.md section 4.7), requested by the user. c025 with only
+      the model changed: same prompt file, greedy decoding, 4096 tokens, same-forward native
+      trace capture and seven-scalar contract. The chat template reads no clock and has no
+      thinking switch; the registered system turn replaces its default "You are Qwen"
+      system text, as rendered with the real tokenizer before registration. Its
+      generation_config.json carries repetition_penalty 1.05, which vLLM would apply to any
+      request that omits it; the request sends the registered 1.0. This is the snapshot
+      c002/c003 served as G, whose requests omitted the penalty and so decoded with 1.05
+      (docs/analysis/generation_config_decoding_defaults.md); c031 is not a rerun of them.
+      Development only; the sealed test manifest is not touched.
+
+  protocol:
+    record_schemas:
+      scalar_evidence: protocols/math_expression_scalar_v1/schemas/evidence_record_c031_v1.json
+
+  # Every identity field equals conditions/c031/model_provenance.json, written from one scan
+  # of the snapshot on the login node (2026-09-26); check-runnable enforces it.
+  model:
+    model_id: Qwen/Qwen2.5-7B-Instruct
+    revision: a09a35458c702b33eeacc393d103063234e8bc28
+    tokenizer_revision: a09a35458c702b33eeacc393d103063234e8bc28
+    server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen2.5-7B-Instruct/a09a35458c702b33eeacc393d103063234e8bc28
+    provenance: conditions/c031/model_provenance.json
+    chat_template_hash: cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f
+    identity_reused_from: null
+    preflight_job: null
+    preflight_reused_from: null
+    preflight_reuse_reason: null
+    preflight_policy: >-
+      No separate preflight. The smoke call and every pass-1 row require exact token-ID
+      alignment between the served content trace and the same-forward capture, as for
+      c027 and c029; a mismatch stops the run before its row is kept.
+
+  replicates:
+    plan_id: r012
+    path: replicates/r012.yaml
+    replicate_id: p01
+    base_seed: 20260925
+    seed_cell_id: c031
+
+  runnable_gate:
+    required_before_submission:
+      - c031 differs from c025 only in the model identity, seeds and evidence schema id
+      - the model identity fields equal conditions/c031/model_provenance.json
+      - the request carries the registered repetition_penalty, so generation_config.json cannot supply 1.05
+      - the prompt file's LF-normalized sha256 equals the frozen value in docs/plan/gv_vs_max_g_v_study.md
+      - the manifest hash equals the one in the dataset registration
+      - temperature is 0
+      - local parser and record-schema tests pass

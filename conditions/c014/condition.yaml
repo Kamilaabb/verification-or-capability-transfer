@@ -1,0 +1,231 @@
+schema_version: condition-v1
+condition_id: c014
+status: validated_gate0_stop
+purpose: cheap_controlled_self_verification_pilot_math_dev300
+path_base: repository_root
+
+gate:
+  id: gate_0
+  runs_stages: [pass1_with_same_forward_logit_capture, pass2, grade, analyze]
+  skips_stages: [router_training]
+  skips_stages_because: >-
+    Gate 0 asks whether a routing problem exists at all. That is answered by the repair
+    and harm pools and by the pre-pass-2 separability of the three registered scalars.
+    Training a router before knowing the pool sizes is what c008 did, and the pools were
+    too small for any router to win. See docs/plan/router_c014_design.md section 3.
+  scope_limit: >-
+    This is a cheap controlled self-verification pilot, not a SEVRA replication. Both
+    passes run thinking off at temperature 0, which is a different behaviour
+    distribution from the one SEVRA reports. It must not be described as a SEVRA
+    configuration comparison. If heterogeneity is found here, a thinking-on replication
+    can be registered separately rather than spending that GPU budget up front.
+  measures:
+    - acc_pass1 = mean(u0)
+    - acc_always = mean(u_self with failure fallback to u0)
+    - repair pool R = count(u0 = 0 and u_self = 1)
+    - harm pool H = count(u0 = 1 and u_self = 0)
+    - best fixed arm, and oracle headroom over it = min(R, H)
+    - exact McNemar p and 95% CI for A1 - A0, reported as description of the average
+      effect only and never used as a stop criterion
+    - pre-pass-2 cross-fit AUC for predicting u0 = 0, per registered scalar and jointly
+    - tokens_pass1, tokens_pass2, and the cost of A0 and A1
+    - the cross-fit policy frontier: token cost against accuracy, against both fixed arms
+    - problem-level bootstrap CIs for BOTH the accuracy difference and the token
+      difference, per replicates/r007.yaml
+    - self_check verdict distribution and the rate at which a "looks correct" verdict
+      still changed the answer
+  decision_criteria: docs/plan/router_c014_design.md section 5
+  primary_outcome: cost_at_accuracy_parity
+  primary_outcome_because: >-
+    The accuracy difference between any router and a fixed arm is carried only by the
+    R + H rows where the arms disagree, while every row contributes its pass-2 tokens to
+    the cost difference. The effective sample size is the pool for one and the whole
+    manifest for the other. Cost is measured rather than estimated for these rows, but
+    it is not free of sampling error across problem samples, so both outcomes carry
+    problem-level bootstrap CIs.
+  primary_hypothesis_under_test: >-
+    Self-check's effect is heterogeneous across problems: some rows should be checked
+    and some should not, and enough such rows exist to learn the distinction from
+    pre-pass-2 scalars. This is a statement about treatment effect heterogeneity, not
+    about the average effect of self-checking.
+  average_effect_is_not_the_question: >-
+    A near-zero average effect is when routing is worth the most, not the least. At
+    R == H the two fixed arms tie and McNemar on A1 - A0 is maximally insignificant,
+    while a perfect router still gains min(R, H) = R rows. An earlier draft of this gate
+    required A1 to significantly beat A0 and would have rejected exactly that case. That
+    criterion is deleted; see src/authority_allocation/router_semantics.oracle_headroom.
+  min_r_h_six_is_an_oracle_threshold_not_an_attainment_threshold: >-
+    min(R, H) >= 6 is what McNemar(min(R,H), 0) needs, and that is a perfect router
+    taking every win with no losses. A learned router at 4 wins and 2 losses is still
+    insignificant. The number therefore governs whether a superiority test may be run at
+    all, never whether it passes; that is decided by a held-out paired test. Below 6 no
+    superiority claim is pre-registered.
+  no_champion_threshold_for_a_confirmatory_claim: >-
+    Cross-fitting makes each row's prediction come from a model that never saw it. It
+    does not make "read the whole frontier, then pick the best threshold" unbiased, which
+    is policy-selection optimism. This pilot reports the entire out-of-fold frontier as
+    exploratory and selects no champion operating point. A future confirmatory condition
+    must either choose the threshold inside the training folds and evaluate on the outer
+    held-out fold, or choose it on development and run the frozen test exactly once.
+  a_negative_result_is_a_result: >-
+    If R + H is too small there is nothing to route and the registered conclusion is the
+    measured pools. If min(R, H) < 6 then no router can significantly beat the best fixed
+    arm on accuracy, and only the cost claim may be reported. Both are permitted outcomes
+    and must not be retuned away.
+
+protocol:
+  id: router_v1
+  path: protocols/router_v1/README.md
+  grader_contract: protocols/authority_v5/grader_math_verify_v1.yaml
+  grader_contract_provenance: byte_identical_to_c002_c003_c004
+  record_schemas:
+    pass1_source: protocols/authority_v6/schemas/g_record_single_v3.json
+    native_logit_trace_source: protocols/router_v1/schemas/native_logit_trace_record_v1.json
+    pass2_source: protocols/router_v1/schemas/self_check_record_v1.json
+    counterfactual_source: protocols/router_v1/schemas/router_counterfactual_v1.json
+    run_manifest: protocols/authority_v5/schemas/run_manifest_v1.json
+  pass1_record_is_reused_unchanged_because: >-
+    A pass 1 call is an ordinary single-sample generation. g_record_single_v3 already
+    carries problem_text, raw_output, the sampled-token trace and usage, which is
+    everything this protocol needs from it.
+
+dataset:
+  id: math500-r6e4ed1-l3to5-dev300-s20260910
+  path: datasets/math500-r6e4ed1-l3to5-dev300-s20260910/dataset.yaml
+  manifest: pilot300
+  manifest_rows: 300
+  manifest_sha256: 82b81514679262eac8c3e970a774ab083d769df1c38b0f43a470ef7927c90971
+  reused_from: c003
+  reused_because: >-
+    Same problems, same order, same grader as the only math condition with a validated
+    run. The generator differs, so this is not a paired comparison with c003 and must
+    not be reported as one.
+
+model:
+  role_ids: [pass1, pass2]
+  one_model_serves_both_roles: true
+  y0_selection: sample_index_0_unconditionally
+  kind: llm
+  model_id: Qwen/Qwen3-4B
+  revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  revision_resolved_from: main
+  tokenizer_revision: 1cfa9a7208912126459214e8b04321603b3df60c
+  provenance: conditions/c014/model_provenance.json
+  server_path: /path/to/scratch/authority-allocation/models/Qwen--Qwen3-4B/1cfa9a7208912126459214e8b04321603b3df60c
+  backend: vllm_openai
+  backend_version: 0.29.0
+  dtype: bfloat16
+  quantization: none
+  chat_template_hash: a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8
+  chat_template_hash_basis: tokenizer_config.chat_template_utf8
+  thinking: false
+  thinking_false_for_both_passes_because: >-
+    Greedy decoding at temperature 0 makes the sampled token the argmax, so the archived
+    token can be checked against the top-1 raw logit captured from that same vLLM
+    sampling forward.
+    It also keeps the two passes cost-comparable, which the primary outcome depends on.
+  pass1_logit_capture:
+    backend: vllm_same_forward_logits_processor_v1
+    server_logprobs_mode: raw_logprobs
+    no_op_logits_processor: authority_allocation.vllm_logit_capture:C014LogitCapture
+    return_token_ids: true
+    per_token_fields: [sampled_raw_logit, sampled_logprob, max_raw_logit,
+      logsumexp, entropy, top1_top2_margin, top20_token_ids, top20_raw_logits]
+    top_k_persisted: 20
+    full_vocabulary_logits_persisted: false
+    requires_same_request_capture_id: true
+    requires_exact_generated_token_id_match: true
+    sampled_logprob_identity_tolerance: 0.0001
+    sampled_raw_logit_must_equal_top1_tolerance: 0.000001
+    transformers_teacher_forced_replay: forbidden
+    second_generation_or_replay: forbidden
+  preflight_job: null
+  preflight_must_verify:
+    - finish_reason is stop on a smoke prompt
+    - chat template applies and its hash is recorded
+    - require_exact_content_alignment holds for the sampled-token trace
+    - every output token has all registered summaries from its generating vLLM forward
+    - sampled_logprob equals sampled_raw_logit minus logsumexp within 0.0001
+    - sampled token id equals the captured top-1 token id under greedy decoding
+    - no full-vocabulary logits are persisted
+
+  prompt_pass1: conditions/c002/prompts/g_initial_v1.txt
+  prompt_pass1_provenance: byte_identical_to_c002_c003_c004
+  pass1_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+
+  prompt_pass2: conditions/c014/prompts/self_check_v1.txt
+  pass2_always_emits_a_final_answer: true
+  pass2_decoding:
+    samples: 1
+    temperature: 0.0
+    top_p: 1.0
+    top_k: null
+    max_new_tokens: 3072
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+    repetition_penalty: 1.0
+  structured_outputs_backend: guidance
+  structured_outputs_backend_because: >-
+    c005 lost every candidate program to JSON-constrained decoding stripping newlines
+    and c006 fixed it by moving to guidance. Math answers are shorter, but the same
+    backend is used so the failure mode cannot recur.
+
+features:
+  contract: protocols/router_v1/features_router_v1.yaml
+  decision_time: after_pass1_before_pass2
+  count: 6
+  never_fit_all_three_logit_scalars_jointly: true
+  never_fit_all_three_logit_scalars_jointly_because: >-
+    mean_logprob equals mean_max_logit minus mean_logsumexp exactly, so the three span
+    only two dimensions. R1 and R2 are the two registered arms and R2 omits
+    mean_logprob; the identity is an integrity check on the capture, not a feature.
+
+replicates:
+  plan_id: r007
+  path: replicates/r007.yaml
+
+reuse_policy:
+  reuse_pass1_when_only_router_changes: true
+  reuse_pass1_and_pass2_when_only_reporting_changes: true
+  rerun_from: pass1
+  rerun_from_because: no archived run exists for this model
+
+successor_plan:
+  create_router_condition_only_if: >-
+    docs/plan/router_c014_design.md section 5.2 passes and its section 5.3 policy
+    frontier shows a token saving whose bootstrap CI excludes zero at matched accuracy
+  test_manifest_stays_unread: true
+
+hash_policy:
+  algorithm: sha256
+  canonicalization: canonical_json_of_resolved_behavior_config_v1
+  include: [resolved_behavioral_condition_fields, referenced_prompt_bytes, protocol_component_hashes, immutable_model_revisions, chat_template_hashes, logprob_capture_mode]
+  exclude: [status, purpose, preferred_runtime, node, gpu_uuid, slurm_job_id, timestamps, run_id, preflight_job, service_smoke_job]
+
+change_policy:
+  seed_change_creates_new_replicate_not_new_condition: true
+  model_prompt_temperature_feature_or_algorithm_change_creates_new_condition: true
+  completed_runs_are_immutable: true
+
+runnable_gate:
+  required_before_slurm_submission:
+    - model.revision is not null
+    - model.server_path is not null
+    - model.chat_template_hash is not null
+    - model.thinking is false
+    - model.preflight_job is not null
+    - pass1_decoding.temperature == 0.0 and pass2_decoding.temperature == 0.0
+  because: >-
+    The runner is parameterised and can be written and self-tested on CPU before the
+    snapshot exists. What must not happen is a Slurm submission against an unpinned
+    model: the paired vLLM-native capture is valid only when both calls use the exact
+    weights, tokenizer, chat template and greedy decoding settings and reproduce the
+    same generated token path.

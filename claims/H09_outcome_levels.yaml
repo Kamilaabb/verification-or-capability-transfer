@@ -1,0 +1,37 @@
+schema_version: claim-card-v1
+id: H09
+written: '2026-10-04'
+story: 问题一（什么情况下成立）
+analysis: outcome_levels
+post_hoc: true
+statement_zh: 审阅后的结果落在哪一档，由谁审谁和两个模型差多少决定：较强者审较弱者时，差距越大越停在两者之间、越难追平较强者；较弱者审较强者时，差距越大越容易把较强者改差。
+# 档位直接用 H08 报告里每个方向的 Δ_G、Δ_C 及其 95% 区间，不重新抽样。
+levels:
+  1: 比 G 差：Δ_G 区间整个在 0 以下
+  2: 和 G 差不多：Δ_G 区间含 0
+  3: 高于 G、低于较强者：Δ_G 区间在 0 以上，Δ_C 区间整个在 0 以下
+  4: 和较强者差不多：Δ_G 区间在 0 以上，Δ_C 区间含 0
+  5: 超过较强者：Δ_C 区间整个在 0 以上
+# 较弱者审较强者时 G 就是较强者，Δ_G = Δ_C，只会出现 1、2、5 三档。
+# 检验的是陈述里的那件事（是否追不平较强者 / 是否比较强者差），不是五档的整体次序：
+# 差距小时“和 G 差不多”与“和较强者差不多”几乎是同一回事，五档在差距上没有单调次序。
+indicator:
+  stronger_reviews: short_of_stronger   # Δ_C 区间整个在 0 以下（第 1–3 档，或第 2 档里 Δ_C 也显著为负）
+  weaker_reviews: worse_than_stronger   # 第 1 档（此时 G 就是较强者）
+expected:
+  stronger_reviews: {gap: positive}
+  weaker_reviews: {gap: positive}
+test: 每个方向类型分开：在每个域里算差距和上面这个 0/1 指标的 Spearman 秩相关，四域取平均；p 值只在域内打乱差距（10000 次置换），所以不同域的差距范围和区间宽度不会混在一起比。
+first_version: 写卡当天第一版用“差距 × 五档档位”的秩相关，主分析结果为较强审较弱 −0.256（p = 0.087）、较弱审较强 −0.464（p = 0.002）；因为五档在差距上没有单调次序（见上），改成现在的指标。两版都如实报告，第一版只作透明记录。
+permutation:
+  reps: 10000
+  seed: 20261004
+bins_for_figure_only: [0, 4, 8, 14]
+decision_rule: 平均秩相关与预期同号且双侧置换 p < 0.05 → 成立；反号且 p < 0.05 → 相反；否则看不出关系。主分析用设计配对，全部已跑配对只作敏感性。分箱只用来画图和列表，不做检验。
+seen_when_written:
+  math: seen (H08 per-direction outcomes, 20261004b)
+  knowledge: seen (H08 per-direction outcomes, 20261004b)
+  code: seen (H08 per-direction outcomes, 20261004b)
+  nl_reasoning: seen (H08 per-direction outcomes, 20261004b)
+note: 事后提出、看过全部结果后才写的探索性假说，正文必须这样标注；登记好的 H08 照原样报告，H09 不替代它。
+result: null

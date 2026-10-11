@@ -1,0 +1,18 @@
+schema_version: replicate-plan-v1
+replicate_plan_id: r017
+status: registered_frozen_nl_knowledge_selector_crossfit
+controller_training:
+  outer_split_seeds:
+  - 20260925
+  - 20260926
+  - 20260927
+  - 20260928
+  - 20260929
+  outer_folds: 5
+  inner_folds: 5
+  group_splits_by: problem_id (one row per problem)
+  report_all_outer_split_seeds: true
+  selecting_the_best_seed: forbidden
+generator: reuse
+verifier: no review rerun
+grader: reuse primary u0

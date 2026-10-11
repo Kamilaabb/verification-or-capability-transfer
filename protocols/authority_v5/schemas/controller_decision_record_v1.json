@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "controller_decision_record_v1.json",
+  "title": "Authority v5 controller decision (no outcome labels)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "run_id", "condition_id", "condition_hash",
+    "replicate_id", "stage", "cell_id", "problem_id", "controller_id", "controller_kind",
+    "controller_revision_or_checkpoint", "menu", "source_evidence_record_id", "evidence_sha256",
+    "registered_request", "input_payload_sha256", "call_seed", "raw_output", "reasoning_content", "final_content",
+    "authority_cap", "effective_action", "parse_status", "usage", "created_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "controller-decision-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "condition_id": {"type": "string", "minLength": 1},
+    "condition_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "replicate_id": {"type": "string", "minLength": 1},
+    "stage": {"type": "string", "enum": ["dev30", "pilot300", "test"]},
+    "cell_id": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "controller_id": {"type": "string", "minLength": 1},
+    "controller_kind": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+    "controller_revision_or_checkpoint": {"type": "string", "minLength": 1},
+    "menu": {"type": "string", "enum": ["binary", "ternary"]},
+    "source_evidence_record_id": {"type": "string", "minLength": 1},
+    "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "registered_request": {"type": "string", "enum": ["KEEP", "CRITIQUE_REVISE", "OVERRIDE"]},
+    "input_payload_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "call_seed": {"type": "integer", "minimum": 0},
+    "raw_output": {"type": "string"},
+    "reasoning_content": {"type": ["string", "null"]},
+    "final_content": {"type": ["string", "null"]},
+    "authority_cap": {"type": "string", "enum": ["M0", "M1", "M2"]},
+    "effective_action": {"type": "string", "enum": ["KEEP", "CRITIQUE_REVISE", "OVERRIDE"]},
+    "parse_status": {"type": "string", "enum": ["ok", "retry_ok", "fallback_m0"]},
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_tokens", "reasoning_tokens", "output_tokens", "latency_ms", "finish_reason", "retries"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "reasoning_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "latency_ms": {"type": ["number", "null"], "minimum": 0},
+        "finish_reason": {"type": ["string", "null"]},
+        "retries": {"type": "integer", "minimum": 0}
+      }
+    },
+    "created_at_utc": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"menu": {"const": "binary"}}, "required": ["menu"]},
+      "then": {"properties": {"authority_cap": {"enum": ["M0", "M2"]}}}
+    },
+    {
+      "if": {"properties": {"parse_status": {"const": "fallback_m0"}}, "required": ["parse_status"]},
+      "then": {"properties": {"authority_cap": {"const": "M0"}, "effective_action": {"const": "KEEP"}}}
+    }
+  ]
+}

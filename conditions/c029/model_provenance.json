@@ -1,0 +1,21 @@
+{
+  "chat_template_hash": "5816fce10444e03c2e9ee1ef8a4a1ea61ae7e69e438613f3b17b69d0426223a4",
+  "config_sha256": "39fb36dc5416f445ebc4e71cb71fbcf6727e80a35836d8ba1a1474c318467b7a",
+  "repo_id": "meta-llama/Llama-3.2-3B-Instruct",
+  "resolved_from": "main",
+  "revision": "0cb88a4f764b7a12671c53f0838cd831a0843b95",
+  "schema_version": "model-provenance-v1",
+  "server_path": "/path/to/scratch/authority-allocation/models/meta-llama--Llama-3.2-3B-Instruct/0cb88a4f764b7a12671c53f0838cd831a0843b95",
+  "tokenizer_file_sha256": {
+    "special_tokens_map.json": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec",
+    "tokenizer.json": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+    "tokenizer_config.json": "9823dcfdc1121869029da45192238e85cf44f0b232a6d9dc20e4fe6f4242a14e"
+  },
+  "tokenizer_revision": "0cb88a4f764b7a12671c53f0838cd831a0843b95",
+  "tokenizer_revision_note": "The tokenizer ships inside the same snapshot, so it carries the weights' commit by construction. It is recorded explicitly because a sampled token id interpreted against a different vocabulary is a different token.",
+  "total_bytes": 6434749770,
+  "weight_file_sha256": {
+    "model-00001-of-00002.safetensors": "13cbd6d16e927a0c5bad54102514e6e18b4a47b3a6eb911e39d678d328d19f55",
+    "model-00002-of-00002.safetensors": "7b770216613ac5c34d7c54bdff1fa616bc4e338a9d0b20af6303e48c295ee23c"
+  }
+}
