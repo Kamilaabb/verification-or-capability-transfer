@@ -122,3 +122,35 @@ pass their directory with `--claims` (or `--h`/`--cells`).
   Δ_C (`delta_C`, `dC`), its name in an earlier draft.
 - gap = the stronger model's accuracy − the weaker model's accuracy.
 - Cost per question = parameters (billions) × (input + output tokens).
+
+## Licenses of the benchmarks and models
+
+| Benchmark | License |
+|---|---|
+| MATH | MIT |
+| MMLU-Pro | MIT |
+| BigCodeBench | Apache-2.0 |
+| ReClor | non-commercial research use only |
+| FOLIO | CC BY-SA 4.0 |
+| GPQA | CC BY 4.0; its authors ask that examples not be revealed online |
+
+| Model | License |
+|---|---|
+| Qwen3 4B, 8B, 32B; Qwen2.5-7B; Qwen2.5-Coder-7B; Mistral-Small-24B | Apache-2.0 |
+| Seed-Coder-8B | MIT |
+| Qwen2.5-3B | Qwen Research License |
+| Qwen2.5-72B | Qwen License |
+| Llama-3.2-3B, Llama-3.1-8B | Llama 3.2 / 3.1 Community License |
+| Ministral-8B | Mistral Research License |
+
+All were used for non-commercial research, which every license permits. This release contains code (MIT, see
+`LICENSE`) and per-question correctness results keyed by the public problem IDs of each benchmark. It redistributes
+no question text and no model outputs; in particular, no GPQA question is reproduced.
+
+## Compute
+
+All models were served with vLLM 0.29.0 on a university GPU cluster. From the cluster's job accounting over the
+whole project (September 10 to October 10, 2026), the GPU jobs used about 1,850 GPU hours: about 970 on NVIDIA H100
+(the 72B model runs on two), 510 on A100 (plus 25 on A100 MIG slices), 340 on L40S, and 1 on a Quadro RTX 8000.
+This includes development and exploratory runs that are not reported in the paper. The paper reports compute per
+question as parameters × tokens (Section 5 and Appendix D).
