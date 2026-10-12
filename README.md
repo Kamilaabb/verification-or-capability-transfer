@@ -150,7 +150,7 @@ no question text and no model outputs; in particular, no GPQA question is reprod
 ## Compute
 
 All models were served with vLLM 0.29.0 on a university GPU cluster. From the cluster's job accounting over the
-whole project (September 10 to October 10, 2026), the GPU jobs used about 1,850 GPU hours: about 970 on NVIDIA H100
+whole project, the GPU jobs used about 1,850 GPU hours: about 970 on NVIDIA H100
 (the 72B model runs on two), 510 on A100 (plus 25 on A100 MIG slices), 340 on L40S, and 1 on a Quadro RTX 8000.
 This includes development and exploratory runs that are not reported in the paper. The paper reports compute per
 question as parameters × tokens (Section 5 and Appendix D).
